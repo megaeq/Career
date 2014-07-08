@@ -14,7 +14,7 @@
 	<aop:aspectj-autoproxy />
 
 	<context:component-scan base-package="com.eq.services"/>
-	<context:property-placeholder location="jdbc.properties" />
+	<context:property-placeholder location="classpath:system.properties" />
 
 	<!--创建jdbc数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -28,15 +28,10 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	<!-- 注册Mapper方式二：也可不指定特定mapper，而使用自动扫描包的方式来注册各种Mapper ，配置如下：-->  
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+		<property name="basePackage" value="com.eq.mapper" />  
+	</bean> 
 
-	<!--创建数据映射器，数据映射器必须为接口 -->
-	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.xxt.ibatis.dbcp.dao.UserMapper" />
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
-
-	<bean id="userDaoImpl2" class="com.xxt.ibatis.dbcp.dao.impl.UserDaoImpl2">
-		<property name="userMapper" ref="userMapper" />
-	</bean>
 
 </beans>
