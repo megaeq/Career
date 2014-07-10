@@ -9,8 +9,8 @@ import org.apache.commons.lang.StringUtils;
 @RequestScoped
 public class Test
 {
-	private String name;
-	private Integer age;
+	private String name="123";
+	private Integer age=10;
 	public String getName()
 	{
 		if(StringUtils.isBlank(name)) {
