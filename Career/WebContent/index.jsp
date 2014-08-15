@@ -8,5 +8,10 @@
 </head>
 <body>
 	<a href="hello">hello</a>
+	<form action="form1" method="post">
+		<input id="age" type="text" name="age1">
+		<input id="name" type="text" name="name1">
+		<input type="submit" value="提交" />
+	</form>
 </body>
 </html>
