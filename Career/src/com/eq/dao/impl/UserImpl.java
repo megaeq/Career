@@ -1,5 +1,6 @@
 package com.eq.dao.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -7,24 +8,38 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Component;
 
+import com.eq.dao.entity.User;
+import com.eq.dao.inter.AbstractDao;
 import com.eq.dao.inter.UserInterface;
 @Component
-public class UserImpl implements UserInterface
+public class UserImpl extends BaseDao implements AbstractDao<User>
 {
-	@Resource
-	private SqlSessionTemplate sqlSessionTemplate;
 	@Override
-	public void insert(Map<String, Object> params)
+	public void add(User user)
 	{
-		sqlSessionTemplate.insert("user.insert", params);
+		getSqlSessionTemplate().insert("user.insert", user);
+		
 	}
-	public SqlSessionTemplate getSqlSessionTemplate()
+
+	@Override
+	public void delete(User cls)
 	{
-		return sqlSessionTemplate;
+		// TODO Auto-generated method stub
+		
 	}
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate)
+
+	@Override
+	public void update(User cls)
 	{
-		this.sqlSessionTemplate = sqlSessionTemplate;
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Map<String, Object>> select(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

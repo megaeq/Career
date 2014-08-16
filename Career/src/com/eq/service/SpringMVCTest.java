@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eq.dao.entity.User;
 import com.eq.dao.impl.UserImpl;
 import com.eq.util.BaseAction;
 
@@ -18,10 +19,10 @@ public class SpringMVCTest extends BaseAction
 	public ModelAndView sayHello() {
 		System.out.println("hello");
 		UserImpl userImpl = (UserImpl)getBean("userImpl");
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("age", 10);
-		params.put("name", "1234");
-		userImpl.insert(params);
+		User user = new User();
+		user.setAge(10);
+		user.setName("二狗子");
+		userImpl.add(user);
 		return new ModelAndView("page/hello", "message", "hello springmvc1");
 	}
 }
