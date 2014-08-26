@@ -80,6 +80,20 @@ CREATE TABLE `team_info` (
   `belong` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
--- 2014/08/26 �ܶ�15:14:56.22
+-- 2014/08/26 �ܶ�15:14:56.22
 alter table game add code varchar(20);
+--2014/08/26 周二 21:40:54.67
+-- ----------------------------
+-- Table structure for `country`
+-- ----------------------------
+CREATE TABLE `country` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `country` varchar(20) DEFAULT NULL,
+  `league_matches` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table team_info add orderno int (2)
+
+
 
