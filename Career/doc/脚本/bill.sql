@@ -80,7 +80,7 @@ CREATE TABLE `team_info` (
   `belong` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
--- 2014/08/26 �ܶ�15:14:56.22
+-- 2014/08/26 周二 15:14:56.22
 alter table game add code varchar(20);
 --2014/08/26 周二 21:40:54.67
 -- ----------------------------
@@ -105,6 +105,14 @@ ALTER TABLE game ADD weather VARCHAR (10);
 ALTER TABLE game ADD home_team VARCHAR (40);
 
 ALTER TABLE game ADD guest_team VARCHAR (40);
+-- 2014/08/28 周四  21:19:07.68
+CREATE TABLE `game_complete` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE game ADD game_type VARCHAR (40);
 
 
 
