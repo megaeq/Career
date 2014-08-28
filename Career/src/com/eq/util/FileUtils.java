@@ -10,8 +10,8 @@ import java.util.List;
 
 public class FileUtils
 {
-	
-	// Í¨¹ýÎÄ¼þÃû¶ÁÈ¡ÎÄ¼þ
+		private static List<String>		filelist	= new ArrayList<String>();
+	// Í¨ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ä¼ï¿½
 		@SuppressWarnings("finally")
 		public static String readFileByLines(String fileName,String CHARSET)
 		{
@@ -25,7 +25,7 @@ public class FileUtils
 				reader = new java.io.BufferedReader(new InputStreamReader(new FileInputStream(file), CHARSET));
 				String tempString = null;
 				int line = 1;
-				// Ò»´Î¶ÁÈëÒ»ÐÐ£¬Ö±µ½¶ÁÈënullÎªÎÄ¼þ½áÊø
+				// Ò»ï¿½Î¶ï¿½ï¿½ï¿½Ò»ï¿½Ð£ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nullÎªï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
 
 				while ((tempString = reader.readLine()) != null)
 				{
@@ -53,5 +53,23 @@ public class FileUtils
 				return sb.toString();
 			}
 
+		}
+		
+		public static List<String> refreshFileList(String strPath) {
+			File dir = new File(strPath);
+			File[] files = dir.listFiles();
+
+			if (files == null)
+				return null;
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].isDirectory()) {
+					refreshFileList(files[i].getAbsolutePath());
+				} else {
+					String strFileName = files[i].getAbsolutePath().toLowerCase();
+					System.out.println("---" + strFileName);
+					filelist.add(files[i].getAbsolutePath());
+				}
+			}
+			return filelist;
 		}
 }
