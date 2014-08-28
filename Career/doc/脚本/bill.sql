@@ -94,6 +94,18 @@ CREATE TABLE `country` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 alter table team_info add orderno int (2)
+--  2014/08/28 周四  17:55:28.67
+
+ALTER TABLE game ADD home_half_score INT (1);
+
+ALTER TABLE game ADD guest_half_score INT (1);
+
+ALTER TABLE game ADD weather VARCHAR (10);
+
+ALTER TABLE game ADD home_team VARCHAR (40);
+
+ALTER TABLE game ADD guest_team VARCHAR (40);
+
 
 
 

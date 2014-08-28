@@ -2,9 +2,9 @@ package com.test.fetchdata.game;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +12,6 @@ import org.apache.commons.lang.StringUtils;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.CssSelectorNodeFilter;
-import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.nodes.TagNode;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
@@ -27,7 +26,9 @@ public class GameInfoFetch
 
 	public static String CHARSET = "gb2312"; // 字符集编码
 	private Connection conn = null;
-	private final PreparedStatement stmt = null;
+	private PreparedStatement stmt = null;
+	private Statement stmt2 = null;
+	private ResultSet rs = null;
 
 	public static void main(String[] args)
 	{
@@ -41,7 +42,7 @@ public class GameInfoFetch
 		for (String fileName : filelist)
 		{
 			List<Game> gameList = getGameInfo(Parser.createParser(FileUtils.readFileByLines(fileName, CHARSET), CHARSET));
-			// insertDB(teamList);
+			insertDB(gameList);
 		}
 	}
 
@@ -73,7 +74,6 @@ public class GameInfoFetch
 				System.out.println(td1.toPlainTextString());
 				// 2.获取比赛时间 td2
 				TagNode td2 = (TagNode) nodeList4.elementAt(2);
-				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-DD HH:MM");
 				Timestamp ts = Timestamp.valueOf("2014-" + td2.toPlainTextString() + ":00");
 				game.setTs(ts);
 				// 3.获取主队 td4
@@ -86,9 +86,11 @@ public class GameInfoFetch
 				game.setHomeTeam(td41.toPlainTextString());
 				// 4.全场比分 td5
 				TagNode td5 = (TagNode) nodeList4.elementAt(5);
-				String [] scores = ParserUtils.toPlainText("b", td5.toHtml());
-				if(scores.length>=3) {
-					if(StringUtils.isNotBlank(scores[0])&&StringUtils.isNotBlank(scores[2])) {
+				String[] scores = ParserUtils.toPlainText("b", td5.toHtml());
+				if(scores.length >= 3)
+				{
+					if(StringUtils.isNotBlank(scores[0]) && StringUtils.isNotBlank(scores[2]))
+					{
 						game.setHomeScore(Integer.parseInt(scores[0]));
 						game.setGuestScore(Integer.parseInt(scores[2]));
 					}
@@ -108,8 +110,10 @@ public class GameInfoFetch
 				TagNode td71 = (TagNode) nodeList8.elementAt(0);
 				String half = td71.toPlainTextString();
 				String[] halfs = half.split("-");
-				if(halfs.length>=2) {
-					if(StringUtils.isNotBlank(halfs[0])&&StringUtils.isNotBlank(halfs[1])) {
+				if(halfs.length >= 2)
+				{
+					if(StringUtils.isNotBlank(halfs[0]) && StringUtils.isNotBlank(halfs[1]))
+					{
 						game.setHomeHalfScore(Integer.parseInt(halfs[0]));
 						game.setGuestHalfScore(Integer.parseInt(halfs[1]));
 					}
@@ -142,16 +146,123 @@ public class GameInfoFetch
 		}
 		return gameList;
 	}
+	private void insertDB(List<Game> gameList)
+	{
+		try
+		{
+			initMysql();
+			conn.setAutoCommit(false);
+			String sql = "INSERT INTO game (home_team,guest_team,home_score,guest_score,home_half_score,guest_half_score,win_rate,draw_rate,lose_rate,let_the_ball,weather,time,home_team_id,guest_home_id)";
+			sql += "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+			stmt = conn.prepareStatement(sql);
 
+			for (Game g : gameList)
+			{
+				stmt.setString(1, g.getHomeTeam());
+				stmt.setString(2, g.getGuestTeam());
+				if(g.getHomeScore() == null)
+				{
+					stmt.setInt(3, -1);
+				}
+				else
+				{
+					stmt.setInt(3, g.getHomeScore());
+				}
+				if(g.getGuestScore() == null)
+				{
+					stmt.setInt(4, -1);
+				}
+				else
+				{
+					stmt.setInt(4, g.getGuestScore());
+				}
+				if(g.getHomeHalfScore() == null)
+				{
+					stmt.setInt(5, -1);
+				}
+				else
+				{
+					stmt.setInt(5, g.getHomeHalfScore());
+				}
+				if(g.getGuestHalfScore() == null)
+				{
+					stmt.setInt(6, -1);
+				}
+				else
+				{
+					stmt.setInt(6, g.getGuestHalfScore());
+				}
+				if(g.getWinRate() == null)
+				{
+					stmt.setFloat(7, 0);
+				}
+				else
+				{
+					stmt.setFloat(7, g.getWinRate());
+				}
+				if(g.getDrawRate() == null)
+				{
+					stmt.setFloat(8, 0);
+				}
+				else
+				{
+					stmt.setFloat(8, g.getDrawRate());
+				}
+				if(g.getLoseRate() == null)
+				{
+					stmt.setFloat(9, 0);
+				}
+				else
+				{
+					stmt.setFloat(9, g.getLoseRate());
+				}
+				stmt.setInt(10, 0);
+				stmt.setString(11, g.getWeather());
+				stmt.setTimestamp(12, g.getTs());
+				stmt.setLong(13, getTeamId(g.getHomeTeam()));
+				stmt.setLong(14, getTeamId(g.getGuestTeam()));
+				stmt.addBatch();
+			}
+
+			stmt.executeBatch();
+			conn.commit();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	private Long getTeamId(String name)
+	{
+		Long id = 1l;
+		try
+		{
+			initMysql();
+			String sql = "SELECT * FROM team_info WHERE chn='"+name+"'";
+			rs = stmt2.executeQuery(sql);
+			if(rs.next()) {
+				id = rs.getLong("id");
+			}
+			
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return id;
+	}
 	public void initMysql() throws Exception
 	{
 		if(conn == null || conn.isClosed())
 		{
 			conn = Mysql.getMysqlConnection();
 		}
-		/*
-		 * if(stmt2 == null || stmt2.isClosed()) { stmt2 = conn.createStatement(); }
-		 */
+
+		if(stmt2 == null || stmt2.isClosed())
+		{
+			stmt2 = conn.createStatement();
+		}
+
 	}
 
 }
