@@ -9,9 +9,9 @@
 	http://www.springframework.org/schema/context/spring-context-3.1.xsd  
 	http://www.springframework.org/schema/mvc  
 	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
-	<mvc:annotation-driven />  
+	<mvc:annotation-driven />
 	<context:component-scan base-package="com.eq.service" />  
-      
+    <mvc:default-servlet-handler/>  
 	<!-- Handles HTTP GET requests for /static/** by efficiently serving up static resources in the ${webappRoot}/static/ directory -->  
 	<mvc:resources mapping="/static/**" location="/static/" />  
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
