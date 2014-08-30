@@ -113,6 +113,12 @@ CREATE TABLE `game_complete` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE game ADD game_type VARCHAR (40);
+--2014/08/30 周六10:05:24.50
+CREATE TABLE `property` (
+  `property` varchar(100) NOT NULL,
+  `value` varchar(100) NOT NULL,
+  PRIMARY KEY (`property`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 

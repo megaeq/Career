@@ -1,6 +1,12 @@
 package com.test;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 
 public class Test {
 
@@ -8,9 +14,9 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String date = "1991-01-01";
-		Date date1 = Date.valueOf(date);
-		System.out.println(date1.toString());
+		List<String> list = new ArrayList<String>();
+		System.out.println(list.size());
+		
 	}
 
 }
