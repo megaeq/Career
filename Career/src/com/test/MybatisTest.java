@@ -18,6 +18,6 @@ public class MybatisTest
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("age", 10);
 		params.put("name", "Сϼϼ");
-		userImpl.insert(params);
+		//userImpl.insert(params);
 	}
 }

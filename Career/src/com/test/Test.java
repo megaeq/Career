@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 
 public class Test {
 
@@ -14,8 +13,8 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		List<String> list = new ArrayList<String>();
-		System.out.println(list.size());
+		int i = 26;
+		
 		
 	}
 

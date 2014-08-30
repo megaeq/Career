@@ -2,24 +2,31 @@ package com.eq.util;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 
 public class JfreechartUtils
 {
-	private static String toFile(JFreeChart chart, String path, Integer width, Integer height)
+	public static String toFile(JFreeChart chart, String path, int width, int height)
 	{
+		SimpleDateFormat df= new SimpleDateFormat("yyyyMMDDHHMMSS");
+		String name = df.format(Calendar.getInstance().getTime())+".jpg";
+		System.out.println(name);
 		try
 		{
 			FileOutputStream fos = null;
-			fos = new FileOutputStream(path);
-			ChartUtilities.writeChartAsJPEG(fos, chart, width, height);
+			fos = new FileOutputStream("D:/tomcatfile/"+path+name);
+			System.out.println("D:/tomcatfile/"+path+name);
+			ChartUtilities.writeChartAsJPEG(fos, 1,chart, width, height,null);
+			fos.close();
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		return "";
+		return "http://localhost:8080/file/"+path+name;
 	}
 }
