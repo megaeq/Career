@@ -1,0 +1,21 @@
+--2014/08/30 周六15:45:06.83
+tomcat虚拟路径配置
+tomcat conf文件夹下
+web.xml 中
+<servlet-name>default</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+在<param-value>处将false改为true
+
+再打开server.xml
+在</host>之前加入
+<Context path="/file" docBase="D:\tomcatfile" reloadable="true" crossContext="true" />
