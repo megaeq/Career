@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="team">
+	<resultMap type="team" id="teamResult">
+		<id column="id" property="id"/>
+		<result column="eng" property="eng"/>
+		<result column="chn" property="chn"/>
+		<result column="orderno" property="orderno"/>
+		<result column="belong" property="belong"/>
+	</resultMap>
+	<select id="select" parameterType="hashmap" resultMap="teamResult">
+		SELECT * FROM team_info 
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="chn != null">
+				chn = #{chn} AND
+			</if>
+		</trim>
+		ORDER BY belong,orderno
+	</select>
+</mapper>

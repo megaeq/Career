@@ -32,7 +32,7 @@ public class UserImpl extends BaseDao implements AbstractDao<User>
 	}
 
 	@Override
-	public List<Map<String, Object>> select(Map<String, Object> params)
+	public List<User> selectList(Map<String, Object> params)
 	{
 		// TODO Auto-generated method stub
 		return null;

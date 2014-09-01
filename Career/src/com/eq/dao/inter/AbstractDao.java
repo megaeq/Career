@@ -8,5 +8,5 @@ public interface AbstractDao<T>
 	public void add(T entity);
 	public void delete(T entity);
 	public void update(T entity);
-	public List<Map<String, Object>> select(Map<String, Object> params);
+	public List<T> selectList(Map<String, Object> params);
 }

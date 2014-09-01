@@ -40,7 +40,7 @@ public class PropertyImpl extends BaseDao implements AbstractDao<Property>
 	}
 
 	@Override
-	public List<Map<String, Object>> select(Map<String, Object> params)
+	public List<Property> selectList(Map<String, Object> params)
 	{
 		// TODO Auto-generated method stub
 		return null;
