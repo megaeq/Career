@@ -112,4 +112,63 @@ public class FileUtils
 			e.printStackTrace();
 		}
 	}
+	public static boolean delAllFile(String dirName)//删除指定文件夹下所有文件 
+	{  
+	   boolean flag=false;  
+	   //如果dir不以文件分隔符结尾，自动添加文件分隔符 
+	     if(!dirName.endsWith(File.separator)) 
+	     { 
+	      dirName = dirName + File.separator; 
+	      
+	     }    
+	     File dirFile = new File(dirName); 
+	     //如果dir对应的文件不存在，或者不是一个文件夹则退出 
+	     if(!dirFile.exists() || (!dirFile.isDirectory())){ 
+	      System.out.println("List失败！找不到目录："+dirName); 
+	      return false; 
+	     } 
+	    
+	     /* 
+	     * list方法返回该目录下的所有文件（包括目录）的文件名，文件名不含路径信息 
+	     * 
+	        String[] files = dirFile.list(); 
+	      for(int i = 0; i < files.length; i++){ 
+	       System.out.println(files[i]); 
+	      } 
+	     */    
+	     //列出文件夹下所有的文件,listFiles方法返回目录下的所有文件（包括目录）的File对象 
+	     File[] files = dirFile.listFiles();     
+	     for(int i = 0; i < files.length; i++) 
+	     { 
+	      if(files[i].isFile()) 
+	      { 
+	       Long nowMills = System.currentTimeMillis();
+	       
+	       Long modifiedMills = files[i].lastModified();
+	       //删除创建时间超过10分钟的文件
+	       if(nowMills-modifiedMills>600000) {
+	    	   if(files[i].delete()==false) 
+		       { 
+		      System.out.print(files[i].getAbsolutePath()+"删除失败\n"); 
+		       } 
+		       else 
+		       { 
+		      System.out.println(files[i].getAbsolutePath() + " 删除成功\n"); 
+		       }      
+		       flag=true; 
+	       }
+	      } 
+	      else if (files[i].isDirectory()) 
+	      { 
+	       System.out.println(files[i].getAbsolutePath() + " 是目录！"); 
+	       //ListFileUtil.listAllFiles(files[i].getAbsolutePath()); 
+	      } 
+	     } 
+	     return flag; 
+	} 
+	
+	private static Long getMills(String fileName) {
+		String mills = fileName.substring(0, 11);
+		return 0l;
+	}
 }

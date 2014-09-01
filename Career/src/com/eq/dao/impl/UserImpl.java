@@ -3,14 +3,10 @@ package com.eq.dao.impl;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Component;
 
 import com.eq.dao.entity.User;
 import com.eq.dao.inter.AbstractDao;
-import com.eq.dao.inter.UserInterface;
 @Component
 public class UserImpl extends BaseDao implements AbstractDao<User>
 {

@@ -32,4 +32,6 @@ public class GetParam extends BaseAction
 		map.put("imagePath", JfreechartUtils.toFile(chart, "temp/", 540, 720));
 		return "page/hello";
 	}
+	
+	
 }

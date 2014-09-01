@@ -17,4 +17,7 @@ public class BaseAction implements ApplicationContextAware
 	public Object getBean(String beanName) {
 		return context.getBean(beanName);
 	}
+	public String getProperty(String property) {
+		return property;
+	}
 }
