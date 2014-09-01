@@ -10,7 +10,7 @@
  hello springmvc
  年龄：${age }<br>
 姓名：${name }<br>
-<img alt="jfreechat" src="${imagePath} " height="960" width="540">
+<img alt="jfreechat" src="${imagePath} ">
 
 </body>
 </html>

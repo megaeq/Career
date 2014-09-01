@@ -119,6 +119,9 @@ CREATE TABLE `property` (
   `value` varchar(100) NOT NULL,
   PRIMARY KEY (`property`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+2014/09/01 周一18:58:05.88
+INSERT INTO `property` (`property`, `value`) VALUES ('dirpath', 'D:/tomcatfile/');
+INSERT INTO `property` (`property`, `value`) VALUES ('urlpath', 'http://localhost:8080/file/');
 
 
 

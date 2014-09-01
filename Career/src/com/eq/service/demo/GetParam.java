@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,23 +16,23 @@ import com.eq.util.JfreechartUtils;
 public class GetParam extends BaseAction
 {
 	@RequestMapping("form1")
-	public String gerParam(@RequestParam("age1") String a,@RequestParam("name1") String b,Map<String,Object> map) {
-		System.out.println(a+" "+b);
+	public String gerParam(@RequestParam("age1") String a, @RequestParam("name1") String b, Map<String, Object> map)
+	{
+		System.out.println(a + " " + b);
 		map.put("age", 13);
 		map.put("name", "二狗");
-		//创建饼图数据对象
-	       DefaultPieDataset dfp=new DefaultPieDataset();
-	       dfp.setValue("管理人员", 25);
-	       dfp.setValue("市场人员", 35);
-	       dfp.setValue("开发人员", 20);
-	       dfp.setValue("后勤人员", 5);
-	       dfp.setValue("财务人员", 15);
-	       System.out.println(111);
-	        //Create JFreeChart object
-	       JFreeChart chart =ChartFactory.createPieChart("CityInfoPort公司组织架构图",dfp, true, true, true);
-		map.put("imagePath", JfreechartUtils.toFile(chart, "temp/", 540, 720));
+		// 创建饼图数据对象
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		dataset.addValue(12, "月份总计", "1月份");
+		dataset.addValue(14, "月份总计", "2月份");
+		dataset.addValue(65, "月份总计", "3月份");
+		dataset.addValue(99, "月份总计", "4月份");
+		String dirpath = getProperty("dirpath")+"temp/";
+		String urlpath = getProperty("urlpath")+"temp/";
+		// Create JFreeChart object
+		JFreeChart chart = JfreechartUtils.createBar3DChart(dataset, "第一季度月份图", "月份", "销售量", 960, 540);
+		map.put("imagePath", JfreechartUtils.toFile(chart, dirpath, urlpath,"test",960,540));
 		return "page/hello";
 	}
-	
-	
+
 }

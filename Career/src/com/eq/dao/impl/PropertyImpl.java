@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.ResultHandler;
+import org.springframework.stereotype.Component;
 
 import com.eq.dao.entity.Property;
 import com.eq.dao.inter.AbstractDao;
-
+@Component
 public class PropertyImpl extends BaseDao implements AbstractDao<Property>
 {
 
@@ -32,10 +33,17 @@ public class PropertyImpl extends BaseDao implements AbstractDao<Property>
 		
 	}
 
+	public Object selectOne(Map<String, Object> params)
+	{
+		return getSqlSessionTemplate().selectOne("property.select", params);
+		
+	}
+
 	@Override
 	public List<Map<String, Object>> select(Map<String, Object> params)
 	{
-		return getSqlSessionTemplate().selectList("property.select", params);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

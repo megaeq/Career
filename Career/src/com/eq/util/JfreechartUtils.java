@@ -13,6 +13,7 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer3D;
 import org.jfree.chart.title.TextTitle;
@@ -41,9 +42,12 @@ public class JfreechartUtils
 		return urlpath+name;
 	}
 	
-	public static JFreeChart createChart(CategoryDataset dataset,String name,String xname,String yname,int width ,int length) {
+	public static JFreeChart createBar3DChart(CategoryDataset dataset,String name,String xname,String yname,int width ,int length) {
 		JFreeChart chart = ChartFactory.createBarChart3D(name,xname,yname, dataset);
 		CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
+		BarRenderer3D barRender = (BarRenderer3D) categoryplot.getRenderer();
+		barRender.setBaseItemLabelGenerator((new StandardCategoryItemLabelGenerator()));
+		barRender.setBaseItemLabelsVisible(true);
         NumberAxis numberaxis = (NumberAxis) categoryplot.getRangeAxis();  
         CategoryAxis domainAxis = categoryplot.getDomainAxis();  
         TextTitle textTitle = chart.getTitle();
