@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,31 +38,41 @@ public class GameInfoFetch {
 	}
 
 	private void todo() {
-		//List<String> filelist = FileUtils.refreshFileList("D:\\bill");
-		initMysql();
-		String sql = "select id,dirpath,date from game_complete where flag='0'";
-		rs = stmt2.executeQuery(sql);
-		while(rs.next()){
-			String fileName = rs.getString("dirpath");
-			Date da
-			 List<Game> gameList = getGameInfo(Parser.createParser(
-					 FileUtils.readFileByLines(fileName, CHARSET), CHARSET), date);
-					 insertDB(gameList, date1);
+		// List<String> filelist = FileUtils.refreshFileList("D:\\bill");
+		try {
+			initMysql();
+			String sql = "select id,dirpath,date from game_complete where flag='0'";
+			rs = stmt2.executeQuery(sql);
+			while (rs.next()) {
+				String fileName = rs.getString("dirpath");
+				Date date = rs.getDate("date");
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-");
+				SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+				List<Game> gameList = getGameInfo(Parser.createParser(
+						FileUtils.readFileByLines(fileName, CHARSET), CHARSET),
+						df.format(date), df2.format(date));
+				insertDB(gameList, rs.getInt("id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		/*for (String fileName : filelist) {
-			String[] dates = fileName.split("\\\\");
-			String date = dates[dates.length - 1].split("\\.")[0];
-			Date date1 = Date.valueOf(date);
-			
-			 List<Game> gameList = getGameInfo(Parser.createParser(
-			 FileUtils.readFileByLines(fileName, CHARSET), CHARSET), date);
-			 insertDB(gameList, date1);
-			 
-			insertFile(fileName, date1);
-		}*/
+
+		/*
+		 * for (String fileName : filelist) { String[] dates =
+		 * fileName.split("\\\\"); String date = dates[dates.length -
+		 * 1].split("\\.")[0]; Date date1 = Date.valueOf(date);
+		 * 
+		 * List<Game> gameList = getGameInfo(Parser.createParser(
+		 * FileUtils.readFileByLines(fileName, CHARSET), CHARSET), date);
+		 * insertDB(gameList, date1);
+		 * 
+		 * insertFile(fileName, date1); }
+		 */
 	}
 
-	private List<Game> getGameInfo(Parser parser, String date) {
+	private List<Game> getGameInfo(Parser parser, String year, String date) {
 		List<Game> gameList = new ArrayList<Game>();
 		try {
 			NodeFilter filter = new CssSelectorNodeFilter(
@@ -96,8 +108,8 @@ public class GameInfoFetch {
 				game.setGameType(td1.toPlainTextString());
 				// 2.获取比赛时间 td2
 				TagNode td2 = (TagNode) nodeList4.elementAt(2);
-				Timestamp ts = Timestamp.valueOf("2014-"
-						+ td2.toPlainTextString() + ":00");
+				Timestamp ts = Timestamp.valueOf(year + td2.toPlainTextString()
+						+ ":00");
 				game.setTs(ts);
 				// 3.获取主队 td4
 				TagNode td4 = (TagNode) nodeList4.elementAt(4);
@@ -189,9 +201,9 @@ public class GameInfoFetch {
 		}
 	}
 
-	private void insertDB(List<Game> gameList, Date date) {
+	private void insertDB(List<Game> gameList, int id) {
 		try {
-			initMysql();
+			// initMysql();
 			conn.setAutoCommit(false);
 			String sql = "INSERT INTO game (home_team,guest_team,home_score,guest_score,home_half_score,guest_half_score,win_rate,draw_rate,lose_rate,let_the_ball,weather,time,home_team_id,guest_team_id,code,game_type)";
 			sql += "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -255,10 +267,9 @@ public class GameInfoFetch {
 				stmt.addBatch();
 			}
 			stmt.executeBatch();
-			conn.commit();
-			String sql1 = "INSERT INTO game_complete(date) VALUES(?)";
+			String sql1 = "update game_complete set flag='1' where id=?";
 			stmt = conn.prepareStatement(sql1);
-			stmt.setDate(1, date);
+			stmt.setInt(1, id);
 			stmt.addBatch();
 			stmt.executeBatch();
 			conn.commit();
