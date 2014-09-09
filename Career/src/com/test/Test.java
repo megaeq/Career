@@ -17,10 +17,9 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String s = "1234567890asdfg";
-		System.out.println(s.substring(0, 13));
-		
-		
+		Integer i = 0;
+		Long a = Long.parseLong(i.toString());
+		System.out.println(a);
 	}
 
 }
