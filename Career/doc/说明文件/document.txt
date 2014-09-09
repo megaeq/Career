@@ -19,3 +19,5 @@ web.xml 中
 再打开server.xml
 在</host>之前加入
 <Context path="/file" docBase="D:\tomcatfile" reloadable="true" crossContext="true" />
+2014/09/09 周二 21:49:07.15
+dojojs忽略

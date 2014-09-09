@@ -36,17 +36,28 @@ public class GameInfoFetch {
 	}
 
 	private void todo() {
-		List<String> filelist = FileUtils.refreshFileList("D:\\bill");
-
-		for (String fileName : filelist) {
+		//List<String> filelist = FileUtils.refreshFileList("D:\\bill");
+		initMysql();
+		String sql = "select id,dirpath,date from game_complete where flag='0'";
+		rs = stmt2.executeQuery(sql);
+		while(rs.next()){
+			String fileName = rs.getString("dirpath");
+			Date da
+			 List<Game> gameList = getGameInfo(Parser.createParser(
+					 FileUtils.readFileByLines(fileName, CHARSET), CHARSET), date);
+					 insertDB(gameList, date1);
+		}
+		/*for (String fileName : filelist) {
 			String[] dates = fileName.split("\\\\");
 			String date = dates[dates.length - 1].split("\\.")[0];
 			Date date1 = Date.valueOf(date);
-			List<Game> gameList = getGameInfo(Parser.createParser(
-					FileUtils.readFileByLines(fileName, CHARSET), CHARSET),
-					date);
-			insertDB(gameList, date1);
-		}
+			
+			 List<Game> gameList = getGameInfo(Parser.createParser(
+			 FileUtils.readFileByLines(fileName, CHARSET), CHARSET), date);
+			 insertDB(gameList, date1);
+			 
+			insertFile(fileName, date1);
+		}*/
 	}
 
 	private List<Game> getGameInfo(Parser parser, String date) {
@@ -158,6 +169,24 @@ public class GameInfoFetch {
 			e.printStackTrace();
 		}
 		return gameList;
+	}
+
+	private void insertFile(String filename, Date date) {
+		try {
+			initMysql();
+			conn.setAutoCommit(false);
+			String sql = "insert into game_complete(date,dirpath,flag) values(?,?,?)";
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setDate(1, date);
+			stmt.setString(2, filename);
+			stmt.setString(3, "0");
+			stmt.addBatch();
+			stmt.executeBatch();
+			conn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void insertDB(List<Game> gameList, Date date) {
