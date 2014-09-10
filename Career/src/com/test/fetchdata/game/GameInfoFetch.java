@@ -30,7 +30,9 @@ public class GameInfoFetch {
 	private Connection			conn	= null;
 	private PreparedStatement	stmt	= null;
 	private Statement			stmt2	= null;
+	private Statement			stmt3	= null;
 	private ResultSet			rs		= null;
+	private ResultSet			rs2		= null;
 
 	public static void main(String[] args) {
 		GameInfoFetch gf = new GameInfoFetch();
@@ -43,7 +45,9 @@ public class GameInfoFetch {
 			initMysql();
 			String sql = "select id,dirpath,date from game_complete where flag='0'";
 			rs = stmt2.executeQuery(sql);
+			
 			while (rs.next()) {
+				System.out.println(rs.getRow());
 				String fileName = rs.getString("dirpath");
 				Date date = rs.getDate("date");
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-");
@@ -203,7 +207,6 @@ public class GameInfoFetch {
 
 	private void insertDB(List<Game> gameList, int id) {
 		try {
-			// initMysql();
 			conn.setAutoCommit(false);
 			String sql = "INSERT INTO game (home_team,guest_team,home_score,guest_score,home_half_score,guest_half_score,win_rate,draw_rate,lose_rate,let_the_ball,weather,time,home_team_id,guest_team_id,code,game_type)";
 			sql += "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -283,9 +286,9 @@ public class GameInfoFetch {
 		try {
 			initMysql();
 			String sql = "SELECT * FROM team_info WHERE chn='" + name + "'";
-			rs = stmt2.executeQuery(sql);
-			if (rs.next()) {
-				id = rs.getLong("id");
+			rs2 = stmt3.executeQuery(sql);
+			if (rs2.next()) {
+				id = rs2.getLong("id");
 			}
 
 		} catch (Exception e) {
@@ -302,6 +305,10 @@ public class GameInfoFetch {
 		if (stmt2 == null || stmt2.isClosed()) {
 			stmt2 = conn.createStatement();
 		}
+		if (stmt3 == null || stmt3.isClosed()) {
+			stmt3 = conn.createStatement();
+		}
+		
 
 	}
 
