@@ -9,52 +9,45 @@
  @import "../../js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "../../js/dojojs/dojo/resources/dojo.css"; 
  </style> 
-<script type="text/javascript" src="../../js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true"></script>
+<script type="text/javascript" src="../../js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript">
-require(["dojo/data/ItemFileWriteStore","dojox/grid/DataGrid"],function(){
-    /*set up data store*/
-    var data = {
-      identifier: 'id',
-      items: []
-    };
-    var data_list = [
-      { col1: "normal", col2: false, col3: 'But are not followed by two hexadecimal', col4: 29.91},
-      { col1: "important", col2: false, col3: 'Because a % sign always indicates', col4: 9.33},
-      { col1: "important", col2: false, col3: 'Signs can be selectively', col4: 19.34}
-    ];
-    var rows = 60;
-    for(var i=0, l=data_list.length; i<rows; i++){
-      data.items.push(dojo.mixin({ id: i+1 }, data_list[i%l]));
-    }
-    var store = new dojo.data.ItemFileWriteStore({data: data});
-
-    /*set up layout*/
-    var layout = [[
-      {'name': 'Column 1', 'field': 'id', 'width': '100px'},
-      {'name': 'Column 2', 'field': 'col2', 'width': '100px'},
-      {'name': 'Column 3', 'field': 'col3', 'width': '200px'},
-              {'name': 'Column 4', 'field': 'col4', 'width': '150px'}
-    ]];
-
-    /*create a new grid:*/
-    var grid = new dojox.grid.DataGrid({
-        id: 'grid',
-        store: store,
-        structure: layout,
-        rowSelector: '20px'},
-      document.createElement('div'));
-
-    /*append the new grid to the div*/
-    dojo.byId("gridDiv").appendChild(grid.domNode);
-	alert("hello");
-    /*Call startup() to render the grid*/
-    grid.startup();
-});
+require(["dojo/_base/declare", "dgrid/Grid", "dgrid/Keyboard", "dgrid/Selection", "dojo/domReady!"],
+	    function(declare, Grid, Keyboard, Selection){
+	        var data = [
+	            { first: "Bob", last: "Barker", age: 89 },
+	            { first: "Vanna", last: "White", age: 55 },
+	            { first: "Pat", last: "Sajak", age: 65 }
+	        ];
+	 
+	        // Create a new constructor by mixing in the components
+	        var CustomGrid = declare([ Grid, Keyboard, Selection ]);
+	 
+	        // Now, create an instance of our custom grid which
+	        // have the features we added!
+	        var grid = new CustomGrid({
+	            columns: {
+	                first: "First Name",
+	                last: "Last Name",
+	                age: "Age"
+	            },
+	            selectionMode: "single", // for Selection; only select a single row at a time
+	            cellNavigation: true // for Keyboard; allow only row-level keyboard navigation
+	        }, "grid");
+	        grid.renderArray(data);
+	        grid.on("dgrid-select", function(event){
+	            // Report the item from the selected row to the console.
+	            console.log("Row selected: ", event.rows[0].data);
+	        });
+	        grid.on("dgrid-deselect", function(event){
+	            console.log("Row de-selected: ", event.rows[0].data);
+	        });
+	        
+	});
 
 
 </script>
 </head>
 <body class="tundra">
-<div id="gridDiv"></div>
+<div id="grid"></div>
 </body>
 </html>
