@@ -3,6 +3,8 @@
  */
 package com.eq.service.demo;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,10 +18,12 @@ import com.orsoncharts.util.json.JSONObject;
  * 
  */
 @Controller
+@RequestMapping("page/dojo")
 public class DojoJson extends BaseAction {
-	@RequestMapping("page/dojo/dojojson")
+	@RequestMapping("dojojson")
 	public @ResponseBody
-	JSONArray getJson() {
+	JSONArray getJson(Date date, String name) {
+		System.out.println(date.toString() + " " + name);
 		JSONArray jsonArray = new JSONArray();
 		for (int i = 1; i < 4; i++) {
 			JSONObject json = new JSONObject();
