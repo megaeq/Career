@@ -1,7 +1,9 @@
 package com.test;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Test {
 
@@ -9,9 +11,10 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Date date = new Date();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-");
-		System.out.println(df.format(date));
+		List<String> list = new ArrayList<String>();
+		for(int i=0;i<list.size();i++) {
+			System.out.println(i);
+		}
 	}
 
 }
