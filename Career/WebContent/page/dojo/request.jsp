@@ -58,7 +58,8 @@ function getGrid() {
 	            	    // cell.column == the column definition object for the column the cell is within
 	            	    // cell.row == the same object obtained from grid.row(evt)
 	            	});
-	             grid.on(".dgrid-row:contextmenu", function(evt){
+	             grid.on(".dgrid-row .dgrid-cell:click", function(evt){
+	            	 	console.log(evt);
 	            	    var row = grid.row(evt);
 	            	    console.log(row);
 	            	    // row.element == the element with the dgrid-row class

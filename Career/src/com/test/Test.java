@@ -11,10 +11,11 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		List<String> list = new ArrayList<String>();
-		for(int i=0;i<list.size();i++) {
-			System.out.println(i);
-		}
+		String s = ",,,1";
+		String s2 = "1,,,";
+		System.out.println(s.contains(""));
+		System.out.println(s.split(",").length);
+		System.out.println(s2.split(",").length);
 	}
 
 }
