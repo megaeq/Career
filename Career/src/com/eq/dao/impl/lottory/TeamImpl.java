@@ -1,9 +1,10 @@
-package com.eq.dao.impl;
+package com.eq.dao.impl.lottory;
 
 import java.util.List;
 import java.util.Map;
 
 import com.eq.dao.entity.lottory.Team;
+import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
 
 public class TeamImpl extends BaseDao implements AbstractDao<Team> {

@@ -4,7 +4,8 @@
 <configuration>
    <typeAliases> 
         <typeAlias alias="user" type="com.eq.dao.entity.User"/> 
-        <typeAlias alias="team" type="com.eq.dao.entity.Team"/> 
+        <typeAlias alias="team" type="com.eq.dao.entity.lottory.Team"/> 
+        <typeAlias alias="incomecost" type="com.eq.dao.entity.myinfo.IncomeAndCost"/> 
     </typeAliases>
 
     

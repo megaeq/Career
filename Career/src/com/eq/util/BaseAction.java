@@ -2,7 +2,6 @@ package com.eq.util;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +48,7 @@ public class BaseAction implements ApplicationContextAware {
 		// 对于需要转换为Date类型的属性，使用DateEditor进行处理
 		binder.registerCustomEditor(Date.class, new DateEditor());
 	}
-	
+
 	/**
 	 * 将List数据转换为Json格式数据并过滤掉不需要的数据
 	 * 
@@ -60,36 +59,26 @@ public class BaseAction implements ApplicationContextAware {
 	 * @return String
 	 * @throws
 	 */
-	protected String formatArrayToJsonExecute(List list, String... filters)
-	{
+	protected String formatObjectToJsonExecute(Object obj, String... filters) {
 		JsonConfig config = new JsonConfig();
 		config.setIgnoreDefaultExcludes(false);
 		config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
-		config.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor("yyyy/MM/dd"));
+		config.registerJsonValueProcessor(Date.class,
+				new DateJsonValueProcessor("yyyy/MM/dd"));
 		config.setExcludes(filters);
-		String jsonObj = JSONSerializer.toJSON(list, config).toString();
+		String jsonObj = JSONSerializer.toJSON(obj, config).toString();
 		return jsonObj;
 	}
 
-	protected String formatArrayToJsonExecute2(List list, String... filters)
-	{
+	protected String formatObjectToJsonExecute2(Object obj, String... filters) {
 		JsonConfig config = new JsonConfig();
 		config.setIgnoreDefaultExcludes(false);
 		config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
-		config.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
+		config.registerJsonValueProcessor(Date.class,
+				new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
 		config.setExcludes(filters);
-		String jsonObj = JSONSerializer.toJSON(list, config).toString();
+		String jsonObj = JSONSerializer.toJSON(obj, config).toString();
 		return jsonObj;
 	}
 
-	protected String formatMapToJsonExecute(Map map, String... filters)
-	{
-		JsonConfig config = new JsonConfig();
-		config.setIgnoreDefaultExcludes(false);
-		config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
-		config.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
-		config.setExcludes(filters);
-		String jsonObj = JSONSerializer.toJSON(map, config).toString();
-		return jsonObj;
-	}
 }

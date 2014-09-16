@@ -30,7 +30,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis-configuration.xml"></property>
 		<property name="mapperLocations"  
-			value="classpath:com/eq/mapper/*Mapper.xml" />
+			value="classpath:com/eq/mapper/**/*Mapper.xml" />
 		<!--<property name="configLocation" value="classpath:mybatis-configuration.xml"/>-->
 	</bean>
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
