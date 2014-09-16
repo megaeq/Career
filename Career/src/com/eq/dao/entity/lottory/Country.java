@@ -1,4 +1,6 @@
-package com.eq.dao.entity;
+package com.eq.dao.entity.lottory;
+
+import com.eq.dao.entity.BaseEntity;
 
 public class Country extends BaseEntity {
 	/**

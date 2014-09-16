@@ -13,8 +13,8 @@ import org.htmlparser.nodes.TagNode;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-import com.eq.dao.entity.Country;
-import com.eq.dao.entity.Team;
+import com.eq.dao.entity.lottory.Country;
+import com.eq.dao.entity.lottory.Team;
 import com.eq.util.FileUtils;
 import com.eq.util.Mysql;
 

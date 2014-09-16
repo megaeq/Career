@@ -19,7 +19,7 @@ import org.htmlparser.nodes.TagNode;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-import com.eq.dao.entity.Game;
+import com.eq.dao.entity.lottory.Game;
 import com.eq.util.FileUtils;
 import com.eq.util.Mysql;
 import com.eq.util.ParserUtils;
@@ -45,7 +45,7 @@ public class GameInfoFetch {
 			initMysql();
 			String sql = "select id,dirpath,date from game_complete where flag='0'";
 			rs = stmt2.executeQuery(sql);
-			
+
 			while (rs.next()) {
 				System.out.println(rs.getRow());
 				String fileName = rs.getString("dirpath");
@@ -308,7 +308,6 @@ public class GameInfoFetch {
 		if (stmt3 == null || stmt3.isClosed()) {
 			stmt3 = conn.createStatement();
 		}
-		
 
 	}
 
