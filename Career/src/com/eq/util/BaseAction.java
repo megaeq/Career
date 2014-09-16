@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.billionhealth.mobile.common.DateJsonValueProcessor;
 import com.eq.dao.impl.PropertyImpl;
 
 @Service
