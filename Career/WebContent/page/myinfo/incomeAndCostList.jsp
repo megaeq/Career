@@ -12,7 +12,7 @@
  </style> 
  <script type="text/javascript" src="../../js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript">
-require(["dojo/parser", "dijit/form/DateTextBox"]);
+require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
 function getGrid() {
 	require([
 	         "dojo/_base/declare",
@@ -82,7 +82,8 @@ function getGrid() {
 	<input type="text" id="endDate" 
     data-dojo-type="dijit/form/DateTextBox"
     required="true" />
-    <input type="button" value="查询" onclick="change()">
+    <button data-dojo-type="dijit/form/Button" onclick="change()">查询</button>
+    
 </div>
 <div id="list"></div>
 </body>
