@@ -13,4 +13,42 @@
 		</trim>
 		ORDER BY date DESC
 	</select>
+	<insert id="add" parameterType="incomecost">
+		INSERT INTO income_cost 
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="income != null">
+			income,
+			</if>
+			<if test="cost != null">
+			cost,
+			</if>
+			<if test="usage !=null">
+			usage,
+			</if>
+			<if test="memo !=null">
+			memo,
+			</if>
+			<if test="date !=null">
+			date,
+			</if>
+		</trim>
+		 VALUES 
+		 <trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="income != null">
+			#{income},
+			</if>
+			<if test="cost != null">
+			#{cost},
+			</if>
+			<if test="usage !=null">
+			#{usage},
+			</if>
+			<if test="memo !=null">
+			#{memo},
+			</if>
+			<if test="date !=null">
+			#{date},
+			</if>
+		</trim>
+	</insert>
 </mapper>

@@ -22,7 +22,7 @@ public class IncomeAndCostImpl extends BaseDao implements
 
 	@Override
 	public void add(IncomeAndCost entity) {
-		// TODO Auto-generated method stub
+		getSqlSessionTemplate().insert("incomeandcost.add", entity);
 
 	}
 

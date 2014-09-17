@@ -1,16 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../../js/dojojs/dijit/themes/claro/claro.css">
+<link rel="stylesheet" href="<%=basePath%>js/dojojs/dijit/themes/claro/claro.css">
 <style type="text/css"> 
- @import "../../js/dojojs/dojox/grid/resources/tundraGrid.css"; 
- @import "../../js/dojojs/dojo/resources/dojo.css"; 
+ @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
+ @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
  </style> 
- <script type="text/javascript" src="../../js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
+ <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
+ <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript">
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
 function getGrid() {
@@ -70,6 +75,24 @@ function getGrid() {
     	 document.getElementById("list").innerHTML="";
     	 getGrid();
      }
+     function addinfo() {
+    	 require(["dojo/request","dojo/dom",],function(request,dom) {
+    		 request("add",{query:{income:dom.byId("income").value,
+    			 cost:dom.byId("cost").value,addDate:dom.byId("addDate").value,
+    			 usage:dom.byId("usage").value,memo:dom.byId("memo").value}
+    			 }).then(function() {
+    			 console.log("添加成功");
+    			 $.unblockUI();
+    		 });
+    	 });
+    	 
+     }
+     function divclose() {
+    	 $.unblockUI();
+     }
+     function openAddDiv() {
+    	 $.blockUI({ message: $('#add') });
+     }
 </script>
 </head>
 <body class="claro" onload="getGrid()">
@@ -83,8 +106,37 @@ function getGrid() {
     data-dojo-type="dijit/form/DateTextBox"
     required="true" />
     <button data-dojo-type="dijit/form/Button" onclick="change()">查询</button>
-    
+    <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
 </div>
 <div id="list"></div>
+<div id="add" style="text-align: center; width: 200px; height: 200px; border;
+    1px solid #9cf; padding: 25px; display: none;">
+    <table>
+    	<tr>
+    		<td>收入</td>
+    		<td><input id = "income" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
+    	</tr>
+    	<tr>
+    		<td>消费</td>
+    		<td><input id = "cost" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
+    	</tr>
+    	<tr>
+    		<td>日期</td>
+    		<td><div><input type="text" id="addDate" data-dojo-type="dijit.form.ValidationTextBox""/></div></td>
+    	</tr>
+    	<tr>
+    		<td>用途</td>
+    		<td><input id = "usage" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
+    	</tr>
+    	<tr>
+    		<td>备注</td>
+    		<td><input id = "memo" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
+    	</tr>
+    	<tr>
+    		<td><button data-dojo-type="dijit/form/Button" onclick="addinfo()">添加</button></td>
+    		<td><button data-dojo-type="dijit/form/Button" onclick="divclose()">取消</button></td>
+    	</tr>
+    </table>
+</div>
 </body>
 </html>
