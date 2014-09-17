@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="incomeandcost">
+	<select id="select" parameterType="hashmap" resultType="incomecost">
+		SELECT * FROM income_cost
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="startDate != null">
+				date &gt;= #{startDate} AND
+			</if>
+			<if test="endDate != null">
+				date  &lt;= #{endDate} AND
+			</if>
+		</trim>
+		ORDER BY date DESC
+	</select>
+</mapper>

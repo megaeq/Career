@@ -1,38 +1,34 @@
-package com.eq.dao.impl;
+package com.eq.dao.impl.lottory;
 
 import java.util.List;
 import java.util.Map;
 
-import com.eq.dao.entity.Team;
+import com.eq.dao.entity.lottory.Team;
+import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
 
-public class TeamImpl extends BaseDao implements AbstractDao<Team>
-{
+public class TeamImpl extends BaseDao implements AbstractDao<Team> {
 
 	@Override
-	public void add(Team entity)
-	{
+	public void add(Team entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void delete(Team entity)
-	{
+	public void delete(Team entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void update(Team entity)
-	{
+	public void update(Team entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public List<Team> selectList(Map<String, Object> params)
-	{
+	public List<Team> selectList(Map<String, Object> params) {
 		return getSqlSessionTemplate().selectList("team.select", params);
 	}
 
