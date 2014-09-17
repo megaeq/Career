@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="game">
+	<select id="select" parameterType="hashmap" resultType="game">
+		SELECT * FROM game 
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="startDate != null">
+				time &gt;=#{startDate} AND
+			</if>
+			<if test="endDate!=null">
+				time &lt;= #{endDate} AND
+			</if>
+			<if test="id!=null">
+			id=#{id} AND
+			</if>
+			<if test="hometeam!=null">
+			hometeam=#{hometeam} AND
+			</if>
+			<if test="guestteam!=null">
+			guestteam=#{guestteam} AND
+			</if>
+			<if test="hometeamid!=null">
+			hometeamid=#{hometeamid} AND
+			</if>
+			<if test="guestteam !=null">
+			guestteamid=#{guestteamid} AND
+			</if>
+			<if test="weather!=null">
+			weather=#{weather} AND
+			</if>
+		</trim>
+		ORDER BY time DESC LIMIT 280
+	</select>
+	<insert id="add" parameterType="game">
+	INSERT INTO game (
+	<trim suffixOverrides=",">
+		<if test="code!=null">code,</if>
+		<if test="gameType!=null">gameType,</if>
+		<if test="homeTeamId!=null">homeTeamId,</if>
+		<if test="homeTeam!=null">homeTeam,</if>
+		<if test="guestTeamId!=null">guestTeamId,</if>
+		<if test="guestTeam!=null">guestTeam,</if>
+		<if test="winRate!=null">winRate,</if>
+		<if test="drawRate!=null">drawRate,</if>
+		<if test="loseRate!=null">loseRate,</if>
+		<if test="homeHalfScore!=null">homeHalfScore,</if>
+		<if test="guestHalfScore!=null">guestHalfScore,</if>
+		<if test="homeScore!=null">homeScore,</if>
+		<if test="guestScore!=null">guestScore,</if>
+		<if test="weather!=null">weather,</if>
+		<if test="result!=null">result,</if>
+		<if test="time!=null">time,</if>
+		<if test="suggest!=null">suggest,</if>
+		<if test="lettheball!=null">lettheball,</if>
+	</trim>)
+	VALUES {
+	<trim suffixOverrides=",">
+		<if test="code!=null">#{code}</if>
+		<if test="gameType!=null">#{gameType},</if>
+		<if test="homeTeamId!=null">#{homeTeamId},</if>
+		<if test="homeTeam!=null">#{homeTeam},</if>
+		<if test="guestTeamId!=null">#{guestTeamId},</if>
+		<if test="guestTeam!=null">#{guestTeam},</if>
+		<if test="winRate!=null">#{winRate},</if>
+		<if test="drawRate!=null">#{drawRate},</if>
+		<if test="loseRate!=null">#{loseRate},</if>
+		<if test="homeHalfScore!=null">#{homeHalfScore},</if>
+		<if test="guestHalfScore!=null">#{guestHalfScore},</if>
+		<if test="homeScore!=null">#{homeScore},</if>
+		<if test="guestScore!=null">#{guestScore},</if>
+		<if test="weather!=null">#{weather},</if>
+		<if test="result!=null">#{result},</if>
+		<if test="time!=null">#{time},</if>
+		<if test="suggest!=null">#{suggest},</if>
+		<if test="lettheball!=null">#{lettheball},</if>
+	</trim>
+	}
+	</insert>
+	<update id="update" parameterType="game">
+		UPDATE game SET
+		<trim suffixOverrides=",">
+		<if test="code!=null">code=#{code},</if>
+		<if test="gameType!=null">gameType=#{gameType},</if>
+		<if test="homeTeamId!=null">homeTeamId=#{homeTeamId},</if>
+		<if test="homeTeam!=null">homeTeam=#{homeTeam},</if>
+		<if test="guestTeamId!=null">guestTeamId=#{guestTeamId},</if>
+		<if test="guestTeam!=null">guestTeam=#{guestTeam},</if>
+		<if test="winRate!=null">winRate=#{winRate},</if>
+		<if test="drawRate!=null">drawRate=#{drawRate},</if>
+		<if test="loseRate!=null">loseRate=#{loseRate},</if>
+		<if test="homeHalfScore!=null">homeHalfScore=#{homeHalfScore},</if>
+		<if test="guestHalfScore!=null">guestHalfScore=#{guestHalfScore},</if>
+		<if test="homeScore!=null">homeScore=#{homeScore},</if>
+		<if test="guestScore!=null">guestScore=#{guestScore},</if>
+		<if test="weather!=null">weather=#{weather},</if>
+		<if test="result!=null">result=#{result},</if>
+		<if test="time!=null">time=#{time},</if>
+		<if test="suggest!=null">suggest=#{suggest},</if>
+		<if test="lettheball!=null">lettheball=#{lettheball},</if>
+	</trim>
+	WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+	DELETE FROM game WHERE id=#{id}
+	</delete>
+</mapper>

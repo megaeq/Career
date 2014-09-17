@@ -18,7 +18,7 @@ import com.eq.dao.inter.AbstractDao;
  */
 @Component
 public class IncomeAndCostImpl extends BaseDao implements
-		AbstractDao<IncomeAndCost> {
+		AbstractDao<IncomeAndCost, Integer> {
 
 	@Override
 	public void add(IncomeAndCost entity) {
@@ -27,15 +27,13 @@ public class IncomeAndCostImpl extends BaseDao implements
 	}
 
 	@Override
-	public void delete(IncomeAndCost entity) {
-		// TODO Auto-generated method stub
-
+	public void delete(Integer id) {
+		getSqlSessionTemplate().delete("incomeandcost.delete", id);
 	}
 
 	@Override
 	public void update(IncomeAndCost entity) {
-		// TODO Auto-generated method stub
-
+		getSqlSessionTemplate().update("incomeandcost.update", entity);
 	}
 
 	@Override

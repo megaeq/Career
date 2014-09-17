@@ -114,7 +114,7 @@ public class GameInfoFetch {
 				TagNode td2 = (TagNode) nodeList4.elementAt(2);
 				Timestamp ts = Timestamp.valueOf(year + td2.toPlainTextString()
 						+ ":00");
-				game.setTs(ts);
+				game.setTime(ts);
 				// 3.获取主队 td4
 				TagNode td4 = (TagNode) nodeList4.elementAt(4);
 				parser = Parser.createParser(td4.toHtml(), CHARSET);
@@ -208,7 +208,7 @@ public class GameInfoFetch {
 	private void insertDB(List<Game> gameList, int id) {
 		try {
 			conn.setAutoCommit(false);
-			String sql = "INSERT INTO game (home_team,guest_team,home_score,guest_score,home_half_score,guest_half_score,win_rate,draw_rate,lose_rate,let_the_ball,weather,time,home_team_id,guest_team_id,code,game_type)";
+			String sql = "INSERT INTO game (hometeam,guestteam,homescore,guestscore,homehalfscore,guesthalfscore,winrate,drawrate,loserate,lettheball,weather,time,hometeamid,guestteamid,code,gametype)";
 			sql += "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 
@@ -252,7 +252,7 @@ public class GameInfoFetch {
 				}
 				stmt.setInt(10, 0);
 				stmt.setString(11, g.getWeather());
-				stmt.setTimestamp(12, g.getTs());
+				stmt.setTimestamp(12, g.getTime());
 				Long homeTeamId = getTeamId(g.getHomeTeam());
 				Long guestTeamId = getTeamId(g.getGuestTeam());
 				if (homeTeamId != null) {

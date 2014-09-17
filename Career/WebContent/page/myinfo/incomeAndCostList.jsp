@@ -46,7 +46,9 @@ function getGrid() {
 	             }, "grid"); */
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
-	                 columns: {id:{label:"id"},income:{label:"收入"},cost:{label:"消费"},date1:{label:"日期"},usage:{label:"用途"},memo:{label:"备注"}},
+	                 columns: {id:{label:"id"},income:{label:"收入"},cost:{label:"消费"},date1:{label:"日期"},
+	                	 usages:{label:"用途"},memo:{label:"备注"},
+	                	 edit:{label:"编辑"}},
 	                 rowsPerPage:14,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
@@ -79,9 +81,10 @@ function getGrid() {
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
     		 request("add",{query:{income:dom.byId("income").value,
     			 cost:dom.byId("cost").value,addDate:dom.byId("addDate").value,
-    			 usage:dom.byId("usage").value,memo:dom.byId("memo").value}
+    			 usages:dom.byId("usages").value,memo:dom.byId("memo").value}
     			 }).then(function() {
-    			 console.log("添加成功");
+   				 document.getElementById("list").innerHTML="";
+   		    	 getGrid();
     			 $.unblockUI();
     		 });
     	 });
@@ -122,11 +125,11 @@ function getGrid() {
     	</tr>
     	<tr>
     		<td>日期</td>
-    		<td><div><input type="text" id="addDate" data-dojo-type="dijit.form.ValidationTextBox""/></div></td>
+    		<td><div><input type="text" id="addDate" data-dojo-type="dijit.form.ValidationTextBox" required="true"/></div></td>
     	</tr>
     	<tr>
     		<td>用途</td>
-    		<td><input id = "usage" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
+    		<td><input id = "usages" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
     	</tr>
     	<tr>
     		<td>备注</td>

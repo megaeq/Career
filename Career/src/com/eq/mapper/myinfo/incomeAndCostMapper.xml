@@ -11,7 +11,7 @@
 				date  &lt;= #{endDate} AND
 			</if>
 		</trim>
-		ORDER BY date DESC
+		ORDER BY date DESC LIMIT 280
 	</select>
 	<insert id="add" parameterType="incomecost">
 		INSERT INTO income_cost 
@@ -22,8 +22,8 @@
 			<if test="cost != null">
 			cost,
 			</if>
-			<if test="usage !=null">
-			usage,
+			<if test="usages !=null">
+			usages,
 			</if>
 			<if test="memo !=null">
 			memo,
@@ -40,8 +40,8 @@
 			<if test="cost != null">
 			#{cost},
 			</if>
-			<if test="usage !=null">
-			#{usage},
+			<if test="usages !=null">
+			#{usages},
 			</if>
 			<if test="memo !=null">
 			#{memo},
@@ -51,4 +51,28 @@
 			</if>
 		</trim>
 	</insert>
+	<delete id="delete" parameterType="int">
+	DELETE FROM income_cost WHERE id=#{id}
+	</delete>
+	<update id="update" parameterType="incomecost">
+	UPDATE income_cost SET 
+	<trim suffixOverrides=",">
+		<if test=" income!= null">
+			income = #{income},
+		</if>
+		<if test="cost != null">
+			cost = #{cost},
+		</if>
+		<if test="usages != null">
+		usages=#{usages},
+		</if>
+		<if test="memo != null">
+			memo=#{memo},
+		</if>
+		<if test=" date!= null">
+		date=#{date},
+		</if>
+		WHERE id=#{id}
+	</trim>
+	</update>
 </mapper>

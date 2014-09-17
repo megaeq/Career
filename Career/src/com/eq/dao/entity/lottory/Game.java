@@ -3,6 +3,7 @@ package com.eq.dao.entity.lottory;
 import java.sql.Timestamp;
 
 import com.eq.dao.entity.BaseEntity;
+import com.eq.util.DateUtil;
 
 public class Game extends BaseEntity {
 
@@ -14,6 +15,7 @@ public class Game extends BaseEntity {
 	private String				code;
 	private String				gameType;
 	private Integer				homeTeamId;
+	private Integer				lettheball;
 	private String				homeTeam;
 	private Integer				guestTeamId;
 	private String				guestTeam;
@@ -28,7 +30,8 @@ public class Game extends BaseEntity {
 	private String				weather;
 	// 310
 	private String				result;
-	private Timestamp			ts;
+	private Timestamp			time;
+	private String				time2;
 	private String				suggest;
 
 	public Integer getId() {
@@ -135,14 +138,6 @@ public class Game extends BaseEntity {
 		this.guestScore = guestScore;
 	}
 
-	public Timestamp getTs() {
-		return ts;
-	}
-
-	public void setTs(Timestamp ts) {
-		this.ts = ts;
-	}
-
 	public String getSuggest() {
 		return suggest;
 	}
@@ -173,6 +168,31 @@ public class Game extends BaseEntity {
 
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public Timestamp getTime() {
+		return time;
+	}
+
+	public void setTime(Timestamp time) {
+		this.time = time;
+	}
+
+	public Integer getLettheball() {
+		return lettheball;
+	}
+
+	public void setLettheball(Integer lettheball) {
+		this.lettheball = lettheball;
+	}
+
+	public String getTime2() {
+		time2 = DateUtil.getFormatDate(time);
+		return time2;
+	}
+
+	public void setTime2(String time2) {
+		this.time2 = time2;
 	}
 
 }

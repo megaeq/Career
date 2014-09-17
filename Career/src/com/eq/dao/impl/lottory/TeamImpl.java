@@ -3,11 +3,14 @@ package com.eq.dao.impl.lottory;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.eq.dao.entity.lottory.Team;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
 
-public class TeamImpl extends BaseDao implements AbstractDao<Team> {
+@Component
+public class TeamImpl extends BaseDao implements AbstractDao<Team, Integer> {
 
 	@Override
 	public void add(Team entity) {
@@ -16,7 +19,7 @@ public class TeamImpl extends BaseDao implements AbstractDao<Team> {
 	}
 
 	@Override
-	public void delete(Team entity) {
+	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 
 	}

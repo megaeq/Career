@@ -16,7 +16,7 @@ public class IncomeAndCost extends BaseEntity {
 	private Float				cost;
 	private Timestamp			date;
 	// 用途
-	private String				usage;
+	private String				usages;
 	// 备注
 	private String				memo;
 	private String				date1;
@@ -62,12 +62,12 @@ public class IncomeAndCost extends BaseEntity {
 		this.date = date;
 	}
 
-	public String getUsage() {
-		return usage;
+	public String getUsages() {
+		return usages;
 	}
 
-	public void setUsage(String usage) {
-		this.usage = usage;
+	public void setUsages(String usages) {
+		this.usages = usages;
 	}
 
 	public String getMemo() {
