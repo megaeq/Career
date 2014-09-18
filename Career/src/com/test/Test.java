@@ -1,9 +1,15 @@
 package com.test;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import net.sf.json.JSONObject;
+
 
 public class Test {
 
@@ -11,11 +17,11 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String s = ",,,1";
-		String s2 = "1,,,";
-		System.out.println(s.contains(""));
-		System.out.println(s.split(",").length);
-		System.out.println(s2.split(",").length);
+		boolean s=true;
+		System.out.println);
+		if(s) {
+			
+		}
 	}
 
 }

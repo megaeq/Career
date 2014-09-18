@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import com.eq.dao.entity.BaseEntity;
 import com.eq.util.DateUtil;
+import com.eq.util.HtmlUtil;
 
 public class IncomeAndCost extends BaseEntity {
 
@@ -20,9 +21,9 @@ public class IncomeAndCost extends BaseEntity {
 	// 备注
 	private String				memo;
 	private String				date1;
-
+	private String edit;
 	public String getDate1() {
-		date1 = DateUtil.getFormatDate2(date);
+		date1 = DateUtil.getDateStr(date);
 		return date1;
 	}
 
@@ -76,6 +77,17 @@ public class IncomeAndCost extends BaseEntity {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getEdit()
+	{
+		edit=HtmlUtil.getButton("delete", "删除");
+		return edit;
+	}
+
+	public void setEdit(String edit)
+	{
+		this.edit = edit;
 	}
 
 }

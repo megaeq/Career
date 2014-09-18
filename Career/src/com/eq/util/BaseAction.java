@@ -1,5 +1,6 @@
 package com.eq.util;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.CycleDetectionStrategy;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -22,6 +24,7 @@ import com.eq.dao.impl.PropertyImpl;
 @Service
 public class BaseAction implements ApplicationContextAware {
 	private ApplicationContext	context;
+	public Map<String, Object> params;
 
 	@Override
 	public void setApplicationContext(ApplicationContext context)
@@ -79,5 +82,42 @@ public class BaseAction implements ApplicationContextAware {
 		String jsonObj = JSONSerializer.toJSON(obj, config).toString();
 		return jsonObj;
 	}
-
+	
+	public Integer getInt(String param) {
+		if(params.get(param)==null) {
+			return null;
+		} else {
+			return Integer.parseInt(params.get(param).toString());
+		}
+		
+	}
+	public Float getFloat(String param) {
+		if(params.get(param)==null) {
+			return null;
+		} else {
+			return Float.parseFloat(params.get(param).toString());
+		}
+	}
+	public Date getDate(String param) {
+		if(params.get(param)==null) {
+			return null;
+		} else {
+			String date = params.get(param).toString();
+			return DateUtil.getDate(date);
+		}
+	}
+	public String getString(String param) {
+		if(params.get(param)==null) {
+			return null;
+		} else {
+			return params.get(param).toString();
+		}
+	}
+	public Timestamp getTimestamp(String param) {
+		if(params.get(param)==null) {
+			return null;
+		} else {
+			return DateUtil.getTimestamp(params.get(param).toString());
+		}
+	}
 }

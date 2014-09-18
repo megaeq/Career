@@ -25,8 +25,9 @@ function getGrid() {
 	         "dojo/dom",
 	         "dojo/store/Memory",
 	         "dgrid/OnDemandGrid",
-	         "dgrid/extensions/Pagination"
-	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination) {
+	         "dgrid/extensions/Pagination",
+	         "dijit/form/Button"
+	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button) {
 	         request("getList", {
 	             handleAs: "json",query:{startDate:dom.byId("startDate").value,endDate:dom.byId("endDate").value}
 	         }).then(function (response) {
@@ -44,11 +45,31 @@ function getGrid() {
 	                     totalG: "Games Played"
 	                 }
 	             }, "grid"); */
+	             var actionRenderCell = function (object, data, cell) {
+
+	                 var btnDelete = new Button({
+	                     rowId : object.id,
+	                     label: "删除",
+	                     onClick: function () {
+	                    	 $.blockUI();
+	                         request("delete",{query:{id:this.rowId}}).then(function() {
+	                        	 document.getElementById("list").innerHTML="";
+	               		    	 getGrid();
+	                			 $.unblockUI();
+	                         })
+	                     }
+	                 }, cell.appendChild(document.createElement("div")));
+
+	                 btnDelete._destroyOnRemove = true;
+
+	                 return btnDelete;
+
+	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
 	                 columns: {id:{label:"id"},income:{label:"收入"},cost:{label:"消费"},date1:{label:"日期"},
 	                	 usages:{label:"用途"},memo:{label:"备注"},
-	                	 edit:{label:"编辑"}},
+	                	 edit2:{label:"操作",renderCell: actionRenderCell}},
 	                 rowsPerPage:14,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
