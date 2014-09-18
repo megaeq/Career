@@ -5,18 +5,17 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.eq.dao.entity.lottory.Team;
+import com.eq.dao.entity.lottory.GameAndBill;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
 
 @Component
-public class TeamImpl extends BaseDao implements AbstractDao<Team, Integer> {
+public class GameAndBillImpl extends BaseDao implements
+		AbstractDao<GameAndBill, Integer> {
 
 	@Override
-	public Integer add(Team entity) {
-		// TODO Auto-generated method stub
-		return null;
-
+	public Integer add(GameAndBill entity) {
+		return getSqlSessionTemplate().insert("gameAndBill.add", entity);
 	}
 
 	@Override
@@ -26,18 +25,19 @@ public class TeamImpl extends BaseDao implements AbstractDao<Team, Integer> {
 	}
 
 	@Override
-	public void update(Team entity) {
+	public void update(GameAndBill entity) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public List<Team> selectList(Map<String, Object> params) {
-		return getSqlSessionTemplate().selectList("team.select", params);
+	public List<GameAndBill> selectList(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Team selectOne(Integer id) {
+	public GameAndBill selectOne(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

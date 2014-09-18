@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="game">
-	<select id="select" parameterType="hashmap" resultType="game">
+	<select id="select" parameterType="hashmap" resultType="game" >
 		SELECT * FROM game 
 		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="startDate != null">
@@ -29,9 +29,12 @@
 			weather=#{weather} AND
 			</if>
 		</trim>
-		ORDER BY time DESC LIMIT 280
+		ORDER BY time DESC LIMIT 140
 	</select>
-	<insert id="add" parameterType="game">
+	<select id="one" parameterType="int" resultType="game">
+	SELECT * FROM game WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="game" useGeneratedKeys="true" keyProperty="id">
 	INSERT INTO game (
 	<trim suffixOverrides=",">
 		<if test="code!=null">code,</if>

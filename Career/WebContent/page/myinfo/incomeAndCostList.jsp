@@ -33,7 +33,7 @@ function getGrid() {
 	         }).then(function (response) {
 	             // Once the response is received, build an in-memory store
 	             // with the data
-	             console.log(response);
+	            // console.log(response);
 	             var store = new Memory({ data: response });
 	              
 	             // Create an instance of OnDemandGrid referencing the store
@@ -45,8 +45,9 @@ function getGrid() {
 	                     totalG: "Games Played"
 	                 }
 	             }, "grid"); */
-	             var actionRenderCell = function (object, data, cell) {
-
+	             var actionRenderCell = function (object, data,cell) {
+	            	 //console.log(object);
+	            	 console.log(cell);
 	                 var btnDelete = new Button({
 	                     rowId : object.id,
 	                     label: "删除",
@@ -59,10 +60,22 @@ function getGrid() {
 	                         })
 	                     }
 	                 }, cell.appendChild(document.createElement("div")));
-
 	                 btnDelete._destroyOnRemove = true;
+	                 var btnDelete2 = new Button({
+	                     rowId : object.id,
+	                     label: "编辑",
+	                     onClick: function () {
+	                    	 $.blockUI();
+	                         request("delete",{query:{id:this.rowId}}).then(function() {
+	                        	 document.getElementById("list").innerHTML="";
+	               		    	 getGrid();
+	                			 $.unblockUI();
+	                         })
+	                     }
+	                 }, cell.appendChild(document.createElement("div")));
+	                 btnDelete2._destroyOnRemove = true;
 
-	                 return btnDelete;
+	                 return [btnDelete,btnDelete2];
 
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({

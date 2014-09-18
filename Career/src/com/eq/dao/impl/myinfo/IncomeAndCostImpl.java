@@ -21,8 +21,8 @@ public class IncomeAndCostImpl extends BaseDao implements
 		AbstractDao<IncomeAndCost, Integer> {
 
 	@Override
-	public void add(IncomeAndCost entity) {
-		getSqlSessionTemplate().insert("incomeandcost.add", entity);
+	public Integer add(IncomeAndCost entity) {
+		return getSqlSessionTemplate().insert("incomeandcost.add", entity);
 
 	}
 
@@ -40,6 +40,12 @@ public class IncomeAndCostImpl extends BaseDao implements
 	public List<IncomeAndCost> selectList(Map<String, Object> params) {
 		return getSqlSessionTemplate().selectList("incomeandcost.select",
 				params);
+	}
+
+	@Override
+	public IncomeAndCost selectOne(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

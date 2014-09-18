@@ -13,12 +13,6 @@ public class PropertyImpl extends BaseDao implements
 		AbstractDao<Property, String> {
 
 	@Override
-	public void add(Property entity) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void delete(String key) {
 		// TODO Auto-generated method stub
 
@@ -37,6 +31,18 @@ public class PropertyImpl extends BaseDao implements
 
 	@Override
 	public List<Property> selectList(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Property selectOne(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String add(Property entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
