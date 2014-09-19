@@ -16,11 +16,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
+  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-extension.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript">
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
 function getGrid() {
+	
 	require([
 	         "dojo/_base/declare",
 	         "dojo/request",
@@ -31,8 +33,8 @@ function getGrid() {
 	         "dijit/form/Button",
 	         'dojo/dom-style' 
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle) {
-	         request("account/getList", {
-	             handleAs: "json"
+	         request("accountHistory/getList", {
+	             handleAs: "json",query:{accountId:$.getUrlParam('accountId')}
 	         }).then(function (response) {
 	             var store = new Memory({ data: response });
 	              
@@ -42,7 +44,7 @@ function getGrid() {
 	                     label: "删除",
 	                     onClick: function () {
 	                    	 $.blockUI();
-	                         request("account/delete",{query:{id:this.rowId,pwd:""}}).then(function() {
+	                         request("accountHistory/delete",{query:{id:this.rowId}}).then(function() {
 	                        	 document.getElementById("list").innerHTML="";
 	               		    	 getGrid();
 	                			 $.unblockUI();
@@ -54,11 +56,10 @@ function getGrid() {
 	                     label: "编辑",
 	                     onClick: function() {
 	                    	 $("#id").val(object.id);
-	                    	 $("#name").val(object.name);
-	                    	 $("#balance").val(object.balance);
-	                    	 $("#belong").val(object.belong);
+	                    	 $("#income").val(object.income);
+	                    	 $("#cost").val(object.cost);
+	                    	 $("#usages").val(object.usages);
 	                    	 $("#memo").val(object.memo);
-	                    	 $("#isReal").val(object.isReal);
 	                    	 $("#addButton").hide();
 	                       	 $("#updateButton").show();
 	                       	 $.blockUI({ message: $('#add') });
@@ -67,16 +68,8 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
-	                 columns: {name:{label:"名称"},belong:{label:"所属机构"},balance:{label:"余额"},
-	                	 time:{label:"创建时间"},type:{label:"账户类型",renderCell:function(object, data,cell) {
-	                		 var div = document.createElement("div");
-	                		 if(0==object.isReal) {
-	                			 div.innerHTML = "虚拟";
-	                		 } else {
-	                			 div.innerHTML ="现实";
-	                		 } 
-                		    return div;
-	                	 }},
+	                 columns: {time:{label:"创建时间"},income:{label:"收入"},cost:{label:"支出"},
+	                	 usages:{label:"用途"},memo:{label:"备注"},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
 	                 rowsPerPage:14,
 	                 pagingTextBox:true,
@@ -95,9 +88,9 @@ function getGrid() {
      function addinfo() {
     	 
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
-    		 request("account/add",{query:{name:dom.byId("name").value,
-    			 pwd:dom.byId("pwd").value,belong:dom.byId("belong").value,
-    			 isReal:dom.byId("isReal").value}
+    		 request("accountHistory/add",{query:{income:dom.byId("income").value,
+    			 cost:dom.byId("cost").value,usages:dom.byId("usages").value,
+    			 accountId:$.getUrlParam('accountId'),memo:dom.byId("memo").value}
     			 }).then(function() {
    				 document.getElementById("list").innerHTML="";
    		    	 getGrid();
@@ -109,17 +102,16 @@ function getGrid() {
      }
      function clearclean() {
     	 $("#id").val("");
-    	 $("#name").val("");
-    	 $("#pwd").val("");
-    	 $("#belong").val("");
-    	 $("#balance").val("");
-    	 $("#isReal").val("");
+    	 $("#income").val("");
+    	 $("#cost").val("");
+    	 $("#usages").val("");
+    	 $("#memo").val("");
      }
      function updateInfo() {
        	 require(["dojo/request","dojo/dom",],function(request,dom) {
-       		 request("account/update",{query:{id:dom.byId("id").value,name:dom.byId("name").value,
-       			 pwd:dom.byId("pwd").value,belong:dom.byId("belong").value,
-       			 isReal:dom.byId("isReal").value,balance:dom.byId("balance").value}
+       		 request("accountHistory/update",{query:{id:dom.byId("id").value,
+       			 income:dom.byId("income").value,memo:dom.byId("memo").value,
+    			 cost:dom.byId("cost").value,usages:dom.byId("usages").value}
        			 }).then(function() {
       				 document.getElementById("list").innerHTML="";
       		    	 getGrid();
@@ -158,27 +150,22 @@ function getGrid() {
     1px solid #9cf; padding: 25px; display: none;">
     <table>
     	<tr>
-    		<td>名称<div style="width:100px;"></div></td>
+    		<td>收入<div style="width:100px;"></div></td>
     		<td><input id = "id" type="text" style="display:none" />
-    		<input id = "name" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
+    		<input id = "income" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
     	</tr>
     	<tr>
-    		<td>密码</td>
-    		<td><input id = "pwd" type="password" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
+    		<td>支出</td>
+    		<td><input id = "cost" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
     	</tr>
     	<tr>
-    		<td>所属机构</td>
-    		<td><input id = "belong" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
+    		<td>用途</td>
+    		<td><input id = "usages" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
     	</tr>
     	<tr>
-    		<td>余额</td>
-    		<td><div><input id="balance" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/></div></td>
+    		<td>备注</td>
+    		<td><div><input id="memo" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/></div></td>
     	</tr>
-    	<tr>
-    		<td>账户类型</td>
-    		<td><input id = "isReal" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
-    	</tr>
-    	
     	<tr>
     		<td></td>
     		<td><button id="addButton" class="greyButton" onclick="addinfo()">添加</button>

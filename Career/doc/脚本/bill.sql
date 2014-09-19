@@ -139,7 +139,7 @@ CREATE TABLE `account_history` (
   `cost` float(11,2) DEFAULT NULL,
   `accountid` int(4) DEFAULT NULL,
   `createtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `momo` varchar(500) DEFAULT NULL,
+  `memo` varchar(500) DEFAULT NULL,
   `usages` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

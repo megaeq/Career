@@ -1,8 +1,5 @@
 package com.eq.service.myinfo;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,18 +14,21 @@ import com.eq.dao.entity.myinfo.Account;
 import com.eq.dao.impl.myinfo.AccountImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+
 @Controller
 @RequestMapping("page/myinfo/account")
-public class AccountManage extends BaseAction
-{
+public class AccountManage extends BaseAction {
 	@Autowired
-	private AccountImpl impl;
+	private AccountImpl	impl;
+
 	@ResponseBody
 	@RequestMapping("getList")
 	public List<Account> getList(@RequestParam Map<String, Object> params) {
 		this.params = params;
+		// System.out.println(this.params.hashCode() + " " + params.hashCode());
 		return impl.selectList(params);
 	}
+
 	@RequestMapping("add")
 	@ResponseBody
 	public void add(@RequestParam Map<String, Object> params) {
@@ -42,6 +42,7 @@ public class AccountManage extends BaseAction
 		account.setPwd(getString("pwd"));
 		impl.add(account);
 	}
+
 	@RequestMapping("delete")
 	@ResponseBody
 	public void delete(@RequestParam Map<String, Object> params) {
@@ -51,6 +52,8 @@ public class AccountManage extends BaseAction
 		params2.put("pwd", getString("pwd"));
 		impl.delete(params2);
 	}
+
+	@ResponseBody
 	@RequestMapping("update")
 	public void update(@RequestParam Map<String, Object> params) {
 		this.params = params;

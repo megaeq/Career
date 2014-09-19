@@ -9,6 +9,7 @@
 			<if test="endDate!=null">createTime &lt;=#{endDate} AND</if>
 			<if test="usages!=null">usages LIKE "%"#{usages}"%" AND</if>
 		</trim>
+		ORDER BY createTime DESC LIMIT 70
 	</select>
 	<select id="selectone" parameterType="int" resultType="accounthistory">
 		SELECT * FROM account_history WHERE id=#{id}
