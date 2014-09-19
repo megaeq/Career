@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface AbstractDao<T, PK> {
-	public PK add(T entity);
+	public void add(T entity);
 
 	public void delete(PK id);
 

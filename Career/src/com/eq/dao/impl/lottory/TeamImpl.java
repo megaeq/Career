@@ -13,9 +13,8 @@ import com.eq.dao.inter.AbstractDao;
 public class TeamImpl extends BaseDao implements AbstractDao<Team, Integer> {
 
 	@Override
-	public Integer add(Team entity) {
+	public void add(Team entity) {
 		// TODO Auto-generated method stub
-		return null;
 
 	}
 

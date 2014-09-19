@@ -11,8 +11,8 @@ import com.eq.dao.inter.AbstractDao;
 @Component
 public class UserImpl extends BaseDao implements AbstractDao<User, Integer> {
 	@Override
-	public Integer add(User user) {
-		return getSqlSessionTemplate().insert("user.insert", user);
+	public void add(User user) {
+		 getSqlSessionTemplate().insert("user.insert", user);
 
 	}
 

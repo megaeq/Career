@@ -21,8 +21,8 @@ public class IncomeAndCostImpl extends BaseDao implements
 		AbstractDao<IncomeAndCost, Integer> {
 
 	@Override
-	public Integer add(IncomeAndCost entity) {
-		return getSqlSessionTemplate().insert("incomeandcost.add", entity);
+	public void add(IncomeAndCost entity) {
+		getSqlSessionTemplate().insert("incomeandcost.add", entity);
 
 	}
 

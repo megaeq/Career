@@ -14,8 +14,8 @@ public class GameAndBillImpl extends BaseDao implements
 		AbstractDao<GameAndBill, Integer> {
 
 	@Override
-	public Integer add(GameAndBill entity) {
-		return getSqlSessionTemplate().insert("gameAndBill.add", entity);
+	public void add(GameAndBill entity) {
+		getSqlSessionTemplate().insert("gameAndBill.add", entity);
 	}
 
 	@Override

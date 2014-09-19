@@ -42,9 +42,8 @@ public class PropertyImpl extends BaseDao implements
 	}
 
 	@Override
-	public String add(Property entity) {
+	public void add(Property entity) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
