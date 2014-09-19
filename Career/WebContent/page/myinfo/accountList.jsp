@@ -37,7 +37,7 @@ function getGrid() {
 	             var store = new Memory({ data: response });
 	              
 	             var actionRenderCell = function (object, data,cell) {
-	                 var btnDelete = new Button({
+	                 var btn1 = new Button({
 	                     rowId : object.id,
 	                     label: "删除",
 	                     onClick: function () {
@@ -49,7 +49,7 @@ function getGrid() {
 	                         })
 	                     }
 	                 }, cell.appendChild(document.createElement("div")));
-	                 var btnDelete2 = new Button({
+	                 var btn2 = new Button({
 	                     rowId : object.id,
 	                     label: "编辑",
 	                     onClick: function() {
@@ -62,6 +62,13 @@ function getGrid() {
 	                    	 $("#addButton").hide();
 	                       	 $("#updateButton").show();
 	                       	 $.blockUI({ message: $('#add') });
+	                     },
+	                 }, cell.appendChild(document.createElement("div")));
+	                 var btn3 = new Button({
+	                     rowId : object.id,
+	                     label: "编辑",
+	                     onClick: function() {
+	                    	 location.href="<%=basePath%>page/myinfo/accountHistoryList.jsp?accountId="+object.id;
 	                     },
 	                 }, cell.appendChild(document.createElement("div")));
 	             }

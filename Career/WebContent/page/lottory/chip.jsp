@@ -112,25 +112,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	 document.getElementById("list").innerHTML="";
      	 getGrid();
       }
-      function addinfo() {
-     	 require(["dojo/request","dojo/dom"],function(request,dom) {
-     		 request("add",{query:{income:dom.byId("income").value,
-     			 cost:dom.byId("cost").value,addDate:dom.byId("addDate").value,
-     			 usages:dom.byId("usages").value,memo:dom.byId("memo").value}
-     			 }).then(function() {
-    				 document.getElementById("list").innerHTML="";
-    		    	 getGrid();
-     			 $.unblockUI();
-     		 });
-     	 });
-     	 
-      }
-      function divclose() {
-     	 $.unblockUI();
-      }
-      function openAddDiv() {
-     	 $.blockUI({ message: $('#add') });
-      }
       function chipin() {
     	  $.blockUI();
     	 
@@ -159,18 +140,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     data-dojo-type="dijit/form/DateTextBox"
     required="true" />
     <button data-dojo-type="dijit/form/Button" onclick="change()">查询</button>
-    <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
 </div>
 <div id="list"></div>
-<div id="add" style="text-align: center; width: 200px; height: 200px; border;
-    1px solid #9cf; padding: 25px; display: none;">
-    <table>
-    	<tr>
-    		<td><button data-dojo-type="dijit/form/Button" onclick="addinfo()">添加</button></td>
-    		<td><button data-dojo-type="dijit/form/Button" onclick="divclose()">取消</button></td>
-    	</tr>
-    </table>
-</div>
 <br>
 <div id="chipList">
 <table id="chiptable" class="pure-table pure-table-bordered">
