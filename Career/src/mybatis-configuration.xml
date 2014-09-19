@@ -9,7 +9,8 @@
         <typeAlias alias="bill" type="com.eq.dao.entity.lottory.Bill"/> 
         <typeAlias alias="gamebill" type="com.eq.dao.entity.lottory.GameAndBill"/> 
         <typeAlias alias="incomecost" type="com.eq.dao.entity.myinfo.IncomeAndCost"/> 
-        
+        <typeAlias alias="account" type="com.eq.dao.entity.myinfo.Account"/> 
+        <typeAlias alias="accounthistory" type="com.eq.dao.entity.myinfo.AccountHistory"/> 
     </typeAliases>
 
     

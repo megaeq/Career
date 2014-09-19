@@ -122,6 +122,26 @@ CREATE TABLE `property` (
 --2014/09/01 周一18:58:05.88
 INSERT INTO `property` (`property`, `value`) VALUES ('dirpath', 'D:/tomcatfile/');
 INSERT INTO `property` (`property`, `value`) VALUES ('urlpath', 'http://localhost:8080/file/');
+ --2014/09/19 周五 8:43:56.28
+CREATE TABLE `account` (
+  `id` int(4) DEFAULT NULL,
+  `balance` float(11,2) DEFAULT '0.00' COMMENT '余额',
+  `belong` varchar(40) DEFAULT '' COMMENT '归属机构',
+  `createtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `name` varchar(40) DEFAULT NULL,
+  `pwd` blob,
+  `isreal` int(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `account_history` (
+  `id` int(11) DEFAULT NULL,
+  `income` float(11,2) DEFAULT NULL,
+  `cost` float(11,2) DEFAULT NULL,
+  `accountid` int(4) DEFAULT NULL,
+  `createtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `momo` varchar(500) DEFAULT NULL,
+  `usages` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 

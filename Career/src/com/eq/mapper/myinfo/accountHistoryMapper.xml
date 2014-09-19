@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="accounthistory">
+	<select id="selectlist" parameterType="hashmap" resultType="accounthistory" >
+		SELECT * FROM account_history
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="accountId!=null">accountId=#{accountId} AND</if>
+			<if test="startDate!=null">createtime&gt;=#{startDate} AND</if>
+			<if test="endDate!=null">createTime &lt;=#{endDate} AND</if>
+			<if test="usages!=null">usages LIKE "%"#{usages}"%" AND</if>
+		</trim>
+	</select>
+	<select id="selectone" parameterType="int" resultType="accounthistory">
+		SELECT * FROM account_history WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="accounthistory" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO account_history (
+		<trim suffixOverrides=",">
+			<if test="income!=null">income,</if>
+			<if test="cost!=null">cost,</if>
+			<if test="accountId!=null">accountid,</if>
+			<if test="createTime!=null">createTime,</if>
+			<if test="memo!=null">memo,</if>
+			<if test="usages!=null">usages,</if>
+		</trim>
+		) VALUES(
+		<trim suffixOverrides=",">
+			<if test="income!=null">#{income},</if>
+			<if test="cost!=null">#{cost},</if>
+			<if test="accountId!=null">#{accountId},</if>
+			<if test="createTime!=null">#{createTime},</if>
+			<if test="memo!=null">#{memo},</if>
+			<if test="usages!=null">#{usages},</if>
+		</trim>
+		)
+	</insert>
+	<update id="update" parameterType="accounthistory">
+		UPDATE account_history SET
+		<trim suffixOverrides=",">
+			<if test="income!=null">income=#{income},</if>
+			<if test="cost!=null">cost=#{cost},</if>
+			<if test="accountId!=null">accountid=#{accountId},</if>
+			<if test="createTime!=null">createtime=#{createTime},</if>
+			<if test="memo!=null">memo=#{memo},</if>
+			<if test="usages!=null">usages=#{usages},</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM account_history WHERE id=#{id}
+	</delete>
+</mapper>

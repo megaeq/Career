@@ -3,6 +3,7 @@ package com.eq.util;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil
@@ -70,5 +71,8 @@ public class DateUtil
 			e.printStackTrace();
 		}
 		return null;
+	}
+	public static Timestamp getNowTime() {
+		return new Timestamp(Calendar.getInstance().getTimeInMillis());
 	}
 }
