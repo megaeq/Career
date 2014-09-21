@@ -14,31 +14,27 @@ public class BillImpl extends BaseDao implements AbstractDao<Bill, Integer> {
 
 	@Override
 	public void add(Bill entity) {
-		 getSqlSessionTemplate().insert("bill.add", entity);
+		getSqlSessionTemplate().insert("bill.add", entity);
 	}
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-
+		getSqlSessionTemplate().delete("bill.delete", id);
 	}
 
 	@Override
 	public void update(Bill entity) {
-		// TODO Auto-generated method stub
-
+		getSqlSessionTemplate().update("bill.update", entity);
 	}
 
 	@Override
 	public List<Bill> selectList(Map<String, Object> params) {
-		// TODO Auto-generated method stub
-		return null;
+		return getSqlSessionTemplate().selectList("bill.selectlist", params);
 	}
 
 	@Override
 	public Bill selectOne(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return getSqlSessionTemplate().selectOne("bill.selectone", id);
 	}
 
 }

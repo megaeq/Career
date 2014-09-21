@@ -36,7 +36,7 @@
 			<if test="pwd!=null">password(#{pwd}),</if>
 			<if test="isReal!=null">#{isReal},</if>
 			<if test="destinationId!=null">#{destinationId},</if>
-			<if test="destinationType!=null">#{destinationtype},</if>
+			<if test="destinationType!=null">#{destinationType},</if>
 		</trim>
 		)
 	</insert>
@@ -49,7 +49,7 @@
 			<if test="name!=null">name=#{name},</if>
 			<if test="isReal!=null">isreal=#{isReal},</if>
 			<if test="destinationId!=null">destinationId=#{destinationId},</if>
-			<if test="destinationType!=null">destinationType=#{destinationtype},</if>
+			<if test="destinationType!=null">destinationType=#{destinationType},</if>
 		</trim>
 		WHERE id=#{id} AND pwd=password(#{pwd})
 	</update>

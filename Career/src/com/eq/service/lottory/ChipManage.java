@@ -73,7 +73,9 @@ public class ChipManage extends BaseAction {
 		} else {
 			bill.setType("real");
 		}
-
+		bill.setFlag(0);
+		bill.setIsDel(0);
+		bill.setAccountId(getInt("accountId"));
 		billImpl.add(bill);
 		for (GameAndBill gb : gbList) {
 			gb.setBillId(bill.getId());

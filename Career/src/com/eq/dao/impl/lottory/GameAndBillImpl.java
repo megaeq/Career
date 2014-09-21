@@ -32,8 +32,8 @@ public class GameAndBillImpl extends BaseDao implements
 
 	@Override
 	public List<GameAndBill> selectList(Map<String, Object> params) {
-		// TODO Auto-generated method stub
-		return null;
+		return getSqlSessionTemplate().selectList("gameAndBill.selectlist",
+				params);
 	}
 
 	@Override

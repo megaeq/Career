@@ -139,7 +139,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	  }
     	  require(["dojo/request","dojo/dom"],function(request,dom) {
     		  request("chip/chipin",{query:{money:dom.byId("money").value,
-    			  chip:chip,accountId:$.getUrlParam('accountId')}}).then(function() {
+    			  chip:chip,accountId:$.getUrlParam('accountId'),
+    			  accountId:$.getUrlParam('accountId')}}).then(function() {
     				  require(["dojo/request","dojo/dom"],function(request,dom) {
     		    		  request("chip/addincome",{query:{income:dom.byId("money").value,
     		    			  accountId:$.getUrlParam('accountId'),memo:chip}}).then(function() {

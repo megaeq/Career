@@ -64,19 +64,37 @@ function getGrid() {
 	                       	 $.blockUI({ message: $('#add') });
 	                     },
 	                 }, cell.appendChild(document.createElement("div")));
-	                 var btn3 = new Button({
-	                     rowId : object.id,
-	                     label: "记录",
-	                     onClick: function() {
-	                    	 //console.log("##"+object.destinationType);
-	                    	 if(1==object.destinationType||0==object.destinationType) {
+	                 if(object.destinationType==1||0==object.destinationType) {
+	                	 var btn3 = new Button({
+		                     rowId : object.id,
+		                     label: "记录",
+		                     onClick: function() {
+		                    	 //console.log("##"+object.destinationType);
 	                    		 location.href="<%=basePath%>page/myinfo/accountHistoryList.jsp?accountId="+object.id;
-	                    	 } else if(2==object.destinationType||3==object.destinationType) {
-	                    		 location.href="<%=basePath%>page/lottory/chip.jsp?accountId="+object.id;
-	                    	 }
-	                    	 
-	                     },
-	                 }, cell.appendChild(document.createElement("div")));
+		                    	 
+		                     },
+		                 }, cell.appendChild(document.createElement("div")));
+	                 } else if(object.destinationType==2||3==object.destinationType){
+	                	 var btn3 = new Button({
+		                     rowId : object.id,
+		                     label: "投注",
+		                     onClick: function() {
+		                    	 //console.log("##"+object.destinationType);
+		                    		 location.href="<%=basePath%>page/lottory/chip.jsp?accountId="+object.id;
+		                    	 
+		                     },
+		                 }, cell.appendChild(document.createElement("div")));
+	                	 var btn4= new Button({
+		                     rowId : object.id,
+		                     label: "投注记录",
+		                     onClick: function() {
+		                    	 //console.log("##"+object.destinationType);
+	                    		 location.href="<%=basePath%>page/lottory/billList.jsp?accountId="+object.id;
+		                    	 
+		                     },
+		                 }, cell.appendChild(document.createElement("div")));
+	                 }
+	                 
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,

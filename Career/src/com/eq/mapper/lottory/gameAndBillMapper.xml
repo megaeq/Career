@@ -16,4 +16,13 @@
 		</trim>
 		)
 	</insert>
+	<select id="selectlist" parameterType="hashmap" resultType="gamebill">
+		SELECT * FROM game_bill 
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="gameId!=null">gameid=#{gameId} AND</if>
+			<if test="billId!=null">billId=#{billId} AND</if>
+			<if test="bet!=null">bet=#{bet} AND</if>
+		</trim>
+	</select>
+	
 </mapper>

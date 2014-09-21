@@ -1,14 +1,14 @@
 package com.test.fetchdata.game;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,55 +24,40 @@ import com.eq.util.FileUtils;
 import com.eq.util.Mysql;
 import com.eq.util.ParserUtils;
 
-public class GameInfo2Fetch {
+public class GameComplete {
 	public static String		CHARSET	= "gb2312"; // 字符集编码
 	private Connection			conn	= null;
 	private PreparedStatement	stmt	= null;
 	private Statement			stmt2	= null;
 	private Statement			stmt3	= null;
-	private ResultSet			rs		= null;
+	private final ResultSet		rs		= null;
 	private ResultSet			rs2		= null;
 
 	public static void main(String[] args) {
-		GameInfo2Fetch gf = new GameInfo2Fetch();
-		// gf.todo();
+		GameComplete gf = new GameComplete();
+		gf.todo();
 	}
 
 	private void todo() {
-		// List<String> filelist = FileUtils.refreshFileList("D:\\bill");
-		try {
-			initMysql();
-			String sql = "select id,dirpath,date from game_complete where flag='0'";
-			rs = stmt2.executeQuery(sql);
-
-			while (rs.next()) {
-				System.out.println(rs.getRow());
-				String fileName = rs.getString("dirpath");
-				Date date = rs.getDate("date");
-				SimpleDateFormat df = new SimpleDateFormat("yyyy-");
-				SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-				List<Game> gameList = getGameInfo(Parser.createParser(
-						FileUtils.readFileByLines(fileName, CHARSET), CHARSET),
+		List<String> filelist = FileUtils.refreshFileList("D:\\complete");
+		for (int i = 0; i < filelist.size(); i++) {
+			String fileName = filelist.get(i);
+			String[] belongs = fileName.split("\\\\");
+			String datestr = belongs[belongs.length - 1].split("\\.")[0];
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-");
+			SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				Date date = df2.parse(datestr);
+				List<Game> gameList = getGameInfo(
+						Parser.createParser(FileUtils.readFileByLines(
+								filelist.get(i), CHARSET), CHARSET),
 						df.format(date), df2.format(date));
-				insertDB(gameList, rs.getInt("id"));
+				insertDB(gameList);
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
-		/*
-		 * for (String fileName : filelist) { String[] dates =
-		 * fileName.split("\\\\"); String date = dates[dates.length -
-		 * 1].split("\\.")[0]; Date date1 = Date.valueOf(date);
-		 * 
-		 * List<Game> gameList = getGameInfo(Parser.createParser(
-		 * FileUtils.readFileByLines(fileName, CHARSET), CHARSET), date);
-		 * insertDB(gameList, date1);
-		 * 
-		 * insertFile(fileName, date1); }
-		 */
+		}
 	}
 
 	private List<Game> getGameInfo(Parser parser, String year, String date) {
@@ -193,7 +178,7 @@ public class GameInfo2Fetch {
 			String sql = "insert into game_complete(date,dirpath,flag) values(?,?,?)";
 
 			stmt = conn.prepareStatement(sql);
-			stmt.setDate(1, date);
+			// stmt.setDate(1, date);
 			stmt.setString(2, filename);
 			stmt.setString(3, "0");
 			stmt.addBatch();
@@ -204,75 +189,38 @@ public class GameInfo2Fetch {
 		}
 	}
 
-	private void insertDB(List<Game> gameList, int id) {
+	private void insertDB(List<Game> gameList) {
 		try {
+			initMysql();
 			conn.setAutoCommit(false);
-			String sql = "INSERT INTO game (hometeam,guestteam,homescore,guestscore,homehalfscore,guesthalfscore,winrate,drawrate,loserate,lettheball,weather,time,hometeamid,guestteamid,code,gametype)";
-			sql += "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "update game set homescore=?,guestscore=?,homehalfscore=?,guesthalfscore=?,weather=? where code=?";
 			stmt = conn.prepareStatement(sql);
 
 			for (Game g : gameList) {
-				stmt.setString(1, g.getHomeTeam());
-				stmt.setString(2, g.getGuestTeam());
-				if (g.getHomeScore() == null) {
+				if (g.getHomeScore() != null) {
+					stmt.setInt(1, g.getHomeScore());
+				} else {
+					stmt.setInt(1, -1);
+				}
+				if (g.getGuestScore() != null) {
+					stmt.setInt(2, g.getGuestScore());
+				} else {
+					stmt.setInt(2, -1);
+				}
+				if (g.getHomeHalfScore() != null) {
+					stmt.setInt(3, g.getHomeHalfScore());
+				} else {
 					stmt.setInt(3, -1);
-				} else {
-					stmt.setInt(3, g.getHomeScore());
 				}
-				if (g.getGuestScore() == null) {
+				if (g.getGuestHalfScore() != null) {
+					stmt.setInt(4, g.getGuestHalfScore());
+				} else {
 					stmt.setInt(4, -1);
-				} else {
-					stmt.setInt(4, g.getGuestScore());
 				}
-				if (g.getHomeHalfScore() == null) {
-					stmt.setInt(5, -1);
-				} else {
-					stmt.setInt(5, g.getHomeHalfScore());
-				}
-				if (g.getGuestHalfScore() == null) {
-					stmt.setInt(6, -1);
-				} else {
-					stmt.setInt(6, g.getGuestHalfScore());
-				}
-				if (g.getWinRate() == null) {
-					stmt.setFloat(7, 0);
-				} else {
-					stmt.setFloat(7, g.getWinRate());
-				}
-				if (g.getDrawRate() == null) {
-					stmt.setFloat(8, 0);
-				} else {
-					stmt.setFloat(8, g.getDrawRate());
-				}
-				if (g.getLoseRate() == null) {
-					stmt.setFloat(9, 0);
-				} else {
-					stmt.setFloat(9, g.getLoseRate());
-				}
-				stmt.setInt(10, 0);
-				stmt.setString(11, g.getWeather());
-				stmt.setTimestamp(12, g.getTime());
-				Long homeTeamId = getTeamId(g.getHomeTeam());
-				Long guestTeamId = getTeamId(g.getGuestTeam());
-				if (homeTeamId != null) {
-					stmt.setLong(13, homeTeamId);
-				} else {
-					stmt.setLong(13, 1l);
-				}
-				if (guestTeamId != null) {
-					stmt.setLong(14, getTeamId(g.getGuestTeam()));
-				} else {
-					stmt.setLong(14, 1l);
-				}
-				stmt.setString(15, g.getCode());
-				stmt.setString(16, g.getGameType());
+				stmt.setString(5, g.getWeather());
+				stmt.setString(6, g.getCode());
 				stmt.addBatch();
 			}
-			stmt.executeBatch();
-			String sql1 = "update game_complete set flag='1' where id=?";
-			stmt = conn.prepareStatement(sql1);
-			stmt.setInt(1, id);
-			stmt.addBatch();
 			stmt.executeBatch();
 			conn.commit();
 		} catch (Exception e) {

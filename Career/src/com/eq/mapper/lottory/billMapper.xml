@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="bill">
+	<select id="selectlist" parameterType="hashmap" resultType="bill">
+		SELECT * FROM bill WHERE isdel=0
+		<trim>
+			<if test="startTime!=null">AND time&gt;=#{startTime}</if>
+			<if test="endTime!=null">AND time&lt;=#{endTime}</if>
+			<if test="flag!=null">AND flag=#{flag}</if>
+			<if test="accountId!=null">AND accountid=#{accountId}</if>
+		</trim>
+		ORDER BY time desc LIMIT 70
+	</select>
+	<select id="selectone" parameterType="int" resultType="bill">
+		SELECT * FROM bill WHERE id=#{id}
+	</select>
 	<insert id="add" parameterType="bill" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO bill(
 		<trim suffixOverrides=",">
@@ -9,6 +22,9 @@
 			<if test="type!=null">type,</if>
 			<if test="cluster!=null">cluster,</if>
 			<if test="time!=null">time,</if>
+			<if test="isdel!=null">isdel,</if>
+			<if test="flag!=null">flag,</if>
+			<if test="accountId!=null">accountid,</if>
 		</trim>
 		) VALUES (
 		<trim suffixOverrides=",">
@@ -17,7 +33,27 @@
 			<if test="type!=null">#{type},</if>
 			<if test="cluster!=null">#{cluster},</if>
 			<if test="time!=null">#{time},</if>
+			<if test="isDel!=null">#{isDel},</if>
+			<if test="flag!=null">#{flag},</if>
+			<if test="accountId!=null">#{accountId},</if>
 		</trim>
 		)
 	</insert>
+	
+	<update id="update" parameterType="bill">
+		UPDATE bill SET 
+		<trim suffixOverrides=",">
+			<if test="betAmount!=null">betamount=#{betAmount},</if>
+			<if test="sp!=null">sp=#{sp},</if>
+			<if test="type!=null">type=#{type},</if>
+			<if test="cluster!=null">cluster=#{cluster},</if>
+			<if test="isDel!=null">isdel=#{isDel},</if>
+			<if test="flag!=null">flag=#{flag},</if>
+			<if test="accountId!=null">accountId=#{accountId},</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM bill WHERE id=#{id}
+	</delete>
 </mapper>

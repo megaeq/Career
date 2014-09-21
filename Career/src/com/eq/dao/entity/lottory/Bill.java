@@ -3,6 +3,7 @@ package com.eq.dao.entity.lottory;
 import java.sql.Timestamp;
 
 import com.eq.dao.entity.BaseEntity;
+import com.eq.util.DateUtil;
 
 public class Bill extends BaseEntity {
 
@@ -11,15 +12,18 @@ public class Bill extends BaseEntity {
 	 */
 	private static final long	serialVersionUID	= 1L;
 	private int					id;
+	private int					accountId;
 	private int					betAmount;
 	private float				sp;
 	private float				income;
-	// 输赢
+	// 是否完成 1为完成
 	private int					flag;
 	private int					cluster;
 	// virtual,real
 	private String				type;
 	private Timestamp			time;
+	private String				time2;
+	private int					isDel;
 
 	public int getId() {
 		return id;
@@ -83,6 +87,31 @@ public class Bill extends BaseEntity {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public int getIsDel() {
+		return isDel;
+	}
+
+	public void setIsDel(int isDel) {
+		this.isDel = isDel;
+	}
+
+	public int getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
+	}
+
+	public String getTime2() {
+		time2 = DateUtil.getTimeStr(time);
+		return time2;
+	}
+
+	public void setTime2(String time2) {
+		this.time2 = time2;
 	}
 
 }
