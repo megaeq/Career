@@ -38,26 +38,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	                 columns: {id:{label:"id"},code:{lable:"编号"},gameType:{label:"联赛类型"},
  	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主胜"},
  	                	drawRate:{label:"平局"},loseRate:{label:"主负"},homeScore:{label:"比分（主）"},
- 	                	guestScore:{label:"比分（客）"},time2:{label:"时间"}},
+ 	                	guestScore:{label:"比分（客）"},time2:{label:"时间"},
+ 	                	edit:{label:"操作",renderCell:function(object,data,cell) {
+ 	                		var btn1 = new Button({
+ 			                     rowId : object.id,
+ 			                     label: "往绩",
+ 			                     onClick: function () {
+ 			                    	location.href="<%=basePath%>page/lottory/gameHistoryList.jsp?gameId="+object.id;
+ 			                     }
+ 			                 }, cell.appendChild(document.createElement("div")));
+ 	                	}}},
  	                 rowsPerPage:14,
  	                 pagingTextBox:true,
  	                 pagingLinks:2
  	             	
  	             }, "list");
- 	             grid.on(".dgrid-header .dgrid-cell:click", function(evt){
- 	            	    var cell = grid.cell(evt);
- 	            	    console.log(cell);
- 	            	    // cell.element == the element with the dgrid-cell class
- 	            	    // cell.column == the column definition object for the column the cell is within
- 	            	    // cell.row == the same object obtained from grid.row(evt)
- 	            	});
- 	             grid.on(".dgrid-row:contextmenu", function(evt){
- 	            	    var row = grid.row(evt);
- 	            	    console.log(row);
- 	            	    // row.element == the element with the dgrid-row class
- 	            	    // row.id == the identity of the item represented by the row
- 	            	    // row.data == the item represented by the row
- 	            	});
  	             grid.startup();
  	         });
  	     });

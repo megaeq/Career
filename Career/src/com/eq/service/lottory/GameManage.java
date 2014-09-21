@@ -32,6 +32,30 @@ public class GameManage extends BaseAction {
 	}
 
 	@ResponseBody
+	@RequestMapping("getListByName")
+	public List<Game> getListByName(@RequestParam Map<String, Object> params) {
+		this.params = params;
+		Game game = impl.selectOne(getInt("gameId"));
+		Map<String, Object> pps = new HashMap<String, Object>();
+		if ("home".equalsIgnoreCase(getString("hg"))) {
+			pps.put("teamname", game.getHomeTeam());
+		} else if ("guest".equalsIgnoreCase(getString("hg"))) {
+			pps.put("teamname", game.getGuestTeam());
+		}
+		return impl.selectList(pps);
+	}
+
+	@ResponseBody
+	@RequestMapping("getABList")
+	public List<Game> getABList(@RequestParam Map<String, Object> params) {
+		this.params = params;
+		Map<String, Object> pps = new HashMap<String, Object>();
+		pps.put("aname", getString("aname"));
+		pps.put("bname", getString("bname"));
+		return impl.selectList(pps);
+	}
+
+	@ResponseBody
 	@RequestMapping("update")
 	public void update(@RequestParam Map<String, Object> params) {
 		this.params = params;

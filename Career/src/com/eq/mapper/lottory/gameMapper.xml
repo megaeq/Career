@@ -16,6 +16,13 @@
 			<if test="hometeam!=null">
 			hometeam=#{hometeam} AND
 			</if>
+			<if test="teamname!=null">
+			(hometeam =#{teamname} OR guestteam =#{teamname}) AND
+			</if>
+			<if test="aname!=null and bname!=null">
+			((hometeam=#{aname} AND guestname=#{bname}) 
+			OR(hometeam=#{bname} AND guestname=#{aname})) AND
+			</if>
 			<if test="guestteam!=null">
 			guestteam=#{guestteam} AND
 			</if>
@@ -28,6 +35,7 @@
 			<if test="weather!=null">
 			weather=#{weather} AND
 			</if>
+			
 		</trim>
 		ORDER BY time DESC,id DESC LIMIT 70
 	</select>

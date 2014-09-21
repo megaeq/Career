@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
  .field-edit {
-        width: 150px;
+        width: 200px;
     }
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
@@ -92,6 +92,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                    	dom.byId("guest").innerHTML=object.guestTeam;
 	                    	$("#suggest").val(object.suggest);
 	                    	 $.blockUI({ message: $('#update') });
+	                     }
+	                 }, cell.appendChild(document.createElement("div")));
+ 	            	var btn1 = new Button({
+	                     rowId : object.id,
+	                     label: "往绩",
+	                     onClick: function () {
+	                    	location.href="<%=basePath%>page/lottory/gameHistoryList.jsp?gameId="+object.id;
 	                     }
 	                 }, cell.appendChild(document.createElement("div")));
  	             }
