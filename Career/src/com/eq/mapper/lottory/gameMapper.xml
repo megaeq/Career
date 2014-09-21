@@ -29,7 +29,7 @@
 			weather=#{weather} AND
 			</if>
 		</trim>
-		ORDER BY time DESC LIMIT 140
+		ORDER BY time DESC,id DESC LIMIT 70
 	</select>
 	<select id="one" parameterType="int" resultType="game">
 	SELECT * FROM game WHERE id=#{id}
@@ -97,7 +97,6 @@
 		<if test="guestScore!=null">guestScore=#{guestScore},</if>
 		<if test="weather!=null">weather=#{weather},</if>
 		<if test="result!=null">result=#{result},</if>
-		<if test="time!=null">time=#{time},</if>
 		<if test="suggest!=null">suggest=#{suggest},</if>
 		<if test="lettheball!=null">lettheball=#{lettheball},</if>
 	</trim>

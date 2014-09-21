@@ -34,7 +34,7 @@ public class AccountManage extends BaseAction {
 	public void add(@RequestParam Map<String, Object> params) {
 		this.params = params;
 		Account account = new Account();
-		account.setBalance(0);
+		account.setBalance(getFloat("balance"));
 		account.setBelong(getString("belong"));
 		account.setCreateTime(DateUtil.getNowTime());
 		account.setIsReal(getInt("isReal"));

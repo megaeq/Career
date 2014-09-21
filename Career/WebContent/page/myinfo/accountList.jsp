@@ -66,9 +66,15 @@ function getGrid() {
 	                 }, cell.appendChild(document.createElement("div")));
 	                 var btn3 = new Button({
 	                     rowId : object.id,
-	                     label: "编辑",
+	                     label: "记录",
 	                     onClick: function() {
-	                    	 location.href="<%=basePath%>page/myinfo/accountHistoryList.jsp?accountId="+object.id;
+	                    	 //console.log("##"+object.destinationType);
+	                    	 if(1==object.destinationType||0==object.destinationType) {
+	                    		 location.href="<%=basePath%>page/myinfo/accountHistoryList.jsp?accountId="+object.id;
+	                    	 } else if(2==object.destinationType||3==object.destinationType) {
+	                    		 location.href="<%=basePath%>page/lottory/chip.jsp?accountId="+object.id;
+	                    	 }
+	                    	 
 	                     },
 	                 }, cell.appendChild(document.createElement("div")));
 	             }
@@ -79,9 +85,13 @@ function getGrid() {
 	                		 var div = document.createElement("div");
 	                		 if(0==object.isReal) {
 	                			 div.innerHTML = "虚拟";
-	                		 } else {
+	                		 } else if(1==object.isReal){
 	                			 div.innerHTML ="现实";
-	                		 } 
+	                		 } else if(2==object.isReal) {
+	                			 div.innerHTML ="虚拟彩票";
+	                		 }else if(3==object.isReal) {
+	                			 div.innerHTML ="现实彩票";
+	                		 }
                 		    return div;
 	                	 }},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
@@ -102,7 +112,7 @@ function getGrid() {
      function addinfo() {
     	 
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
-    		 request("account/add",{query:{name:dom.byId("name").value,
+    		 request("account/add",{query:{name:dom.byId("name").value,balance:dom.byId("balance").value,
     			 pwd:dom.byId("pwd").value,belong:dom.byId("belong").value,
     			 isReal:dom.byId("isReal").value}
     			 }).then(function() {

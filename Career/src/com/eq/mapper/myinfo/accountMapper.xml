@@ -7,10 +7,13 @@
 			<if test="belong!=null">belong=#{belong} AND</if>
 			<if test="name!=null">name=LIKE "%"#{name}"%" AND</if>
 		</trim>
-		ORDER BY createTime
+		ORDER BY id
 	</select>
 	<select id="selectone" parameterType="int" resultType="account">
-	SELECT * FROM account WHERE id=#{id} AND pwd=password(#{pwd})
+	SELECT * FROM account WHERE id=#{id}
+	</select>
+	<select id="selectonewithpwd" parameterType="hashmap" resultType="account">
+		SELECT * FROM account WHERE id=#{id} and pwd=password(#{pwd})
 	</select>
 	<insert id="add" parameterType="account" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO account(
@@ -21,6 +24,8 @@
 			<if test="name!=null">name,</if>
 			<if test="pwd!=null">pwd,</if>
 			<if test="isReal!=null">isreal,</if>
+			<if test="destinationId!=null">destinationId,</if>
+			<if test="destinationType!=null">destinationtype,</if>
 		</trim>
 		) VALUES (
 		<trim suffixOverrides=",">
@@ -30,6 +35,8 @@
 			<if test="name!=null">#{name},</if>
 			<if test="pwd!=null">password(#{pwd}),</if>
 			<if test="isReal!=null">#{isReal},</if>
+			<if test="destinationId!=null">#{destinationId},</if>
+			<if test="destinationType!=null">#{destinationtype},</if>
 		</trim>
 		)
 	</insert>
@@ -41,8 +48,23 @@
 			<if test="createTime!=null">createTime=#{createTime},</if>
 			<if test="name!=null">name=#{name},</if>
 			<if test="isReal!=null">isreal=#{isReal},</if>
+			<if test="destinationId!=null">destinationId=#{destinationId},</if>
+			<if test="destinationType!=null">destinationType=#{destinationtype},</if>
 		</trim>
 		WHERE id=#{id} AND pwd=password(#{pwd})
+	</update>
+	<update id="updatewithoutpwd" parameterType="account">
+		UPDATE account SET 
+		<trim suffixOverrides=",">
+			<if test="balance!=null">balance=#{balance},</if>
+			<if test="belong!=null">belong=#{belong},</if>
+			<if test="createTime!=null">createTime=#{createTime},</if>
+			<if test="name!=null">name=#{name},</if>
+			<if test="isReal!=null">isreal=#{isReal},</if>
+			<if test="destinationId!=null">destinationId=#{destinationId},</if>
+			<if test="destinationType!=null">destinationType=#{destinationType},</if>
+		</trim>
+		WHERE id=#{id}
 	</update>
 	<delete id="delete" parameterType="map">
 		DELETE FROM account WHERE id=#{id} AND pwd=password(#{pwd})

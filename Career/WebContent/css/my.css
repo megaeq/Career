@@ -79,5 +79,10 @@
 	position:relative;
 	top:1px;
 }
+.t_area{ 
+width:200px;
+height:100px; 
+overflow-y:visible;
+} 
 
 

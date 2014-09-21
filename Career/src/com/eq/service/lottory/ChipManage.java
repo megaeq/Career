@@ -15,20 +15,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eq.dao.entity.lottory.Bill;
 import com.eq.dao.entity.lottory.Game;
 import com.eq.dao.entity.lottory.GameAndBill;
+import com.eq.dao.entity.myinfo.Account;
+import com.eq.dao.entity.myinfo.AccountHistory;
 import com.eq.dao.impl.lottory.BillImpl;
 import com.eq.dao.impl.lottory.GameAndBillImpl;
 import com.eq.dao.impl.lottory.GameImpl;
+import com.eq.dao.impl.myinfo.AccountHistoryImpl;
+import com.eq.dao.impl.myinfo.AccountImpl;
 import com.eq.util.BaseAction;
+import com.eq.util.DateUtil;
 
 @Controller
 @RequestMapping("page/lottory/chip")
 public class ChipManage extends BaseAction {
 	@Autowired
-	private BillImpl		billImpl;
+	private BillImpl			billImpl;
 	@Autowired
-	private GameAndBillImpl	gbImpl;
+	private GameAndBillImpl		gbImpl;
 	@Autowired
-	private GameImpl		gameImpl;
+	private GameImpl			gameImpl;
+	@Autowired
+	private AccountHistoryImpl	historyImpl;
+	@Autowired
+	private AccountImpl			accountImpl;
 
 	@ResponseBody
 	@RequestMapping("chipin")
@@ -58,11 +67,60 @@ public class ChipManage extends BaseAction {
 		bill.setCluster(chips.length);
 		bill.setSp(m);
 		bill.setTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-		bill.setType("virtual");
+		Account account = accountImpl.selectOne(getInt("accountId"));
+		if (account.getIsReal() == 2) {
+			bill.setType("virtual");
+		} else {
+			bill.setType("real");
+		}
+
 		billImpl.add(bill);
 		for (GameAndBill gb : gbList) {
 			gb.setBillId(bill.getId());
 			gbImpl.add(gb);
 		}
 	}
+
+	@ResponseBody
+	@RequestMapping("addincome")
+	public void add(@RequestParam Map<String, Object> params) {
+		this.params = params;
+		AccountHistory history = new AccountHistory();
+		history.setIncome(getFloat("income"));
+		history.setCost(getFloat("cost"));
+		if (getTimestamp("date") != null) {
+			history.setCreateTime(getTimestamp("date"));
+		} else {
+			history.setCreateTime(DateUtil.getNowTime());
+		}
+
+		history.setMemo(getString("memo"));
+		history.setUsages("彩票投注");
+		history.setAccountId(getInt("accountId"));
+		historyImpl.add(history);
+		// 修改账户余额
+		Account account1 = accountImpl.selectOne(getInt("accountId"));
+		account1.setBalance(account1.getBalance() + getFloat("income")
+				- getFloat("cost"));
+		accountImpl.updateWithoutPwd(account1);
+		// 修改源账户记录
+		AccountHistory history2 = new AccountHistory();
+		history2.setAccountId(account1.getDestinationId());
+		history2.setCost(getFloat("income"));
+		history2.setIncome(getFloat("cost"));
+		if (getTimestamp("date") != null) {
+			history2.setCreateTime(getTimestamp("date"));
+		} else {
+			history2.setCreateTime(DateUtil.getNowTime());
+		}
+		history2.setMemo(getString("memo"));
+		history2.setUsages("彩票投注");
+		historyImpl.add(history2);
+		// 修改源账户余额
+		Account account2 = accountImpl.selectOne(account1.getDestinationId());
+		account2.setBalance(account2.getBalance() - getFloat("income")
+				+ getFloat("cost"));
+		accountImpl.updateWithoutPwd(account2);
+	}
+
 }

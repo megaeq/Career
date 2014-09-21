@@ -8,18 +8,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<%=basePath%>js/jquery/jquery-ui.css">
 <link rel="stylesheet" href="<%=basePath%>js/dojojs/dijit/themes/claro/claro.css">
 <link rel="stylesheet" href="<%=basePath%>css/my.css">
 <link rel="stylesheet" href="<%=basePath%>css/pure.css">
+
 <style type="text/css"> 
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
+ <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-ui.js"></script>
   <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-extension.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript">
+$(function() {
+    $( "#date" ).datepicker();
+    console.log($( "#date" ));
+    $( "#date" ).end();
+  });
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
 function getGrid() {
 	
@@ -149,6 +157,11 @@ function getGrid() {
 <div id="add" style="text-align: center; width: 200px; height: 150px; border;
     1px solid #9cf; padding: 25px; display: none;">
     <table>
+    	<tr>
+    		<td>日期<div style="width:100px;"></div></td>
+    		<td>
+    		<input id = "date" type="text" /> </td>
+    	</tr>
     	<tr>
     		<td>收入<div style="width:100px;"></div></td>
     		<td><input id = "id" type="text" style="display:none" />

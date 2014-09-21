@@ -187,7 +187,7 @@ public class Game extends BaseEntity {
 	}
 
 	public String getTime2() {
-		time2 = DateUtil.getDateStr(time);
+		time2 = DateUtil.getTimeStr(time);
 		return time2;
 	}
 
