@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="articlecomment">
+	<select id="selectlist" parameterType="hashmap" resultType="articlecomment" >
+		SELECT * FROM　article_comment 
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="articleId!=null">articleId=#{articleId} AND</if>
+		</trim>
+		ORDER BY createTime DESC
+	</select>
+	<select id="selectone" parameterType="int" resultType="articlecomment">
+		SELECT * FROM article_comment WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="articlecomment" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO article_comment(
+		<trim suffixOverrides=",">
+			<if test="content!=null">content,</if>
+			<if test="userId!=null">userId,</if>
+			<if test="createTime!=null">createTime,</if>
+			<if test="articleId!=null">articleId,</if>
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			<if test="content!=null">#{content},</if>
+			<if test="userId!=null">#{userId},</if>
+			<if test="createTime!=null">#{createTime},</if>
+			<if test="articleId!=null">#{articleId},</if>
+		</trim>
+		)
+	</insert>
+	<update id="update" parameterType="articlecomment">
+		UPDATE article_comment SET
+		<trim suffixOverrides=",">
+			<if test="content!=null">content=#{content},</if>
+			<if test="userId!=null">userId=#{userId},</if>
+			<if test="createTime!=null">createTime=#{createTime},</if>
+			<if test="articleId!=null">articleId=#{articleId},</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM article_comment WHERE id=#{id}
+	</delete>
+</mapper>

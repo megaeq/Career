@@ -1,17 +1,17 @@
-package com.eq.dao.impl;
+package com.eq.dao.impl.system;
 
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.eq.dao.entity.Property;
+import com.eq.dao.entity.system.Property;
+import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
 
 @Component
 public class PropertyImpl extends BaseDao implements
 		AbstractDao<Property, String> {
-
 
 	public Object selectOne(Map<String, Object> params) {
 		return getSqlSessionTemplate().selectOne("property.select", params);
@@ -30,24 +30,20 @@ public class PropertyImpl extends BaseDao implements
 		return null;
 	}
 
-
 	@Override
-	public int delete(String id)
-	{
+	public int delete(String id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int update(Property entity)
-	{
+	public int update(Property entity) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int add(Property entity)
-	{
+	public int add(Property entity) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

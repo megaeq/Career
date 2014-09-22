@@ -95,6 +95,7 @@ public class AccountHistoryManage extends BaseAction {
 		history.setIncome(getFloat("income"));
 		history.setMemo(getString("memo"));
 		history.setUsages(getString("usages"));
+		history.setCreateTime(getTimestamp("date"));
 		impl.update(history);
 		// 修改账户余额
 		Account account = accountImpl.selectOne(history.getAccountId());

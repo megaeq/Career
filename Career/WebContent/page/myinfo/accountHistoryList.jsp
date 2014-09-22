@@ -21,11 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript">
-$(function() {
-    $( "#date" ).datepicker();
-    console.log($( "#date" ));
-    $( "#date" ).end();
-  });
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
 function getGrid() {
 	
@@ -96,7 +91,8 @@ function getGrid() {
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
     		 request("accountHistory/add",{query:{income:dom.byId("income").value,
     			 cost:dom.byId("cost").value,usages:dom.byId("usages").value,
-    			 accountId:$.getUrlParam('accountId'),memo:dom.byId("memo").value}
+    			 accountId:$.getUrlParam('accountId'),memo:dom.byId("memo").value,
+    			 date:dom.byId("date").value}
     			 }).then(function() {
    				 document.getElementById("list").innerHTML="";
    		    	 getGrid();
@@ -117,7 +113,8 @@ function getGrid() {
        	 require(["dojo/request","dojo/dom",],function(request,dom) {
        		 request("accountHistory/update",{query:{id:dom.byId("id").value,
        			 income:dom.byId("income").value,memo:dom.byId("memo").value,
-    			 cost:dom.byId("cost").value,usages:dom.byId("usages").value}
+    			 cost:dom.byId("cost").value,usages:dom.byId("usages").value,
+    			 date:dom.byId("date").value}
        			 }).then(function() {
       				 document.getElementById("list").innerHTML="";
       		    	 getGrid();

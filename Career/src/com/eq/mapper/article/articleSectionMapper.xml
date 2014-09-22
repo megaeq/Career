@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="articlesection">
+	<select id="selectlist" parameterType="hashmap" resultType="articlesection" >
+		SELECT * FROM article_section WHERE articleId=#{articleId} 
+		ORDER BY createTime
+	</select>
+	<select id="selectone" parameterType="int" resultType="articlesection">
+		SELECT * FROM article_section WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="articlesection" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO article_section (
+		<trim suffixOverrides=",">
+			<if test="title!=null">title,</if>
+			<if test="content!=null">content,</if>
+			<if test="articleId!=null">articleId,</if>
+			<if test="createTime!=null">createTime,</if>
+		</trim>
+		) VALUES(
+		<trim suffixOverrides=",">
+			<if test="title!=null">#{title},</if>
+			<if test="content!=null">#{content},</if>
+			<if test="articleId!=null">#{articleId},</if>
+			<if test="createTime!=null">#{createTime},</if>
+		</trim>
+		)
+	</insert>
+	<update id="update" parameterType="articlesection">
+		UPDATE article_section SET
+		<trim suffixOverrides=",">
+			<if test="title!=null">title=#{title},</if>
+			<if test="content!=null">content=#{content},</if>
+			<if test="articleId!=null">articleId=#{articleId},</if>
+			<if test="createTime!=null">createTime=#{createTime},</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM article_section WHERE id=#{id}
+	</delete>
+</mapper>

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.eq.dao.impl.PropertyImpl;
+import com.eq.dao.impl.system.PropertyImpl;
 
 @Service
 public class BaseAction implements ApplicationContextAware {

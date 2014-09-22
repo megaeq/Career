@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="articletag">
+	<select id="selectlist" parameterType="hashmap" resultType="articletag" >
+		SELECT * FROM article_tag 
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="articleId!=null">articleId=#{articleId} AND</if>
+			<if test="tagName!=null">tagName=#{tagName} AND</if>
+		</trim>
+	</select>
+	<select id="selectone" parameterType="int" resultType="articletag">
+		SELECT * FROM article_tag WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="articletag" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO article_tag(
+		<trim suffixOverrides=",">
+			<if test="articleId!=null">articleId,</if>
+			<if test="tagName!=null">tagName,</if>
+		</trim>
+		) VALUES(
+		<trim suffixOverrides=",">
+			<if test="articleId!=null">#{articleId},</if>
+			<if test="tagName!=null">#{tagName},</if>
+		</trim>
+		)
+	</insert>
+	<update id="update" parameterType="articletag">
+		UPDATE article_tag SET
+		<trim suffixOverrides=",">
+			<if test="articleId!=null">articleId=#{articleId},</if>
+			<if test="tagName!=null">tagName=#{tagName},</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM article_tag WHERE id=#{id}
+	</delete>
+</mapper>
