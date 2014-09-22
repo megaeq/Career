@@ -14,17 +14,18 @@ public class AccountImpl extends BaseDao implements
 		AbstractDao<Account, Integer> {
 
 	@Override
-	public void add(Account entity) {
-		getSqlSessionTemplate().insert("account.add", entity);
+	public int add(Account entity) {
+		return getSqlSessionTemplate().insert("account.add", entity);
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public int delete(Integer id) {
+		return 0;
 	}
 
 	@Override
-	public void update(Account entity) {
-		getSqlSessionTemplate().update("account.update", entity);
+	public int update(Account entity) {
+		return getSqlSessionTemplate().update("account.update", entity);
 	}
 
 	@Override

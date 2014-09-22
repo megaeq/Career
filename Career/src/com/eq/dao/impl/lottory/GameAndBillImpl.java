@@ -14,21 +14,10 @@ public class GameAndBillImpl extends BaseDao implements
 		AbstractDao<GameAndBill, Integer> {
 
 	@Override
-	public void add(GameAndBill entity) {
-		getSqlSessionTemplate().insert("gameAndBill.add", entity);
+	public int add(GameAndBill entity) {
+		return getSqlSessionTemplate().insert("gameAndBill.add", entity);
 	}
 
-	@Override
-	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update(GameAndBill entity) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public List<GameAndBill> selectList(Map<String, Object> params) {
@@ -40,6 +29,22 @@ public class GameAndBillImpl extends BaseDao implements
 	public GameAndBill selectOne(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public int delete(Integer id)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public int update(GameAndBill entity)
+	{
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

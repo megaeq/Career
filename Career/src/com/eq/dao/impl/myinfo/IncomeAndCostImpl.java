@@ -21,19 +21,19 @@ public class IncomeAndCostImpl extends BaseDao implements
 		AbstractDao<IncomeAndCost, Integer> {
 
 	@Override
-	public void add(IncomeAndCost entity) {
-		getSqlSessionTemplate().insert("incomeandcost.add", entity);
+	public int add(IncomeAndCost entity) {
+		return getSqlSessionTemplate().insert("incomeandcost.add", entity);
 
 	}
 
 	@Override
-	public void delete(Integer id) {
-		getSqlSessionTemplate().delete("incomeandcost.delete", id);
+	public int delete(Integer id) {
+		return getSqlSessionTemplate().delete("incomeandcost.delete", id);
 	}
 
 	@Override
-	public void update(IncomeAndCost entity) {
-		getSqlSessionTemplate().update("incomeandcost.update", entity);
+	public int update(IncomeAndCost entity) {
+		return getSqlSessionTemplate().update("incomeandcost.update", entity);
 	}
 
 	@Override

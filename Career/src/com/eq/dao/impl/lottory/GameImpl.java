@@ -13,18 +13,18 @@ import com.eq.dao.inter.AbstractDao;
 public class GameImpl extends BaseDao implements AbstractDao<Game, Integer> {
 
 	@Override
-	public void add(Game entity) {
-		 getSqlSessionTemplate().insert("game.add", entity);
+	public int add(Game entity) {
+		 return getSqlSessionTemplate().insert("game.add", entity);
 	}
 
 	@Override
-	public void delete(Integer id) {
-		getSqlSessionTemplate().delete("game.delete", id);
+	public int delete(Integer id) {
+		return getSqlSessionTemplate().delete("game.delete", id);
 	}
 
 	@Override
-	public void update(Game entity) {
-		getSqlSessionTemplate().update("game.update", entity);
+	public int update(Game entity) {
+		return getSqlSessionTemplate().update("game.update", entity);
 	}
 
 	@Override

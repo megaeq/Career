@@ -12,17 +12,6 @@ import com.eq.dao.inter.AbstractDao;
 public class PropertyImpl extends BaseDao implements
 		AbstractDao<Property, String> {
 
-	@Override
-	public void delete(String key) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update(Property entity) {
-		// TODO Auto-generated method stub
-
-	}
 
 	public Object selectOne(Map<String, Object> params) {
 		return getSqlSessionTemplate().selectOne("property.select", params);
@@ -41,9 +30,26 @@ public class PropertyImpl extends BaseDao implements
 		return null;
 	}
 
+
 	@Override
-	public void add(Property entity) {
+	public int delete(String id)
+	{
 		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(Property entity)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int add(Property entity)
+	{
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

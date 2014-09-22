@@ -13,18 +13,18 @@ import com.eq.dao.inter.AbstractDao;
 public class BillImpl extends BaseDao implements AbstractDao<Bill, Integer> {
 
 	@Override
-	public void add(Bill entity) {
-		getSqlSessionTemplate().insert("bill.add", entity);
+	public int add(Bill entity) {
+		return getSqlSessionTemplate().insert("bill.add", entity);
 	}
 
 	@Override
-	public void delete(Integer id) {
-		getSqlSessionTemplate().delete("bill.delete", id);
+	public int delete(Integer id) {
+		return getSqlSessionTemplate().delete("bill.delete", id);
 	}
 
 	@Override
-	public void update(Bill entity) {
-		getSqlSessionTemplate().update("bill.update", entity);
+	public int update(Bill entity) {
+		return getSqlSessionTemplate().update("bill.update", entity);
 	}
 
 	@Override

@@ -13,21 +13,21 @@ public class AccountHistoryImpl extends BaseDao implements AbstractDao<AccountHi
 {
 
 	@Override
-	public void add(AccountHistory entity)
+	public int add(AccountHistory entity)
 	{
-		getSqlSessionTemplate().insert("accounthistory.add", entity);
+		return getSqlSessionTemplate().insert("accounthistory.add", entity);
 	}
 
 	@Override
-	public void delete(Integer id)
+	public int delete(Integer id)
 	{
-		getSqlSessionTemplate().delete("accounthistory.delete", id);
+		return getSqlSessionTemplate().delete("accounthistory.delete", id);
 	}
 
 	@Override
-	public void update(AccountHistory entity)
+	public int update(AccountHistory entity)
 	{
-		getSqlSessionTemplate().update("accounthistory.update", entity);
+		return getSqlSessionTemplate().update("accounthistory.update", entity);
 	}
 
 	@Override

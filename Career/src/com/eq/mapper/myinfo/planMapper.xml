@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="plan">
+	<select id="selectlist" parameterType="hashmap" resultType="plan" >
+		SELECT * FROM plan WHERE isDel=0
+		<trim>
+			<if test="type!=null">AND type=#{type}</if>
+		</trim>
+		ORDER BY level ,createTime 
+	</select>
+	<select id="selectone" parameterType="int" resultType="plan">
+		SELECT * FROM plan WHERE id=#{id} AND isDel=0
+	</select>
+	<insert id="add" parameterType="plan" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO plan(
+		<trim suffixOverrides=",">
+			<if test="type!=null">type,</if>
+			<if test="name!=null">name,</if>
+			<if test="memo!=null">memo,</if>
+			<if test="createTime!=null">createtime,</if>
+			<if test="level!=null">level,</if>
+			<if test="complete!=null">complete,</if>
+			<if test="isDel!=null">isDel,</if>
+		</trim>
+		) VALUES(
+		<trim suffixOverrides=",">
+			<if test="type!=null">#{type},</if>
+			<if test="name!=null">#{name},</if>
+			<if test="memo!=null">#{memo},</if>
+			<if test="createTime!=null">#{createTime},</if>
+			<if test="level!=null">#{level},</if>
+			<if test="complete!=null">#{complete},</if>
+			<if test="isDel!=null">#{isDel},</if>
+		</trim>
+		) 
+	</insert>
+	<update id="update" parameterType="plan">
+		UPDATE plan SET 
+		<trim>
+			<if test="type!=null">type=#{type},</if>
+			<if test="name!=null">name=#{name},</if>
+			<if test="memo!=null">memo=#{memo},</if>
+			<if test="createTime!=null">createTime=#{createTime},</if>
+			<if test="level!=null">level=#{level},</if>
+			<if test="complete!=null">complete=#{complete},</if>
+			<if test="isDel!=null">isDel=#{isDel},</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		
+	</delete>
+</mapper>
