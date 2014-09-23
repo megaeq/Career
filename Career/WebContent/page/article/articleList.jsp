@@ -11,6 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="<%=basePath%>js/dojojs/dijit/themes/claro/claro.css">
 <link rel="stylesheet" href="<%=basePath%>css/my.css">
 <link rel="stylesheet" href="<%=basePath%>css/pure.css">
+<link rel="stylesheet" href="<%=basePath%>css/blog.css">
 <style type="text/css"> 
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
@@ -36,12 +37,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	        "dijit/form/Button"
  	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button) {
  	         request("getList", {
- 	             handleAs: "json"
+ 	             handleAs: "json",query:{userId:1}
  	         }).then(function (response) {
  	        	 console.log(response);
  	        	 for(var i=0;i<response.length;i++) {
- 	        		 console.log(response[i]);
- 	        		 console.log(response[i].title);
+ 	        		 
  	        	 }
  	             var store = new Memory({ data: response });
  	             console.log(store);
@@ -110,20 +110,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     required="true" />
     <button data-dojo-type="dijit/form/Button" onclick="change()">查询</button>
 </div>
-<div id="list"></div>
-<br>
-<div id="chipList">
-<table id="chiptable" class="pure-table pure-table-bordered">
-<thead>
-<tr>
-	<th width="100px">编号</th><th width="100px">主队</th>
-	<th width="100px">平</th><th width="100px">客队</th>
-</tr>
-</thead>
-<tbody id="tbody"></tbody>
-</table>
-<input type="text" id="money" placeHolder="投注额">
-<button data-dojo-type="dijit/form/Button" onclick="chipin()">投注</button>
+<div id="layout" class="pure-g">
+   
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            <!-- A wrapper for all the blog posts -->
+            <div class="posts">
+                <h1 class="content-subhead">Pinned Post</h1>
+
+                <!-- A single blog post -->
+                <section class="post">
+                    <header class="post-header">
+                        <img class="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="img/common/tilo-avatar.png">
+
+                        <h2 class="post-title">Introducing Pure</h2>
+
+                        <p class="post-meta">
+                            By <a href="#" class="post-author">Tilo Mitra</a> under <a class="post-category post-category-design" href="#">CSS</a> <a class="post-category post-category-pure" href="#">Pure</a>
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+                            Yesterday at CSSConf, we launched Pure – a new CSS library. Phew! Here are the <a href="https://speakerdeck.com/tilomitra/pure-bliss">slides from the presentation</a>. Although it looks pretty minimalist, we’ve been working on Pure for several months. After many iterations, we have released Pure as a set of small, responsive, CSS modules that you can use in every web project.
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+            
+
+            <div class="footer">
+                <div class="pure-menu pure-menu-horizontal pure-menu-open">
+                    <ul>
+                        <li><a href="http://purecss.io/">About</a></li>
+                        <li><a href="http://twitter.com/yuilibrary/">Twitter</a></li>
+                        <li><a href="http://github.com/yahoo/pure/">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="update" style="text-align: center; width: 200px; height: 180px; border;
     1px solid #9cf; padding: 25px; display: none;">

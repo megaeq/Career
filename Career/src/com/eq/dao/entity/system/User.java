@@ -14,6 +14,7 @@ public class User extends BaseEntity {
 	private String				name;
 	private String				pwd;
 	private Timestamp			createTime;
+	private String				imagePath;
 
 	public int getId() {
 		return id;
@@ -45,6 +46,14 @@ public class User extends BaseEntity {
 
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 }

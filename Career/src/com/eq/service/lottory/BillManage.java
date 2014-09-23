@@ -1,5 +1,6 @@
 package com.eq.service.lottory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,9 +90,47 @@ public class BillManage extends BaseAction {
 			impl.update(bill);
 			return "success";
 		} else if (complete && !success) {
+			Bill bill = impl.selectOne(getInt("billId"));
+			bill.setFlag(1);
+			impl.update(bill);
 			return "success,no profit";
 		} else {
 			return "game not finish,can not clearing";
 		}
+	}
+
+	@ResponseBody
+	@RequestMapping("detail")
+	public List<Map<String, Object>> detail(int billId) {
+		Map<String, Object> pps = new HashMap<String, Object>();
+		pps.put("billId", billId);
+		List<GameAndBill> gbList = gbImpl.selectList(pps);
+		List<Map<String, Object>> response = new ArrayList<Map<String, Object>>();
+		for (GameAndBill gb : gbList) {
+			Game game = gameImpl.selectOne(gb.getGameId());
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("homeTeam", game.getHomeTeam());
+			map.put("guestTeam", game.getGuestTeam());
+			map.put("homeScore", game.getHomeScore());
+			map.put("guestScore", game.getGuestScore());
+			map.put("bet", gb.getBet());
+			int res = 0;
+			if (game.getHomeScore() > game.getGuestScore()) {
+				res = 3;
+				map.put("sp", game.getWinRate());
+			} else if (game.getHomeScore() == game.getGuestScore()) {
+				res = 1;
+				map.put("sp", game.getDrawRate());
+			} else {
+				map.put("sp", game.getLoseRate());
+			}
+			if (gb.getBet() == res) {
+				map.put("win", true);
+			} else {
+				map.put("win", false);
+			}
+			response.add(map);
+		}
+		return response;
 	}
 }

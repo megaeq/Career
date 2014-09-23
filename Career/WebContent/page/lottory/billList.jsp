@@ -52,6 +52,31 @@ function getGrid() {
 		                     }
 		                 }, cell.appendChild(document.createElement("div")));
 	            	 }
+	            	 var btn1 = new Button({
+	                     rowId : object.id,
+	                     label: "详情",
+	                     onClick: function () {
+	                         request("bill/detail",{handleAs: "json",
+	                        	 query:{billId:object.id}}).then(function(response) {
+	                        	 document.getElementById("detailbody").innerHTML="";
+	                        	 for(var i=0;i<response.length;i++) {
+	                        		if(response[i].win) {
+	                        			document.getElementById("detailbody").innerHTML+=
+	                        				 "<tr><td>"+response[i].homeTeam+" - "+response[i].guestTeam+"</td><td>"+
+		                        			 response[i].homeScore+" - "+response[i].guestScore+"</td>"+
+	                        			"<td style='color:#149e30;'>"+response[i].sp+"</td><td style='color:#149e30;'>"+response[i].bet+"</td></tr>"
+	                        		} else {
+	                        			document.getElementById("detailbody").innerHTML+=
+	                        				 "<tr><td>"+response[i].homeTeam+" - "+response[i].guestTeam+"</td><td>"+
+		                        			 response[i].homeScore+" - "+response[i].guestScore+"</td>"+
+		                        			"<td>"+response[i].sp+"</td><td>"+response[i].bet+"</td></tr>"
+	                        		}
+	                        			 
+	                        	 }
+	                			 $.blockUI({ message: $('#detail') });
+	                         })
+	                     }
+	                 }, cell.appendChild(document.createElement("div")));
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
@@ -119,12 +144,6 @@ function getGrid() {
      
      function divclose() {
     	 $.unblockUI();
-    	 clearclean();
-     }
-     function openAddDiv() {
-    	 $("#addButton").show();
-    	 $("#updateButton").hide();
-    	 $.blockUI({ message: $('#add') });
      }
 </script>
 </head>
@@ -142,38 +161,12 @@ function getGrid() {
     <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
 </div>
 <div id="list"></div>
-<div id="add" style="text-align: center; width: 200px; height: 150px; border;
+<div id="detail" style="text-align: center; width: 400px; height: 150px; border;
     1px solid #9cf; padding: 25px; display: none;">
-    <table>
-    	<tr>
-    		<td>名称<div style="width:100px;"></div></td>
-    		<td><input id = "id" type="text" style="display:none" />
-    		<input id = "name" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
-    	</tr>
-    	<tr>
-    		<td>密码</td>
-    		<td><input id = "pwd" type="password" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
-    	</tr>
-    	<tr>
-    		<td>所属机构</td>
-    		<td><input id = "belong" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
-    	</tr>
-    	<tr>
-    		<td>余额</td>
-    		<td><div><input id="balance" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/></div></td>
-    	</tr>
-    	<tr>
-    		<td>账户类型</td>
-    		<td><input id = "isReal" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
-    	</tr>
-    	
-    	<tr>
-    		<td></td>
-    		<td><button id="addButton" class="greyButton" onclick="addinfo()">添加</button>
-    		<button id="updateButton" class="greyButton" onclick="updateInfo()">更新</button>
-    		<button  class="greyButton" onclick="divclose()">取消</button></td>
-    	</tr>
+    <table id="detailtable">
+    <tbody id="detailbody"></tbody>
     </table>
+    <button  class="greyButton" onclick="divclose()">取消</button>
 </div>
 </body>
 </html>

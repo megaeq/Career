@@ -22,7 +22,7 @@
 			<if test="type!=null">type,</if>
 			<if test="cluster!=null">cluster,</if>
 			<if test="time!=null">time,</if>
-			<if test="isdel!=null">isdel,</if>
+			<if test="isDel!=null">isdel,</if>
 			<if test="flag!=null">flag,</if>
 			<if test="accountId!=null">accountid,</if>
 		</trim>
