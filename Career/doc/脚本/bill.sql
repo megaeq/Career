@@ -143,7 +143,7 @@ CREATE TABLE `account_history` (
   `usages` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-2014/09/22 周一 21:29:59.25
+--2014/09/22 周一 21:29:59.25
 CREATE TABLE `article` (
   `id` int(11) NOT NULL,
   `title` varchar(100) DEFAULT NULL,
@@ -181,6 +181,18 @@ CREATE TABLE `user` (
   `name` varchar(20) DEFAULT NULL,
   `createTime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `pwd` blob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- 2014/09/23 周二9:21:31.53
+CREATE TABLE `plan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `memo` varchar(1000) DEFAULT NULL COMMENT '备注',
+  `createtime` timestamp NULL DEFAULT NULL,
+  `level` int(2) DEFAULT NULL COMMENT '级别，数字越小，级别越高',
+  `complete` int(11) DEFAULT '0' COMMENT '完成度，100%',
+  `isDel` tinyint(1) DEFAULT '0' COMMENT '1为已删除，0为未删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
