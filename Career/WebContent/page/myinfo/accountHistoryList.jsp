@@ -32,9 +32,30 @@ function getGrid() {
 	         "dgrid/OnDemandGrid",
 	         "dgrid/extensions/Pagination",
 	         "dijit/form/Button",
-	         'dojo/dom-style' 
-	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle) {
-	         request("accountHistory/getList", {
+	         'dojo/dom-style',
+	         "dijit/form/Select",
+	         "dojo/data/ObjectStore",
+	         "dojo/store/Memory"
+	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle,Select,ObjectStore,Memory) {
+		request("accountHistory/getAccountList"
+      			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
+      				console.log(response);
+      				 var store = new Memory({
+      				    data: response
+      				  });
+
+      				  var os = new ObjectStore({ objectStore: store });
+
+      				  var s = new Select({
+      				    store: os
+      				  }, "selectList");
+      				  s.startup();
+
+      				  s.on("change", function(){
+      				      console.log("my value: ", this.get("value"))
+      				  })
+      	 })     
+		request("accountHistory/getList", {
 	             handleAs: "json",query:{accountId:$.getUrlParam('accountId')}
 	         }).then(function (response) {
 	             var store = new Memory({ data: response });
@@ -63,6 +84,24 @@ function getGrid() {
 	                    	 $("#memo").val(object.memo);
 	                    	 $("#addButton").hide();
 	                       	 $("#updateButton").show();
+	                       	 request("accountHistory/getAccountList"
+	                       			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
+	                       				console.log(response);
+	                       				 var store = new Memory({
+	                       				    data: response
+	                       				  });
+
+	                       				  var os = new ObjectStore({ objectStore: store });
+
+	                       				  var s = new Select({
+	                       				    store: os
+	                       				  }, "destinationList");
+	                       				  s.startup();
+
+	                       				  s.on("change", function(){
+	                       				      console.log("my value: ", this.get("value"))
+	                       				  })
+	                       	 })
 	                       	 $.blockUI({ message: $('#add') });
 	                     },
 	                 }, cell.appendChild(document.createElement("div")));
@@ -145,6 +184,7 @@ function getGrid() {
 	<input type="text" id="endDate" 
     data-dojo-type="dijit/form/DateTextBox"
     required="true" />
+    selectList:<div id="selectList"></div>
     <button data-dojo-type="dijit/form/Button">查询</button>
     <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
 </div>
@@ -173,6 +213,10 @@ function getGrid() {
     	<tr>
     		<td>备注</td>
     		<td><div><input id="memo" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/></div></td>
+    	</tr>
+    	<tr>
+    		<td>目标</td>
+    		<td><div id="destinationList"></div></td>
     	</tr>
     	<tr>
     		<td></td>

@@ -6,6 +6,7 @@
 		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="belong!=null">belong=#{belong} AND</if>
 			<if test="name!=null">name=LIKE "%"#{name}"%" AND</if>
+			<if test="destinationId!=null">destinationId=#{destinationId} AND</if>
 		</trim>
 		ORDER BY id
 	</select>

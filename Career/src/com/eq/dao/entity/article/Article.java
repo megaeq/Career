@@ -3,6 +3,7 @@ package com.eq.dao.entity.article;
 import java.sql.Timestamp;
 
 import com.eq.dao.entity.BaseEntity;
+import com.eq.util.DateUtil;
 
 public class Article extends BaseEntity {
 
@@ -16,6 +17,7 @@ public class Article extends BaseEntity {
 	private int					userId;
 	private int					isDel;
 	private Timestamp			createTime;
+	private String				time;
 	private String				type;
 
 	public int getId() {
@@ -72,6 +74,15 @@ public class Article extends BaseEntity {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getTime() {
+		time = DateUtil.getTimeStr(createTime);
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 }

@@ -3,10 +3,13 @@ package com.eq.dao.impl.system;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.eq.dao.entity.system.User;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
 
+@Component
 public class UserImpl extends BaseDao implements AbstractDao<User, Integer> {
 
 	@Override

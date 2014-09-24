@@ -12,16 +12,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="<%=basePath%>css/my.css">
 <link rel="stylesheet" href="<%=basePath%>css/pure.css">
 <link rel="stylesheet" href="<%=basePath%>css/blog.css">
-<style type="text/css"> 
- @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
- @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
- .field-edit {
-        width: 200px;
-    }
- </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
   <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-extension.js"></script>
+ <script type="text/javascript" src="<%=basePath%>js/blog.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
  <script type="text/javascript">
  require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
@@ -39,13 +33,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         request("getList", {
  	             handleAs: "json",query:{userId:1}
  	         }).then(function (response) {
- 	        	 console.log(response);
  	        	 for(var i=0;i<response.length;i++) {
- 	        		 
+ 	        		dom.byId("articlesection").innerHTML+=getArticleHeadDiv(response[i]);
  	        	 }
- 	             var store = new Memory({ data: response });
- 	             console.log(store);
- 	             
  	         });
  	     });
  }
@@ -114,42 +104,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    
 
     <div class="content pure-u-1 pure-u-md-3-4">
-        <div>
+        <div id="articlesection">
             <!-- A wrapper for all the blog posts -->
-            <div class="posts">
-                <h1 class="content-subhead">Pinned Post</h1>
-
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <img class="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="img/common/tilo-avatar.png">
-
-                        <h2 class="post-title">Introducing Pure</h2>
-
-                        <p class="post-meta">
-                            By <a href="#" class="post-author">Tilo Mitra</a> under <a class="post-category post-category-design" href="#">CSS</a> <a class="post-category post-category-pure" href="#">Pure</a>
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p>
-                            Yesterday at CSSConf, we launched Pure – a new CSS library. Phew! Here are the <a href="https://speakerdeck.com/tilomitra/pure-bliss">slides from the presentation</a>. Although it looks pretty minimalist, we’ve been working on Pure for several months. After many iterations, we have released Pure as a set of small, responsive, CSS modules that you can use in every web project.
-                        </p>
-                    </div>
-                </section>
-            </div>
-
-            
-
-            <div class="footer">
-                <div class="pure-menu pure-menu-horizontal pure-menu-open">
-                    <ul>
-                        <li><a href="http://purecss.io/">About</a></li>
-                        <li><a href="http://twitter.com/yuilibrary/">Twitter</a></li>
-                        <li><a href="http://github.com/yahoo/pure/">GitHub</a></li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </div>

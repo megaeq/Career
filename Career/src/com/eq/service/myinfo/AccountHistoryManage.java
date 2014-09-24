@@ -1,5 +1,6 @@
 package com.eq.service.myinfo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eq.dao.entity.myinfo.Account;
 import com.eq.dao.entity.myinfo.AccountHistory;
+import com.eq.dao.entity.system.Select;
 import com.eq.dao.impl.myinfo.AccountHistoryImpl;
 import com.eq.dao.impl.myinfo.AccountImpl;
 import com.eq.util.BaseAction;
@@ -76,6 +78,30 @@ public class AccountHistoryManage extends BaseAction {
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("accountId", getInt("accountId"));
 		return impl.selectList(pps);
+	}
+
+	@ResponseBody
+	@RequestMapping("getAccountList")
+	public List<Select> getAccountList(int accountId) {
+		Account account = accountImpl.selectOne(accountId);
+		Map<String, Object> pps = new HashMap<String, Object>();
+		pps.put("destinationId", account.getDestinationId());
+		List<Account> accountList = accountImpl.selectList(pps);
+		accountList.remove(account);
+		accountList.add(accountImpl.selectOne(account.getDestinationId()));
+		List<Select> selectList = new ArrayList<Select>();
+		for (Account acc : accountList) {
+			Select select = new Select();
+			select.setId(acc.getId() + "");
+			select.setLabel(acc.getName());
+			selectList.add(select);
+		}
+		Select select = new Select();
+		select.setId("");
+		select.setLabel("不限");
+		select.setSelected(true);
+		selectList.add(select);
+		return selectList;
 	}
 
 	@ResponseBody
