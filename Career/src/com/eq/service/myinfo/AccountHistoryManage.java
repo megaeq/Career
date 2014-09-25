@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +70,47 @@ public class AccountHistoryManage extends BaseAction {
 		account2.setBalance(account2.getBalance() - getFloat("income")
 				+ getFloat("cost"));
 		accountImpl.updateWithoutPwd(account2);
+		//
+		if (StringUtils.isNotBlank(getString("destinationId"))) {
+			AccountHistory history3 = new AccountHistory();
+			history3.setIncome(getFloat("cost"));
+			history3.setCost(getFloat("income"));
+			if (getTimestamp("date") != null) {
+				history3.setCreateTime(getTimestamp("date"));
+			} else {
+				history3.setCreateTime(DateUtil.getNowTime());
+			}
+
+			history3.setMemo(getString("memo"));
+			history3.setUsages(getString("usages"));
+			history3.setAccountId(getInt("destinationId"));
+			impl.add(history3);
+			// 修改账户余额
+			Account account3 = accountImpl.selectOne(getInt("destinationId"));
+			account3.setBalance(account3.getBalance() + getFloat("cost")
+					- getFloat("income"));
+			accountImpl.updateWithoutPwd(account3);
+			// 修改源账户记录
+			AccountHistory history4 = new AccountHistory();
+			history4.setAccountId(account3.getDestinationId());
+			history4.setCost(getFloat("cost"));
+			history4.setIncome(getFloat("income"));
+			if (getTimestamp("date") != null) {
+				history4.setCreateTime(getTimestamp("date"));
+			} else {
+				history4.setCreateTime(DateUtil.getNowTime());
+			}
+			history4.setMemo(getString("memo"));
+			history4.setUsages(getString("usages"));
+			impl.add(history4);
+			// 修改源账户余额
+			Account account4 = accountImpl.selectOne(account3
+					.getDestinationId());
+			account4.setBalance(account4.getBalance() + getFloat("income")
+					- getFloat("cost"));
+			accountImpl.updateWithoutPwd(account4);
+		}
+
 	}
 
 	@ResponseBody
@@ -87,10 +129,14 @@ public class AccountHistoryManage extends BaseAction {
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("destinationId", account.getDestinationId());
 		List<Account> accountList = accountImpl.selectList(pps);
-		accountList.remove(account);
-		accountList.add(accountImpl.selectOne(account.getDestinationId()));
-		List<Select> selectList = new ArrayList<Select>();
+		List<Account> accountList2 = new ArrayList<Account>();
 		for (Account acc : accountList) {
+			if (acc.getId() != account.getId()) {
+				accountList2.add(acc);
+			}
+		}
+		List<Select> selectList = new ArrayList<Select>();
+		for (Account acc : accountList2) {
 			Select select = new Select();
 			select.setId(acc.getId() + "");
 			select.setLabel(acc.getName());
@@ -117,15 +163,17 @@ public class AccountHistoryManage extends BaseAction {
 		AccountHistory history = impl.selectOne(getInt("id"));
 		float change = (history.getCost() - getFloat("cost"))
 				- (history.getIncome() - getFloat("income"));
-		history.setCost(getFloat("cost"));
-		history.setIncome(getFloat("income"));
+		// history.setCost(getFloat("cost"));
+		// history.setIncome(getFloat("income"));
 		history.setMemo(getString("memo"));
 		history.setUsages(getString("usages"));
 		history.setCreateTime(getTimestamp("date"));
 		impl.update(history);
 		// 修改账户余额
-		Account account = accountImpl.selectOne(history.getAccountId());
-		account.setBalance(account.getBalance() + change);
-		accountImpl.updateWithoutPwd(account);
+		/*
+		 * Account account = accountImpl.selectOne(history.getAccountId());
+		 * account.setBalance(account.getBalance() + change);
+		 * accountImpl.updateWithoutPwd(account);
+		 */
 	}
 }

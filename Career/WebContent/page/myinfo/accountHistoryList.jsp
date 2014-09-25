@@ -20,6 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-extension.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
+<script type="text/javascript" src="<%=basePath%>js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
 function getGrid() {
@@ -82,25 +83,12 @@ function getGrid() {
 	                    	 $("#cost").val(object.cost);
 	                    	 $("#usages").val(object.usages);
 	                    	 $("#memo").val(object.memo);
+	                    	 $("#date").val(object.time);
 	                    	 $("#addButton").hide();
 	                       	 $("#updateButton").show();
 	                       	 request("accountHistory/getAccountList"
 	                       			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
-	                       				console.log(response);
-	                       				 var store = new Memory({
-	                       				    data: response
-	                       				  });
-
-	                       				  var os = new ObjectStore({ objectStore: store });
-
-	                       				  var s = new Select({
-	                       				    store: os
-	                       				  }, "destinationList");
-	                       				  s.startup();
-
-	                       				  s.on("change", function(){
-	                       				      console.log("my value: ", this.get("value"))
-	                       				  })
+									$.addSelect("destinationList","accountSelect",response)	                       				
 	                       	 })
 	                       	 $.blockUI({ message: $('#add') });
 	                     },
@@ -131,7 +119,7 @@ function getGrid() {
     		 request("accountHistory/add",{query:{income:dom.byId("income").value,
     			 cost:dom.byId("cost").value,usages:dom.byId("usages").value,
     			 accountId:$.getUrlParam('accountId'),memo:dom.byId("memo").value,
-    			 date:dom.byId("date").value}
+    			 date:dom.byId("date").value,destinationId:dom.byId("accountSelect").value}
     			 }).then(function() {
    				 document.getElementById("list").innerHTML="";
    		    	 getGrid();
@@ -153,7 +141,7 @@ function getGrid() {
        		 request("accountHistory/update",{query:{id:dom.byId("id").value,
        			 income:dom.byId("income").value,memo:dom.byId("memo").value,
     			 cost:dom.byId("cost").value,usages:dom.byId("usages").value,
-    			 date:dom.byId("date").value}
+    			 date:dom.byId("date").value,destinationId:dom.byId("accountSelect").value}
        			 }).then(function() {
       				 document.getElementById("list").innerHTML="";
       		    	 getGrid();
@@ -170,6 +158,15 @@ function getGrid() {
      function openAddDiv() {
     	 $("#addButton").show();
     	 $("#updateButton").hide();
+    	 require([
+    		         "dojo/request",
+    		     ], function (request) {
+    		 request("accountHistory/getAccountList"
+          			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
+    				$.addSelect("destinationList","accountSelect",response)	                       				
+          	 })
+    	 })
+    	
     	 $.blockUI({ message: $('#add') });
      }
 </script>
@@ -184,7 +181,6 @@ function getGrid() {
 	<input type="text" id="endDate" 
     data-dojo-type="dijit/form/DateTextBox"
     required="true" />
-    selectList:<div id="selectList"></div>
     <button data-dojo-type="dijit/form/Button">查询</button>
     <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
 </div>
@@ -193,9 +189,13 @@ function getGrid() {
     1px solid #9cf; padding: 25px; display: none;">
     <table>
     	<tr>
-    		<td>日期<div style="width:100px;"></div></td>
+    		<td>日期<div style="width:100px;">
+    		
+    		</div></td>
     		<td>
-    		<input id = "date" type="text" /> </td>
+    			<input id="date" type="text" style="width:150px;"/>
+    		<img onclick="WdatePicker({el:'date',dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="<%=basePath%>js/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+    		</td>
     	</tr>
     	<tr>
     		<td>收入<div style="width:100px;"></div></td>
