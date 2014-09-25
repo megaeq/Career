@@ -5,6 +5,7 @@
 		SELECT * FROM plan WHERE isDel=0
 		<trim>
 			<if test="type!=null">AND type=#{type}</if>
+			<if test="userId!=null">AND userid=#{userId}</if>
 		</trim>
 		ORDER BY level ,createTime 
 	</select>
@@ -21,6 +22,7 @@
 			<if test="level!=null">level,</if>
 			<if test="complete!=null">complete,</if>
 			<if test="isDel!=null">isDel,</if>
+			<if test="userId!=null">userId,</if>
 		</trim>
 		) VALUES(
 		<trim suffixOverrides=",">
@@ -31,6 +33,7 @@
 			<if test="level!=null">#{level},</if>
 			<if test="complete!=null">#{complete},</if>
 			<if test="isDel!=null">#{isDel},</if>
+			<if test="userId!=null">#{userId},</if>
 		</trim>
 		) 
 	</insert>
@@ -44,6 +47,7 @@
 			<if test="level!=null">level=#{level},</if>
 			<if test="complete!=null">complete=#{complete},</if>
 			<if test="isDel!=null">isDel=#{isDel},</if>
+			<if test="userId!=null">userId=#{userId},</if>
 		</trim>
 		WHERE id=#{id}
 	</update>

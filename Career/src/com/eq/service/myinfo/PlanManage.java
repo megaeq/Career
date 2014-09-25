@@ -26,6 +26,7 @@ public class PlanManage extends BaseAction {
 	public List<Plan> getList(@RequestParam Map<String, Object> params) {
 		this.params = params;
 		Map<String, Object> pps = new HashMap<String, Object>();
+		pps.put("userId", getInt("userId"));
 		return impl.selectList(pps);
 	}
 
@@ -45,6 +46,8 @@ public class PlanManage extends BaseAction {
 		plan.setMemo(getString("memo"));
 		plan.setName(getString("name"));
 		plan.setType(getString("type"));
+		plan.setComplete(getInt("complete"));
+		plan.setUserId(getInt("userId"));
 		if (1 == impl.add(plan)) {
 			return "success";
 		} else {
@@ -69,11 +72,17 @@ public class PlanManage extends BaseAction {
 	@RequestMapping("update")
 	public String update(@RequestParam Map<String, Object> params) {
 		this.params = params;
-		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("id", getInt("id"));
-		pps.put("type", getString("type"));
-		pps.put("name", getString("name"));
-		return "";
+		Plan plan = impl.selectOne(getInt("id"));
+		plan.setComplete(getInt("complate"));
+		plan.setLevel(getInt("level"));
+		plan.setMemo(getString("memo"));
+		plan.setName(getString("name"));
+		plan.setType(getString("type"));
+		if (impl.update(plan) == 1) {
+			return "success";
+		} else {
+			return "failure";
+		}
 	}
 
 }
