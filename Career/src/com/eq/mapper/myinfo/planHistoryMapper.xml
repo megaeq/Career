@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="planhistory">
+	<select id="selectlist" parameterType="hashmap" resultType="planhistory" >
+		SELECT * FROM plan_history WHERE planid=#{planId}
+	</select>
+	<select id="selectone" parameterType="int" resultType="planhistory">
+		SELECT * FROM plan_history WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="planhistory" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO plan_history(
+		<trim suffixOverrides=",">
+			<if test="createTime!=null">createTime,</if>
+			<if test="planId!=null">planid,</if>
+			<if test="type!=null">type,</if>
+			<if test="memo!=null">memo,</if>
+		</trim>
+		) VALUES(
+		<trim suffixOverrides=",">
+			<if test="createTime!=null">#{createTime},</if>
+			<if test="planId!=null">#{planid},</if>
+			<if test="type!=null">#{type},</if>
+			<if test="memo!=null">#{memo),</if>
+		</trim>
+		)
+	</insert>
+	<update id="update" parameterType="planhistory">
+		UPDATE plan_history SET 
+		<trim suffixOverrides=",">
+			<if test="createTime!=null">createtime=#{createTime},</if>
+			<if test="planId!=null">planid=#{planid},</if>
+			<if test="type!=null">type=#{type},</if>
+			<if test="memo!=null">memo=#{memo),</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM plan_history WHERE id=#{id}
+	</delete>
+</mapper>

@@ -195,6 +195,15 @@ CREATE TABLE `plan` (
   `isDel` tinyint(1) DEFAULT '0' COMMENT '1为已删除，0为未删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- 2014/09/25 周四8:42:56.08
+CREATE TABLE `plan_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `createtime` timestamp NULL DEFAULT NULL,
+  `planid` int(11) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL COMMENT '变更类型',
+  `memo` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 

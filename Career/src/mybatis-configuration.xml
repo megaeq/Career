@@ -13,6 +13,7 @@
         <typeAlias alias="account" type="com.eq.dao.entity.myinfo.Account"/> 
         <typeAlias alias="accounthistory" type="com.eq.dao.entity.myinfo.AccountHistory"/> 
         <typeAlias alias="plan" type="com.eq.dao.entity.myinfo.Plan"/> 
+        <typeAlias alias="planhistory" type="com.eq.dao.entity.myinfo.PlanHistory"/> 
         
         <typeAlias alias="article" type="com.eq.dao.entity.article.Article"/> 
         <typeAlias alias="articlecomment" type="com.eq.dao.entity.article.ArticleComment"/> 
