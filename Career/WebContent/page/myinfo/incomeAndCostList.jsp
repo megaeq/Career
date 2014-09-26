@@ -48,7 +48,7 @@ function getGrid() {
 	             }, "grid"); */
 	             var actionRenderCell = function (object, data,cell) {
 	            	 //console.log(object);
-	            	 console.log(cell);
+	            	// console.log(cell);
 	                 var btnDelete = new Button({
 	                     rowId : object.id,
 	                     label: "删除",
@@ -105,6 +105,7 @@ function getGrid() {
 	            	});
 	             grid.startup();
 	         });
+	         console.log(dom.byId("startDate"));
 	     });
 }
 
@@ -130,6 +131,7 @@ function getGrid() {
      }
      function openAddDiv() {
     	 addorupdate.show();
+    	 
      }
 </script>
 </head>
