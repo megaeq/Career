@@ -18,6 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript">
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
+require(["dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button"]);
 function getGrid() {
 	require([
 	         "dojo/_base/declare",
@@ -125,10 +126,10 @@ function getGrid() {
     	 
      }
      function divclose() {
-    	 $.unblockUI();
+    	 addorupdate.hide();
      }
      function openAddDiv() {
-    	 $.blockUI({ message: $('#add') });
+    	 addorupdate.show();
      }
 </script>
 </head>
@@ -146,9 +147,12 @@ function getGrid() {
     <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
 </div>
 <div id="list"></div>
-<div id="add" style="text-align: center; width: 200px; height: 200px; border;
-    1px solid #9cf; padding: 25px; display: none;">
-    <table>
+<div data-dojo-type="dijit/Dialog" data-dojo-id="addorupdate" title="编辑">
+    <table class="dijitDialogPaneContentArea">
+    	<tr>
+    		<td>日期</td>
+    		<td><input id = "date" type="text"  dojoType="dijit/form/DateTextBox" required="true"/> </td>
+    	</tr>
     	<tr>
     		<td>收入</td>
     		<td><input id = "income" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
@@ -162,7 +166,7 @@ function getGrid() {
     		<td><div><input type="text" id="addDate" data-dojo-type="dijit.form.ValidationTextBox" required="true"/></div></td>
     	</tr>
     	<tr>
-    		<td>用途</td>
+    		<td>用途11111111阿萨</td>
     		<td><input id = "usages" type="text"  dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
     	</tr>
     	<tr>
@@ -170,8 +174,8 @@ function getGrid() {
     		<td><input id = "memo" type="text" dojoType="dijit.form.ValidationTextBox" required="true"/> </td>
     	</tr>
     	<tr>
-    		<td><button data-dojo-type="dijit/form/Button" onclick="addinfo()">添加</button></td>
-    		<td><button data-dojo-type="dijit/form/Button" onclick="divclose()">取消</button></td>
+    		<td></td><td><button data-dojo-type="dijit/form/Button" onclick="addinfo()">添加</button>
+    		<button data-dojo-type="dijit/form/Button" onclick="divclose()">取消</button></td>
     	</tr>
     </table>
 </div>

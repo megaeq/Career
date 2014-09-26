@@ -12,7 +12,9 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		  System.out.println((420/30)%12);
+		String s = "a1  ";
+		System.out.println(Integer.parseInt(s.replaceAll("a", "").replaceAll(" ", "")));
+	
 	}
 
 }
