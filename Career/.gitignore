@@ -3,5 +3,6 @@
 /.settings
 /.classpath
 /WebContent/js/dojojs
+/src/com/test/Test.java
 
 
