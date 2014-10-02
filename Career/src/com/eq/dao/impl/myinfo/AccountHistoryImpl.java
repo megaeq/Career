@@ -1,5 +1,6 @@
 package com.eq.dao.impl.myinfo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +41,14 @@ public class AccountHistoryImpl extends BaseDao implements AbstractDao<AccountHi
 	public AccountHistory selectOne(Integer id)
 	{
 		return getSqlSessionTemplate().selectOne("accounthistory.selectone", id);
+	}
+	
+	public Map<String, Object> sum(int accountId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("income", 1);
+		params.put("cost", 2);
+		params.put("accountId", accountId);
+		return getSqlSessionTemplate().selectOne("accounthistory.sum",params);
 	}
 
 }

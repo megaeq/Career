@@ -40,7 +40,7 @@ function getGrid() {
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle,Select,ObjectStore,Memory) {
 		request("accountHistory/getAccountList"
       			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
-      				console.log(response);
+      				//console.log(response);
       				 var store = new Memory({
       				    data: response
       				  });
@@ -51,11 +51,7 @@ function getGrid() {
       				    store: os
       				  }, "selectList");
       				  s.startup();
-
-      				  s.on("change", function(){
-      				      console.log("my value: ", this.get("value"))
-      				  })
-      	 })     
+      	 }) ;    
 		request("accountHistory/getList", {
 	             handleAs: "json",query:{accountId:$.getUrlParam('accountId')}
 	         }).then(function (response) {
@@ -99,14 +95,22 @@ function getGrid() {
 	                 columns: {time:{label:"创建时间"},income:{label:"收入"},cost:{label:"支出"},
 	                	 usages:{label:"用途"},memo:{label:"备注"},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
-	                 rowsPerPage:14,
+	                 rowsPerPage:10,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	
 	             }, "list");
 	             grid.startup();
 	         });
+		request("accountHistory/sum"
+	 			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
+	 	 			 var sum="";
+	 	 			 sum+="总收入:"+response.income+",总花费:"+response.cost;
+	 	 			 sum+=";总盈余："+(response.income-response.cost);
+	 				 dom.byId("sum").innerHTML=sum;
+	 			 })  ;
 	     });
+	
 }
 
      function change() {
@@ -226,5 +230,6 @@ function getGrid() {
     	</tr>
     </table>
 </div>
+<div id="sum"></div>
 </body>
 </html>

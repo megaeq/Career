@@ -176,4 +176,9 @@ public class AccountHistoryManage extends BaseAction {
 		 * accountImpl.updateWithoutPwd(account);
 		 */
 	}
+	@ResponseBody
+	@RequestMapping("sum")
+	public Map<String, Object> sum(int accountId) {
+		 return impl.sum(accountId);
+	}
 }

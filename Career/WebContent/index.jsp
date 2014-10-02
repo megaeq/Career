@@ -21,8 +21,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <div class="header_resize">
 	      <div class="menu_nav">
 	        <ul>
-	          <li class="active"><a href="index.jsp"><span>菜单一</span></a></li>
-	          <li><a href="#"><span>菜单二</span></a></li>
+	          <li class="active"><a href="<%=basePath%>page/myinfo/accountList.jsp"><span>我的账户</span></a></li>
+	          <li><a href="<%=basePath%>page/myinfo/planList.jsp"><span>计划</span></a></li>
 	          <li><a href="#"><span>菜单三</span></a></li>
 	          <li><a href="#"><span>菜单四</span></a></li>
 	          <li><a href="#"><span>菜单五</span></a></li>

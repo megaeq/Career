@@ -14,6 +14,14 @@
 	<select id="selectone" parameterType="int" resultType="accounthistory">
 		SELECT * FROM account_history WHERE id=#{id}
 	</select>
+	<select id="sum" parameterType="hashmap" resultType="hashmap">
+	SELECT 
+	<trim suffixOverrides=",">
+		<if test="income!=null">SUM(income) income,</if>
+		<if test="cost!=null">SUM(cost) cost,</if>
+	</trim>
+	FROM account_history WHERE accountid=#{accountId}
+	</select>
 	<insert id="add" parameterType="accounthistory" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO account_history (
 		<trim suffixOverrides=",">

@@ -18,7 +18,7 @@
     	s+="</select>";
     	$("#"+div)[0].innerHTML=s;
     }
-    <small>Page 1 of 3</small> <span>1</span><a href="#">2</a><a href="#">3</a> <a href="#">&raquo;</a>
+    //<small>Page 1 of 3</small> <span>1</span><a href="#">2</a><a href="#">3</a> <a href="#">&raquo;</a>
     $pages = function(div,count,pagenow) {
     	var s = "";
     	s+="<small>第"+pagenow+"/"+count+"页";

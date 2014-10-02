@@ -82,7 +82,7 @@ function getGrid() {
 	                		 return div;
 	                		 }}
 	                	 },
-	                 rowsPerPage:14,
+	                 rowsPerPage:10,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	

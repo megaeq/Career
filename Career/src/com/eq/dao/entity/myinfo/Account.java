@@ -24,6 +24,15 @@ public class Account extends BaseEntity {
 	private String				pwd;
 	// 0:虚拟，1：现实，2：虚拟彩票，3：现实彩票
 	private int					isReal;
+	private int userId;
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	public int getId() {
 		return id;

@@ -7,8 +7,9 @@
 			<if test="belong!=null">belong=#{belong} AND</if>
 			<if test="name!=null">name=LIKE "%"#{name}"%" AND</if>
 			<if test="destinationId!=null">destinationId=#{destinationId} AND</if>
+			<if test="userId!=null">userId=#{userId} AND</if>
 		</trim>
-		ORDER BY id
+		ORDER BY createTime
 	</select>
 	<select id="selectone" parameterType="int" resultType="account">
 	SELECT * FROM account WHERE id=#{id}

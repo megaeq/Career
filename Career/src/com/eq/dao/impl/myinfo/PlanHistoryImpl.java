@@ -1,12 +1,15 @@
 package com.eq.dao.impl.myinfo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.stereotype.Component;
 
 import com.eq.dao.entity.myinfo.PlanHistory;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
-
+@Component
 public class PlanHistoryImpl extends BaseDao implements AbstractDao<PlanHistory, Integer>
 {
 
@@ -39,5 +42,7 @@ public class PlanHistoryImpl extends BaseDao implements AbstractDao<PlanHistory,
 	{
 		return getSqlSessionTemplate().selectOne("planhistory.selectone", id);
 	}
+	
+	
 
 }

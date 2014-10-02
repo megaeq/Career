@@ -1,4 +1,7 @@
 @CHARSET "UTF-8";
+div {
+	font-family:"仿宋",arial;
+}
 .greenButton {
 	-moz-box-shadow: 0px 9px 14px -7px #3e7327;
 	-webkit-box-shadow: 0px 9px 14px -7px #3e7327;
@@ -18,7 +21,7 @@
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:arial;
+	font-family:"黑体",arial;
 	font-size:10px;
 	padding:1px 1px;
 	text-decoration:none;

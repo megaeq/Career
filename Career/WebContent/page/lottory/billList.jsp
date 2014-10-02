@@ -91,7 +91,7 @@ function getGrid() {
                 		    return div;
 	                	 }},cluster:{label:"串"},time2:{label:"时间"},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
-	                 rowsPerPage:14,
+	                 rowsPerPage:10,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	

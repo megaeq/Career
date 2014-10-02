@@ -20,7 +20,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript">
-require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
+require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button","dijit/Dialog",
+         "dijit/form/Select"]);
 function getGrid() {
 	require([
 	         "dojo/_base/declare",
@@ -33,20 +34,19 @@ function getGrid() {
 	         'dojo/dom-style' 
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle) {
 	         request("plan/getList", {
-	             handleAs: "json",query:{userId:$.getUrlParam('userId')}
+	             handleAs: "json"
 	         }).then(function (response) {
 	             var store = new Memory({ data: response });
-	              
 	             var actionRenderCell = function (object, data,cell) {
 	                 var btn1 = new Button({
 	                     rowId : object.id,
 	                     label: "删除",
 	                     onClick: function () {
-	                    	 $.blockUI();
+	                    	 processing.show();
 	                         request("plan/delete",{query:{id:this.rowId}}).then(function() {
 	                        	 document.getElementById("list").innerHTML="";
 	               		    	 getGrid();
-	                			 $.unblockUI();
+	                			 processing.hide();
 	                         })
 	                     }
 	                 }, cell.appendChild(document.createElement("div")));
@@ -57,43 +57,15 @@ function getGrid() {
 	                    	 $("#id").val(object.id);
 	                    	 $("#name").val(object.name);
 	                    	 $("#memo").val(object.memo);
-	                    	 $("#level").val(object.level);
+	                    	 level.value=object.level;
 	                    	 $("#complete").val(object.complete);
 	                    	 $("#addButton").hide();
 	                       	 $("#updateButton").show();
-	                       	 $.blockUI({ message: $('#add') });
+	                       	 types.value=object.type;
+	                       	myDialog.show();
 	                     },
 	                 }, cell.appendChild(document.createElement("div")));
-	                 if(object.destinationType==1||0==object.destinationType) {
-	                	 var btn3 = new Button({
-		                     rowId : object.id,
-		                     label: "记录",
-		                     onClick: function() {
-		                    	 //console.log("##"+object.destinationType);
-	                    		 location.href="<%=basePath%>page/myinfo/accountHistoryList.jsp?accountId="+object.id;
-		                    	 
-		                     },
-		                 }, cell.appendChild(document.createElement("div")));
-	                 } else if(object.destinationType==2||3==object.destinationType){
-	                	 var btn3 = new Button({
-		                     rowId : object.id,
-		                     label: "投注",
-		                     onClick: function() {
-		                    	 //console.log("##"+object.destinationType);
-		                    		 location.href="<%=basePath%>page/lottory/chip.jsp?accountId="+object.id;
-		                    	 
-		                     },
-		                 }, cell.appendChild(document.createElement("div")));
-	                	 var btn4= new Button({
-		                     rowId : object.id,
-		                     label: "投注记录",
-		                     onClick: function() {
-		                    	 //console.log("##"+object.destinationType);
-	                    		 location.href="<%=basePath%>page/lottory/billList.jsp?accountId="+object.id;
-		                    	 
-		                     },
-		                 }, cell.appendChild(document.createElement("div")));
-	                 }
+	                
 	                 
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
@@ -116,7 +88,7 @@ function getGrid() {
 	                		 return div;
 	                	 }},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
-	                 rowsPerPage:14,
+	                 rowsPerPage:10,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	
@@ -131,16 +103,15 @@ function getGrid() {
     	 getGrid();
      }
      function addinfo() {
-    	 
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
     		 request("plan/add",{query:{name:dom.byId("name").value,memo:dom.byId("memo").value,
-    			 level:dom.byId("level").value,complete:dom.byId("complete").value,
-    			 userId:$.getUrlParam('userId')
+    			 level:level.value,complete:dom.byId("complete").value,
+    			 type:types.value
     			 }
     			 }).then(function() {
    				 document.getElementById("list").innerHTML="";
    		    	 getGrid();
-    			 $.unblockUI();
+   		    	myDialog.hide();
     			 clearclean();
     		 });
     	 });
@@ -150,31 +121,43 @@ function getGrid() {
     	 $("#id").val("");
     	 $("#name").val("");
     	 $("#memo").val("");
-    	 $("#level").val("");
+    	 level.value=1;
     	 $("#complete").val("");
      }
      function updateInfo() {
        	 require(["dojo/request","dojo/dom",],function(request,dom) {
        		 request("plan/update",{query:{id:dom.byId("id").value,name:dom.byId("name").value,
-       			 memo:dom.byId("memo").value,level:dom.byId("level").value,
-       			 complete:dom.byId("complete").value}
+       			 memo:dom.byId("memo").value,level:level.value,
+       			 complete:dom.byId("complete").value,type:types.value}
        			 }).then(function() {
       				 document.getElementById("list").innerHTML="";
       		    	 getGrid();
-       			 $.unblockUI();
+      		    	myDialog.hide();
       		    	clearclean();
        		 });
        	 });
         }
      
      function divclose() {
-    	 $.unblockUI();
+    	 myDialog.hide();
     	 clearclean();
      }
      function openAddDiv() {
     	 $("#addButton").show();
     	 $("#updateButton").hide();
-    	 $.blockUI({ message: $('#add') });
+    	 myDialog.show();
+     }
+     function refresh() {
+    	
+    	 require(["dojo/request","dojo/dom",],function(request,dom) {
+    		 processing.show();
+    		 request("plan/refresh").then(function() {
+   				 document.getElementById("list").innerHTML="";
+   		    	 getGrid();
+   		    	
+    		 });
+    		 processing.hide();
+    	 });
      }
 </script>
 </head>
@@ -190,10 +173,11 @@ function getGrid() {
     required="true" />
     <button data-dojo-type="dijit/form/Button">查询</button>
     <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
+    <button data-dojo-type="dijit/form/Button" onclick="refresh()">刷新</button>
 </div>
 <div id="list"></div>
-<div id="add" style="text-align: center; width: 200px; height: 150px; border;
-    1px solid #9cf; padding: 25px; display: none;">
+<div data-dojo-type="dijit/Dialog" data-dojo-id="processing" style="display:none">处理中...</div>
+<div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="编辑" style="display:none">
     <table>
     	<tr>
     		<td>名称<div style="width:100px;"></div></td>
@@ -206,10 +190,17 @@ function getGrid() {
     	</tr>
     	<tr>
     		<td>级别</td>
-    		<td><select id="level">
+    		<td><select  data-dojo-id="level" data-dojo-type="dijit/form/Select">
     			<option value="1" selected="true">一级</option>
     			<option value="2">二级</option>
     			<option value="3">三级</option>
+    		</select></td>
+    	</tr>
+    	<tr>
+    		<td>类型</td>
+    		<td><select  data-dojo-id="types" data-dojo-type="dijit/form/Select">
+    			<option value="生涯" selected="true">生涯</option>
+    			<option value="彩票">彩票</option>
     		</select></td>
     	</tr>
     	<tr>

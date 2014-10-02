@@ -18,9 +18,9 @@
 		) VALUES(
 		<trim suffixOverrides=",">
 			<if test="createTime!=null">#{createTime},</if>
-			<if test="planId!=null">#{planid},</if>
+			<if test="planId!=null">#{planId},</if>
 			<if test="type!=null">#{type},</if>
-			<if test="memo!=null">#{memo),</if>
+			<if test="memo!=null">#{memo},</if>
 		</trim>
 		)
 	</insert>

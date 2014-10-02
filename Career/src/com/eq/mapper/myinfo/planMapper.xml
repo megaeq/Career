@@ -39,7 +39,7 @@
 	</insert>
 	<update id="update" parameterType="plan">
 		UPDATE plan SET 
-		<trim>
+		<trim suffixOverrides=",">
 			<if test="type!=null">type=#{type},</if>
 			<if test="name!=null">name=#{name},</if>
 			<if test="memo!=null">memo=#{memo},</if>

@@ -113,7 +113,7 @@ function getGrid() {
                 		    return div;
 	                	 }},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
-	                 rowsPerPage:14,
+	                 rowsPerPage:10,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	

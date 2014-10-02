@@ -26,7 +26,9 @@ public class AccountManage extends BaseAction {
 	public List<Account> getList(@RequestParam Map<String, Object> params) {
 		this.params = params;
 		// System.out.println(this.params.hashCode() + " " + params.hashCode());
-		return impl.selectList(params);
+		Map<String, Object> pps = new HashMap<String, Object>();
+		pps.put("userId", getUserId());
+		return impl.selectList(pps);
 	}
 
 	@RequestMapping("add")

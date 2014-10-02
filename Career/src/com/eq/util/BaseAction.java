@@ -11,6 +11,7 @@ import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.CycleDetectionStrategy;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -83,7 +84,7 @@ public class BaseAction implements ApplicationContextAware {
 	}
 
 	public Integer getInt(String param) {
-		if (params.get(param) == null) {
+		if (params.get(param) == null||StringUtils.isBlank(params.get(param).toString() )) {
 			return 0;
 		} else {
 			return Integer.parseInt(params.get(param).toString());
@@ -92,7 +93,7 @@ public class BaseAction implements ApplicationContextAware {
 	}
 
 	public Float getFloat(String param) {
-		if (params.get(param) == null) {
+		if (params.get(param) == null||StringUtils.isBlank(params.get(param).toString() )) {
 			return 0f;
 		} else {
 			return Float.parseFloat(params.get(param).toString());
@@ -122,5 +123,8 @@ public class BaseAction implements ApplicationContextAware {
 		} else {
 			return DateUtil.getTimestamp(params.get(param).toString());
 		}
+	}
+	public int getUserId() {
+		return 1;
 	}
 }

@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主胜"},
  	                	drawRate:{label:"平局"},loseRate:{label:"主负"},time2:{label:"时间"},
  	                	weather:{label:"天气"},edit:{label:"操作",renderCell:chipin,width:"200px"}},
- 	                 rowsPerPage:14,
+ 	                 rowsPerPage:10,
  	                 pagingTextBox:true,
  	                 pagingLinks:2
  	             	
