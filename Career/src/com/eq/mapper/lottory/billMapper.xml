@@ -44,6 +44,7 @@
 		UPDATE bill SET 
 		<trim suffixOverrides=",">
 			<if test="betAmount!=null">betamount=#{betAmount},</if>
+			<if test="income!=null">income=#{income},</if>
 			<if test="sp!=null">sp=#{sp},</if>
 			<if test="type!=null">type=#{type},</if>
 			<if test="cluster!=null">cluster=#{cluster},</if>
@@ -56,4 +57,7 @@
 	<delete id="delete" parameterType="int">
 		DELETE FROM bill WHERE id=#{id}
 	</delete>
+	<select id="sum" parameterType="int" resultType="hashmap">
+	SELECT sum(betamount) cost,sum(income) income FROM bill WHERE accountId=#{accountId}
+	</select>
 </mapper>

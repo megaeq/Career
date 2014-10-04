@@ -20,7 +20,7 @@ public class Mysql {
         if (conn == null || conn.isClosed()) {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://127.0.0.1:3306/career", "root",
+                    "jdbc:mysql://127.0.0.1:3306/career?useUnicode=true&characterEncoding=UTF-8", "root",
                     "megaeq");
         }
         return conn;

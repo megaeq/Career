@@ -73,7 +73,7 @@ function getGrid() {
 	                        		}
 	                        			 
 	                        	 }
-	                			 $.blockUI({ message: $('#detail') });
+	                			 detail.show();
 	                         })
 	                     }
 	                 }, cell.appendChild(document.createElement("div")));
@@ -97,7 +97,15 @@ function getGrid() {
 	             	
 	             }, "list");
 	             grid.startup();
+	             
 	         });
+	         request("bill/sum"
+		 			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
+		 	 			 var sum="";
+		 	 			 sum+="<h1>总收入:"+response.income+",总花费:"+response.cost;
+		 	 			 sum+=";总盈余："+(response.income-response.cost)+"</h1>";
+		 				 dom.byId("sum").innerHTML=sum;
+		 			 })  ;
 	     });
 }
 
@@ -105,45 +113,20 @@ function getGrid() {
     	 document.getElementById("list").innerHTML="";
     	 getGrid();
      }
-     function addinfo() {
-    	 
+     
+     function divclose() {
+    	 detail.hide();
+     }
+     function clearAll() {
+    	 $.blockUI();
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
-    		 request("account/add",{query:{name:dom.byId("name").value,balance:dom.byId("balance").value,
-    			 pwd:dom.byId("pwd").value,belong:dom.byId("belong").value,
-    			 isReal:dom.byId("isReal").value}
-    			 }).then(function() {
-   				 document.getElementById("list").innerHTML="";
-   		    	 getGrid();
-    			 $.unblockUI();
-    			 clearclean();
-    		 });
-    	 });
-    	 
-     }
-     function clearclean() {
-    	 $("#id").val("");
-    	 $("#name").val("");
-    	 $("#pwd").val("");
-    	 $("#belong").val("");
-    	 $("#balance").val("");
-    	 $("#isReal").val("");
-     }
-     function updateInfo() {
-       	 require(["dojo/request","dojo/dom",],function(request,dom) {
-       		 request("account/update",{query:{id:dom.byId("id").value,name:dom.byId("name").value,
-       			 pwd:dom.byId("pwd").value,belong:dom.byId("belong").value,
-       			 isReal:dom.byId("isReal").value,balance:dom.byId("balance").value}
+       		 request("bill/clearAll",{query:{accountId:$.getUrlParam('accountId')}
        			 }).then(function() {
       				 document.getElementById("list").innerHTML="";
       		    	 getGrid();
-       			 $.unblockUI();
-      		    	clearclean();
+      		    	$.unblockUI();
        		 });
        	 });
-        }
-     
-     function divclose() {
-    	 $.unblockUI();
      }
 </script>
 </head>
@@ -159,14 +142,20 @@ function getGrid() {
     required="true" />
     <button data-dojo-type="dijit/form/Button">查询</button>
     <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
+    <button data-dojo-type="dijit/form/Button" onclick="clearAll()">结算全部</button>
 </div>
 <div id="list"></div>
-<div id="detail" style="text-align: center; width: 400px; height: 150px; border;
-    1px solid #9cf; padding: 25px; display: none;">
-    <table id="detailtable">
+<div data-dojo-type="dijit/Dialog" data-dojo-id="detail" title="详情" style="display: none;">
+    <table id="detailtable" class="pure-table pure-table-bordered">
+    <thead>
+		<tr>
+			<th width="200px">主队 - 客队</th><th width="50px">比分</th>
+			<th width="50px">sp</th><th width="50px">投注</th>
+		</tr>
+	</thead>
     <tbody id="detailbody"></tbody>
     </table>
-    <button  class="greyButton" onclick="divclose()">取消</button>
 </div>
+<div id="sum" style="color:red;"></div>
 </body>
 </html>

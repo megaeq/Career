@@ -36,5 +36,9 @@ public class BillImpl extends BaseDao implements AbstractDao<Bill, Integer> {
 	public Bill selectOne(Integer id) {
 		return getSqlSessionTemplate().selectOne("bill.selectone", id);
 	}
+	
+	public Map<String, Object> sum(int accountId) {
+		return getSqlSessionTemplate().selectOne("bill.sum",accountId);
+	}
 
 }

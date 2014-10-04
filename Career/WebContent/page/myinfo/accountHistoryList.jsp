@@ -105,8 +105,8 @@ function getGrid() {
 		request("accountHistory/sum"
 	 			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
 	 	 			 var sum="";
-	 	 			 sum+="总收入:"+response.income+",总花费:"+response.cost;
-	 	 			 sum+=";总盈余："+(response.income-response.cost);
+	 	 			 sum+="<h1>总收入:"+response.income+",总花费:"+response.cost;
+	 	 			 sum+=";总盈余："+(response.income-response.cost)+"</h1>";
 	 				 dom.byId("sum").innerHTML=sum;
 	 			 })  ;
 	     });
@@ -230,6 +230,6 @@ function getGrid() {
     	</tr>
     </table>
 </div>
-<div id="sum"></div>
+<div id="sum" style="color:red;"></div>
 </body>
 </html>

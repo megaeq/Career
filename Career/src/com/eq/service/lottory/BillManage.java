@@ -84,7 +84,7 @@ public class BillManage extends BaseAction {
 					.selectOne(account.getDestinationId());
 			Float income = bill.getSp() * bill.getBetAmount();
 			account2.setBalance(account2.getBalance() + income);
-			accountImpl.update(account2);
+			accountImpl.updateWithoutPwd(account2);
 			bill.setIncome(income);
 			bill.setFlag(1);
 			impl.update(bill);
@@ -97,6 +97,68 @@ public class BillManage extends BaseAction {
 		} else {
 			return "game not finish,can not clearing";
 		}
+	}
+	@ResponseBody
+	@RequestMapping("clearAll")
+	public String clearAll(int accountId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("accountId", accountId);
+		params.put("flag", 0);
+		List<Bill> billList = impl.selectList(params);
+		String response = "";
+		for(int i=0;i<billList.size();i++) {
+			params.clear();
+			params.put("billId", billList.get(i).getId());
+			List<GameAndBill> gbList = gbImpl.selectList(params);
+			boolean success = true;
+			boolean complete = true;
+			for (GameAndBill gb : gbList) {
+				Game game = gameImpl.selectOne(gb.getGameId());
+				if (game.getHomeScore() >= 0 && game.getGuestScore() >= 0) {
+					if (game.getHomeScore() == game.getGuestScore()) {
+						if (1 != gb.getBet()) {
+							success = false;
+							break;
+						}
+					} else if (game.getHomeScore() > game.getGuestScore()) {
+						if (3 != gb.getBet()) {
+							success = false;
+							break;
+						}
+					} else {
+						if (0 != gb.getBet()) {
+							success = false;
+							break;
+						}
+					}
+				} else {
+					complete = false;
+					break;
+				}
+			}
+			// 结算与否
+			if (complete && success) {
+				Bill bill = impl.selectOne(billList.get(i).getId());
+				Account account = accountImpl.selectOne(bill.getAccountId());
+				Account account2 = accountImpl
+						.selectOne(account.getDestinationId());
+				Float income = bill.getSp() * bill.getBetAmount();
+				account2.setBalance(account2.getBalance() + income);
+				accountImpl.updateWithoutPwd(account2);
+				bill.setIncome(income);
+				bill.setFlag(1);
+				impl.update(bill);
+				response+=billList.get(i).getId()+ "success;";
+			} else if (complete && !success) {
+				Bill bill = impl.selectOne(billList.get(i).getId());
+				bill.setFlag(1);
+				impl.update(bill);
+				response+=billList.get(i).getId()+ "success,no profit;";
+			} else {
+				response+=billList.get(i).getId()+ "game not finish,can not clearing;";
+			}
+		}
+		return response;
 	}
 
 	@ResponseBody
@@ -132,5 +194,10 @@ public class BillManage extends BaseAction {
 			response.add(map);
 		}
 		return response;
+	}
+	@ResponseBody
+	@RequestMapping("sum")
+	public Map<String, Object> sum(int accountId) {
+		return impl.sum(accountId);
 	}
 }
