@@ -11,12 +11,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="<%=basePath%>js/dojojs/dijit/themes/claro/claro.css">
 <link rel="stylesheet" href="<%=basePath%>css/my.css">
 <link rel="stylesheet" href="<%=basePath%>css/pure.css">
+<link rel="stylesheet" href="<%=basePath%>css/style.css">
+<link rel="stylesheet" href="<%=basePath%>css/coin-slider.css">
 <style type="text/css"> 
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
+ .field-edit{
+ 	width:220px;
+ }
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/cufon-yui.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/script.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/coin-slider.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/jquery/jquery-extension.js"></script>
+
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript">
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
@@ -118,6 +128,7 @@ function getGrid() {
 	                 pagingLinks:2
 	             	
 	             }, "list");
+	             console.log(grid);
 	             grid.startup();
 	         });
 	     });
@@ -175,8 +186,12 @@ function getGrid() {
      }
 </script>
 </head>
-<body class="claro" onload="getGrid()">
-<div id="dateTextBox">
+<body class="claro" onload="$initmenu(1);getGrid();">
+<div class="main" id="menu">
+	  </div>
+	  <div class="content">
+    <div class="content_resize">
+    	<div id="dateTextBox">
 	<label for="date1">起始时间：</label>
 	<input type="text" id="startDate" 
     data-dojo-type="dijit/form/DateTextBox"
@@ -222,5 +237,10 @@ function getGrid() {
     	</tr>
     </table>
 </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+	</div>
+
 </body>
 </html>

@@ -37,7 +37,7 @@
 			</if>
 			
 		</trim>
-		ORDER BY code DESC LIMIT 70
+		ORDER BY code DESC LIMIT 100
 	</select>
 	<select id="one" parameterType="int" resultType="game">
 	SELECT * FROM game WHERE id=#{id}

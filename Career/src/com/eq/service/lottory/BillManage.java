@@ -15,11 +15,14 @@ import com.eq.dao.entity.lottory.Bill;
 import com.eq.dao.entity.lottory.Game;
 import com.eq.dao.entity.lottory.GameAndBill;
 import com.eq.dao.entity.myinfo.Account;
+import com.eq.dao.entity.myinfo.AccountHistory;
 import com.eq.dao.impl.lottory.BillImpl;
 import com.eq.dao.impl.lottory.GameAndBillImpl;
 import com.eq.dao.impl.lottory.GameImpl;
+import com.eq.dao.impl.myinfo.AccountHistoryImpl;
 import com.eq.dao.impl.myinfo.AccountImpl;
 import com.eq.util.BaseAction;
+import com.eq.util.DateUtil;
 
 @Controller
 @RequestMapping("page/lottory/bill")
@@ -32,6 +35,8 @@ public class BillManage extends BaseAction {
 	private GameImpl		gameImpl;
 	@Autowired
 	private AccountImpl		accountImpl;
+	@Autowired
+	private AccountHistoryImpl accountHistoryImpl;
 
 	@ResponseBody
 	@RequestMapping("getList")
@@ -88,10 +93,19 @@ public class BillManage extends BaseAction {
 			bill.setIncome(income);
 			bill.setFlag(1);
 			impl.update(bill);
+			//添加账户历史记录
+			AccountHistory history = new AccountHistory();
+			history.setIncome(income);
+			history.setCreateTime(DateUtil.getNowTime());
+			history.setMemo("投注额："+bill.getBetAmount()+";sp:"+bill.getSp());
+			history.setUsages("彩票中奖");
+			history.setAccountId(account2.getId());
+			accountHistoryImpl.add(history);
 			return "success";
 		} else if (complete && !success) {
 			Bill bill = impl.selectOne(getInt("billId"));
 			bill.setFlag(1);
+			bill.setIncome(0);
 			impl.update(bill);
 			return "success,no profit";
 		} else {
@@ -148,10 +162,19 @@ public class BillManage extends BaseAction {
 				bill.setIncome(income);
 				bill.setFlag(1);
 				impl.update(bill);
+				//添加账户历史记录
+				AccountHistory history = new AccountHistory();
+				history.setIncome(income);
+				history.setCreateTime(DateUtil.getNowTime());
+				history.setMemo("投注额："+bill.getBetAmount()+";sp:"+bill.getSp());
+				history.setUsages("彩票中奖");
+				history.setAccountId(account2.getId());
+				accountHistoryImpl.add(history);
 				response+=billList.get(i).getId()+ "success;";
 			} else if (complete && !success) {
 				Bill bill = impl.selectOne(billList.get(i).getId());
 				bill.setFlag(1);
+				bill.setIncome(0);
 				impl.update(bill);
 				response+=billList.get(i).getId()+ "success,no profit;";
 			} else {

@@ -11,13 +11,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="<%=basePath%>js/dojojs/dijit/themes/claro/claro.css">
 <link rel="stylesheet" href="<%=basePath%>css/my.css">
 <link rel="stylesheet" href="<%=basePath%>css/pure.css">
-
+<LINK href="<%=basePath%>favicon.ico" type="image/x-icon" rel=icon>
+<link rel="stylesheet" href="<%=basePath%>css/style.css">
+<link rel="stylesheet" href="<%=basePath%>css/coin-slider.css">
 <style type="text/css"> 
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
   <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-extension.js"></script>
+  <script type="text/javascript" src="<%=basePath%>js/cufon-yui.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/script.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/coin-slider.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
 <script type="text/javascript" src="<%=basePath%>js/My97DatePicker/WdatePicker.js"></script>
@@ -173,10 +178,17 @@ function getGrid() {
     	
     	 $.blockUI({ message: $('#add') });
      }
+     function goback() {
+    	 window.location="<%=basePath%>page/myinfo/accountList.jsp";
+     }
 </script>
 </head>
-<body class="claro" onload="getGrid()">
-<div id="dateTextBox">
+<body class="claro" onload="$initmenu(1);getGrid()">
+<div class="main" id="menu">
+	  </div>
+	  <div class="content">
+    <div class="content_resize">
+    <div id="dateTextBox">
 	<label for="date1">起始时间：</label>
 	<input type="text" id="startDate" 
     data-dojo-type="dijit/form/DateTextBox"
@@ -187,6 +199,7 @@ function getGrid() {
     required="true" />
     <button data-dojo-type="dijit/form/Button">查询</button>
     <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
+    <button data-dojo-type="dijit/form/Button" style="float:right;" onclick="goback()">返回
 </div>
 <div id="list"></div>
 <div id="add" style="text-align: center; width: 200px; height: 150px; border;
@@ -231,5 +244,10 @@ function getGrid() {
     </table>
 </div>
 <div id="sum" style="color:red;"></div>
+      <div class="clr"></div>
+    </div>
+  </div>
+	</div>
+
 </body>
 </html>

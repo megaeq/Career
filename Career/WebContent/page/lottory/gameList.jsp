@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	                	}}},
  	                 rowsPerPage:10,
  	                 pagingTextBox:true,
- 	                 pagingLinks:2
+ 	                 pagingLinks:8
  	             	
  	             }, "list");
  	             grid.startup();
