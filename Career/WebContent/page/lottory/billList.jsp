@@ -70,7 +70,7 @@ function getGrid() {
 	                        			document.getElementById("detailbody").innerHTML+=
 	                        				 "<tr><td>"+response[i].homeTeam+" - "+response[i].guestTeam+"</td><td>"+
 		                        			 response[i].homeScore+" - "+response[i].guestScore+"</td>"+
-	                        			"<td style='color:#149e30;'>"+response[i].sp+"</td><td style='color:#149e30;'>"+response[i].bet+"</td></tr>"
+	                        			"<td style='color:#d62d0f;'>"+response[i].sp+"</td><td style='color:#d62d0f;'>"+response[i].bet+"</td></tr>"
 	                        		} else {
 	                        			document.getElementById("detailbody").innerHTML+=
 	                        				 "<tr><td>"+response[i].homeTeam+" - "+response[i].guestTeam+"</td><td>"+
