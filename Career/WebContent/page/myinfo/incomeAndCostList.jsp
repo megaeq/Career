@@ -20,6 +20,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
 require(["dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button"]);
 function getGrid() {
+	require(["dojo/store/JsonRest"], function(JsonRest){
+	   	  var store = new JsonRest({
+	   	    target: "getList2"
+	   	  });
+
+	   	  var self = this;
+	   	  console.log(store.query);
+
+	   	  var results = store.query({foo:'bar'}, {
+	   	    start: 2,
+	   	    count: 5,
+	   	    sort: [
+	   	      { attribute: "id", descending: true }
+	   	    ]
+	   	  }).then(function(data){
+	   		  console.log(data);
+	   		  console.log(results);
+	   		results.total.then(function(total){
+	   	      console.log("total results: ", total);
+	   	      console.log("go on and use data ", data, " with this ", self);
+	   	    });
+	   	  });
+	   	});
 	require([
 	         "dojo/_base/declare",
 	         "dojo/request",
@@ -27,10 +50,11 @@ function getGrid() {
 	         "dojo/store/Memory",
 	         "dgrid/OnDemandGrid",
 	         "dgrid/extensions/Pagination",
-	         "dijit/form/Button"
+	         "dijit/form/Button",
+	         "dijit/form/TimeTextBox"
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button) {
 	         request("getList", {
-	             handleAs: "json",query:{startDate:dom.byId("startDate").value,endDate:dom.byId("endDate").value}
+	             handleAs: "json",query:{startDate:'1991-01-01',endDate:dom.byId("endDate").value}
 	         }).then(function (response) {
 	             // Once the response is received, build an in-memory store
 	             // with the data
@@ -80,6 +104,7 @@ function getGrid() {
 
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
+	            	 className: "dgrid-autoheight",
 	                 store: store,
 	                 columns: {id:{label:"id"},income:{label:"收入"},cost:{label:"消费"},date1:{label:"日期"},
 	                	 usages:{label:"用途"},memo:{label:"备注"},
@@ -91,21 +116,23 @@ function getGrid() {
 	             }, "list");
 	             grid.on(".dgrid-header .dgrid-cell:click", function(evt){
 	            	    var cell = grid.cell(evt);
-	            	    console.log(cell);
+	            	    //console.log(cell);
 	            	    // cell.element == the element with the dgrid-cell class
 	            	    // cell.column == the column definition object for the column the cell is within
 	            	    // cell.row == the same object obtained from grid.row(evt)
 	            	});
 	             grid.on(".dgrid-row:contextmenu", function(evt){
 	            	    var row = grid.row(evt);
-	            	    console.log(row);
+	            	    //console.log(row);
 	            	    // row.element == the element with the dgrid-row class
 	            	    // row.id == the identity of the item represented by the row
 	            	    // row.data == the item represented by the row
 	            	});
 	             grid.startup();
 	         });
-	         console.log(dom.byId("startDate"));
+	        // console.log(startDate);
+	         startDate.constraints.datePattern='yyyy-MM-dd';
+	         times.constraints.timePattern='yyyy-MM-dd HH:mm:ss';
 	     });
 }
 
@@ -138,12 +165,15 @@ function getGrid() {
 <body class="claro" onload="getGrid()">
 <div id="dateTextBox">
 	<label for="date1">起始时间：</label>
-	<input type="text" id="startDate" 
+	<input type="text" data-dojo-id="startDate" 
     data-dojo-type="dijit/form/DateTextBox"
     required="true" />
     <label for="date1">结束时间：</label>
 	<input type="text" id="endDate" 
     data-dojo-type="dijit/form/DateTextBox"
+    required="true" />
+    <input type="text" name="time" data-dojo-id="times"
+    data-dojo-type="dijit/form/TimeTextBox"
     required="true" />
     <button data-dojo-type="dijit/form/Button" onclick="change()">查询</button>
     <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>

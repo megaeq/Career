@@ -13,6 +13,7 @@ import net.sf.json.util.CycleDetectionStrategy;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ import com.eq.dao.impl.system.PropertyImpl;
 
 @Service
 public class BaseAction implements ApplicationContextAware {
+	@Autowired
+	public  HttpServletRequest request;  
 	private ApplicationContext	context;
 	public Map<String, Object>	params;
 
