@@ -110,11 +110,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	             }
  	             var grid = new (declare([OnDemandGrid, Pagination]))({
  	                 store: store,
+ 	                className: "dgrid-autoheight",
  	                 columns: {id:{label:"id"},code:{lable:"编号"},gameType:{label:"联赛类型"},
  	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主胜"},
  	                	drawRate:{label:"平局"},loseRate:{label:"主负"},time2:{label:"时间"},
  	                	weather:{label:"天气"},edit:{label:"操作",renderCell:chipin,width:"200px"}},
- 	                 rowsPerPage:10,
+ 	                 rowsPerPage:14,
  	                 pagingTextBox:true,
  	                 pagingLinks:2
  	             	

@@ -108,6 +108,7 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
+	                 className: "dgrid-autoheight",
 	                 columns: {name:{label:"名称"},belong:{label:"所属机构"},balance:{label:"余额"},
 	                	 time:{label:"创建时间"},type:{label:"账户类型",renderCell:function(object, data,cell) {
 	                		 var div = document.createElement("div");
@@ -123,7 +124,7 @@ function getGrid() {
                 		    return div;
 	                	 }},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
-	                 rowsPerPage:10,
+	                 rowsPerPage:14,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	

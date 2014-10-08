@@ -76,6 +76,7 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
+	                 className: "dgrid-autoheight",
 	                 columns: {id:{label:"id"},name:{label:"名称"},levels:{label:"级别",renderCell:function(object, data,cell) {
 	                	 var div = document.createElement("div");
                 		 if(1==object.level) {
@@ -94,7 +95,7 @@ function getGrid() {
 	                		 return div;
 	                	 }},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
-	                 rowsPerPage:10,
+	                 rowsPerPage:14,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	

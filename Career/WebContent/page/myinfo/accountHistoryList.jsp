@@ -97,10 +97,11 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
+	                 className: "dgrid-autoheight",
 	                 columns: {time:{label:"创建时间"},income:{label:"收入"},cost:{label:"支出"},
 	                	 usages:{label:"用途"},memo:{label:"备注"},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
-	                 rowsPerPage:10,
+	                 rowsPerPage:14,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	

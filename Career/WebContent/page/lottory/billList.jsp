@@ -86,6 +86,7 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
+	                 className: "dgrid-autoheight",
 	                 columns: {id:{label:"id"},betAmount:{label:"投注量（元）"},sp:{label:"sp"},
 	                	 income:{label:"收入"},flag:{label:"是否完结",renderCell:function(object, data,cell) {
 	                		 var div = document.createElement("div");
@@ -97,7 +98,7 @@ function getGrid() {
                 		    return div;
 	                	 }},cluster:{label:"串"},time2:{label:"时间"},
 	                	 edit:{label:"操作",renderCell: actionRenderCell}},
-	                 rowsPerPage:10,
+	                 rowsPerPage:14,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	

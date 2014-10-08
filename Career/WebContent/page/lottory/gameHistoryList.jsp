@@ -38,6 +38,7 @@ function getGrid() {
 	             var store = new Memory({ data: response });
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
+	                 className: "dgrid-autoheight",
 	                 columns: {id:{label:"id"},code:{label:"代号"},time2:{label:"时间"},
 	                	 gameType:{label:"比赛类型"},
 	                	 teamInfo:{label:"主队-客队",renderCell:function(object,data,cell){
@@ -82,7 +83,7 @@ function getGrid() {
 	                		 return div;
 	                		 }}
 	                	 },
-	                 rowsPerPage:10,
+	                 rowsPerPage:14,
 	                 pagingTextBox:true,
 	                 pagingLinks:2
 	             	
