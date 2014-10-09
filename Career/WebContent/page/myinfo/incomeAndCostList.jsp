@@ -20,6 +20,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
 require(["dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button"]);
 function getGrid() {
+	require(["dijit/Tooltip", "dojo/domReady!"], function(Tooltip){
+	    // create a new Tooltip and connect it to bar1 and bar4
+	    new Tooltip({
+	        connectId: ["question"],
+	        label: "这里是问题"
+	    });
+	});
 	require(["dojo/store/JsonRest"], function(JsonRest){
 	   	  var store = new JsonRest({
 	   	    target: "getList2"
@@ -177,6 +184,7 @@ function getGrid() {
     required="true" />
     <button data-dojo-type="dijit/form/Button" onclick="change()">查询</button>
     <button data-dojo-type="dijit/form/Button" onclick="openAddDiv()">新增</button>
+    <span id="question" style="margin:0 auto;"><img alt="问题" src="<%=basePath%>image/question.png" height="20px" weight="20px"></span>
 </div>
 <div id="list"></div>
 <div data-dojo-type="dijit/Dialog" data-dojo-id="addorupdate" title="编辑">
