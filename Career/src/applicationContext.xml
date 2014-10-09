@@ -40,5 +40,9 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
+	
+	<!-- shiro配置开始 -->
+	
+	<!-- shiro配置结束 -->
 
 </beans>
