@@ -21,6 +21,8 @@
         
          <typeAlias alias="user" type="com.eq.dao.entity.system.User"/>
          <typeAlias alias="property" type="com.eq.dao.entity.system.Property"/>
+         <typeAlias alias="role" type="com.eq.dao.entity.system.Role"/>
+         <typeAlias alias="permission" type="com.eq.dao.entity.system.Permission"/>
     </typeAliases>
 
     

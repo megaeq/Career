@@ -34,7 +34,16 @@ public class UserImpl extends BaseDao implements AbstractDao<User, Integer> {
 
 	@Override
 	public User selectOne(Integer id) {
-		return getSqlSessionTemplate().selectOne("user.selectone", id);
+		//return getSqlSessionTemplate().selectOne("user.selectone", id);
+		return null;
+	}
+	
+	public User selectOne(String username) {
+		return getSqlSessionTemplate().selectOne("user.selectone", username);
+	}
+	
+	public String getPassword(String password) {
+		return getSqlSessionTemplate().selectOne("user.selectpassword", password);
 	}
 
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="role">
+	<select id="selectlist" parameterType="hashmap" resultType="role" >
+		SELECT * FROM role WHERE username=#{username}
+	</select>
+	<select id="selectone" parameterType="int" resultType="role">
+	</select>
+	<insert id="add" parameterType="role" useGeneratedKeys="true" keyProperty="id">
+	INSERT INTO role (role,username) VALUES (#{role},#{username})
+	</insert>
+	<update id="update" parameterType="role">
+		UPDATE role SET role=#{role} WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM role WHERE id=#{id}
+	</delete>
+</mapper>

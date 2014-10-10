@@ -8,8 +8,11 @@
 		</trim>
 		ORDER BY createTime DESC
 	</select>
-	<select id="selectone" parameterType="int" resultType="user">
-		SELECT * FROM user WHERE id=#{id}
+	<select id="selectone" parameterType="string" resultType="user">
+		SELECT * FROM user WHERE name=#{name}
+	</select>
+	<select id="selectpassword" parameterType="String" resultType="String">
+		SELECT password(#{password})
 	</select>
 	<insert id="add" parameterType="user" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO user (
@@ -31,10 +34,11 @@
 		<trim suffixOverrides=",">
 			<if test="name!=null">name=#{name},</if>
 			<if test="createTime!=null">createTime=#{createtime},</if>
+			<if test="lock!=null">lock=#{lock}</if>
 		</trim>
 		WHERE id=#{id} AND pwd=password(#{pwd})
 	</update>
-	<delete id="delete" parameterType="int">
+	<delete id="delete" parameterType="hashmap">
 		DELETE FROM user WHERE id=#{id} AND pwd=password(#{pwd})
 	</delete>
 </mapper>

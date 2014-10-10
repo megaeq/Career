@@ -15,6 +15,8 @@ public class User extends BaseEntity {
 	private String				pwd;
 	private Timestamp			createTime;
 	private String				imagePath;
+	//0为未锁定，1为锁定
+	private int lock;
 
 	public int getId() {
 		return id;
@@ -54,6 +56,16 @@ public class User extends BaseEntity {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	public int getLock()
+	{
+		return lock;
+	}
+
+	public void setLock(int lock)
+	{
+		this.lock = lock;
 	}
 
 }
