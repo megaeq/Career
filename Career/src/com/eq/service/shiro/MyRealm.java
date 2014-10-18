@@ -71,7 +71,7 @@ public class MyRealm extends AuthorizingRealm
                 user.getPwd(), //密码
                 userImpl.getPassword("user"),//salt=username+salt
                 getName()  //realm name
-        );;
+        );
 		return null;
 	}
 

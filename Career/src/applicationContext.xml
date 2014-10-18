@@ -45,6 +45,24 @@
 	</bean>
 	
 	<!-- shiro配置开始 -->
+	<!-- 凭证匹配器-->
+	<bean id="credentialsMatcher" class="
+	com.github.zhangkaitao.shiro.chapter12.credentials.RetryLimitHashedCredentialsMatcher">
+		<constructor-arg ref="cacheManager"/>
+		<property name="hashAlgorithmName" value="md5"/>
+		<property name="hashIterations" value="2"/>
+		<property name="storedCredentialsHexEncoded" value="true"/>
+	</bean>
+	<!-- Realm实现-->
+	<bean id="userRealm" class="com.github.zhangkaitao.shiro.chapter12.realm.UserRealm">
+		<property name="userService" ref="userService"/>
+		<property name="credentialsMatcher" ref="credentialsMatcher"/>
+		<property name="cachingEnabled" value="true"/>
+		<property name="authenticationCachingEnabled" value="true"/>
+		<property name="authenticationCacheName" value="authenticationCache"/>
+		<property name="authorizationCachingEnabled" value="true"/>
+		<property name="authorizationCacheName" value="authorizationCache"/>
+	</bean>
 	<!-- 缓存管理器 使用Ehcache实现 -->  
 	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">  
 	    <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>  
