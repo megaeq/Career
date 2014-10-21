@@ -15,6 +15,7 @@ public class User extends BaseEntity {
 	private String				pwd;
 	private Timestamp			createTime;
 	private String				imagePath;
+	private String salt;
 	//0为未锁定，1为锁定
 	private int lock;
 
@@ -66,6 +67,20 @@ public class User extends BaseEntity {
 	public void setLock(int lock)
 	{
 		this.lock = lock;
+	}
+
+	public String getSalt()
+	{
+		return salt;
+	}
+
+	public void setSalt(String salt)
+	{
+		this.salt = salt;
+	}
+	
+	public String getCredentialsSalt() {
+		return name+salt;
 	}
 
 }

@@ -16,6 +16,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.eq.dao.entity.system.Permission;
@@ -69,7 +70,7 @@ public class MyRealm extends AuthorizingRealm
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 user.getName(), //用户名
                 user.getPwd(), //密码
-                userImpl.getPassword("user"),//salt=username+salt
+                ByteSource.Util.bytes(user.getCredentialsSalt()+"1991"),//salt=username+salt
                 getName()  //realm name
         );
 		return null;
