@@ -15,6 +15,7 @@
 	http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
 	<aop:aspectj-autoproxy/>
+	<aop:config proxy-target-class="true"></aop:config>
 
 	<context:component-scan base-package="com.eq.service"/>
 	<context:component-scan base-package="com.eq.dao"/>
@@ -123,11 +124,15 @@
 	        </util:map>  
 	    </property>  
 	    <property name="filterChainDefinitions">  
-	        <value>  
+	        <value> 
 	            /index.jsp = anon  
 	            /unauthorized.jsp = anon  
 	            /login.jsp = authc  
+	            /register.jsp=anon
 	            /logout = logout  
+	            /js/**=anon
+	            /css/**=anon
+	            /image/**=anon
 	            /** = user  
 	        </value>  
 	    </property>  

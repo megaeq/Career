@@ -7,10 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form method="post">
+<form method="post" action="user/add">
 	用户名<input id="username" name="username" type="text">
 	密码<input id="password" name="password" type="password">
-	<span><input type="submit" value="登陆">
+	<span><input type="submit" value="注册">
 	<input type="reset" value="重置"></span>
 </form>
 </body>

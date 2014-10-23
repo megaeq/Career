@@ -19,13 +19,15 @@
 		<trim suffixOverrides=",">
 			<if test="name!=null">name,</if>
 			<if test="createTime!=null">createtime,</if>
-			<if test="pwd">pwd,</if>
+			<if test="pwd!=null">pwd,</if>
+			<if test="salt!=null">salt,</if>
 		</trim>
 		) VALUES (
 		<trim suffixOverrides=",">
 			<if test="name!=null">#{name},</if>
-			<if test="createTime!=null">#{createtime},</if>
-			<if test="pwd">password(#{pwd}),</if>
+			<if test="createTime!=null">#{createTime},</if>
+			<if test="pwd!=null">#{pwd},</if>
+			<if test="salt!=null">#{salt},</if>
 		</trim>
 		)
 	</insert>
@@ -33,12 +35,12 @@
 		UPDATE user SET
 		<trim suffixOverrides=",">
 			<if test="name!=null">name=#{name},</if>
-			<if test="createTime!=null">createTime=#{createtime},</if>
+			<if test="createTime!=null">createTime=#{createTime},</if>
 			<if test="lock!=null">lock=#{lock}</if>
 		</trim>
-		WHERE id=#{id} AND pwd=password(#{pwd})
+		WHERE id=#{id} AND pwd=#{pwd}
 	</update>
 	<delete id="delete" parameterType="hashmap">
-		DELETE FROM user WHERE id=#{id} AND pwd=password(#{pwd})
+		DELETE FROM user WHERE id=#{id} AND pwd=#{pwd}
 	</delete>
 </mapper>

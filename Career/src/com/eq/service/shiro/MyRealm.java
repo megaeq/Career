@@ -73,7 +73,7 @@ public class MyRealm extends AuthorizingRealm
                 ByteSource.Util.bytes(user.getCredentialsSalt()+"1991"),//salt=username+salt
                 getName()  //realm name
         );
-		return null;
+		return authenticationInfo;
 	}
 
 }

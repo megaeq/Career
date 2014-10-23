@@ -19,7 +19,7 @@ import net.sf.json.processors.JsonValueProcessor;
  * @author Mega.Yan
  * @date 2014-9-28 下午6:09:15
  */
-public class BooleanJsonValueProcessor implements JsonValueProcessor  
+public class BooleanJsonValueProcessor implements JsonValueProcessor
 {
 
 	@Override
@@ -32,8 +32,10 @@ public class BooleanJsonValueProcessor implements JsonValueProcessor
 	public Object processObjectValue(String s, Object obj, JsonConfig jsonconfig)
 	{
 		String bool = "false";
-		if(obj instanceof Boolean) {
-			if((Boolean) obj) {
+		if(obj instanceof Boolean)
+		{
+			if((Boolean) obj)
+			{
 				bool = "true";
 			}
 		}
