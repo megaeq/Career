@@ -26,7 +26,9 @@
     	}
     }
     $initmenu = function(orderno) {
-    	var basePath="http://localhost:8080/Career/";
+    	var hostport=document.location.host;
+    	//console.log(hostport);
+    	var basePath="http://"+hostport+"/Career/";
     	var array = new Array();
     	var s1="";
     	var s2="";

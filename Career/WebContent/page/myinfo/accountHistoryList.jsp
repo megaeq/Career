@@ -91,7 +91,7 @@ function getGrid() {
 	                       			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
 									$.addSelect("destinationList","accountSelect",response)	                       				
 	                       	 })
-	                       	 $.blockUI({ message: $('#add') });
+	                       	 detail.show();
 	                     },
 	                 }, cell.appendChild(document.createElement("div")));
 	             }
@@ -133,7 +133,7 @@ function getGrid() {
     			 }).then(function() {
    				 document.getElementById("list").innerHTML="";
    		    	 getGrid();
-    			 $.unblockUI();
+    			 detail.hide();
     			 clearclean();
     		 });
     	 });
@@ -155,7 +155,7 @@ function getGrid() {
        			 }).then(function() {
       				 document.getElementById("list").innerHTML="";
       		    	 getGrid();
-       			 $.unblockUI();
+       			 detail.hide();
       		    	clearclean();
        		 });
        	 });
@@ -177,7 +177,7 @@ function getGrid() {
           	 })
     	 })
     	
-    	 $.blockUI({ message: $('#add') });
+    	 detail.show();
      }
      function goback() {
     	 window.location="<%=basePath%>page/myinfo/accountList.jsp";
@@ -203,9 +203,8 @@ function getGrid() {
     <button data-dojo-type="dijit/form/Button" style="float:right;" onclick="goback()">返回
 </div>
 <div id="list"></div>
-<div id="add" style="text-align: center; width: 200px; height: 150px; border;
-    1px solid #9cf; padding: 25px; display: none;">
-    <table>
+<div data-dojo-type="dijit/Dialog" data-dojo-id="detail" title="详情" style="display: none;">
+    <table id="detailtable" class="pure-table pure-table-bordered">
     	<tr>
     		<td>日期<div style="width:100px;">
     		
