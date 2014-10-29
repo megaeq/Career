@@ -29,7 +29,6 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 		Ini ini = new Ini();  
         //加载默认的url  
         ini.load(filterChainDefinitions);  
-        System.out.println(filterChainDefinitions);
         Ini.Section section = ini.getSection(Ini.DEFAULT_SECTION_NAME); 
 		for(Resource r:list) {
 			if(StringUtils.isNotBlank(r.getValue())&&StringUtils.isNotBlank(r.getPermission())) {

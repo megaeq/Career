@@ -2,16 +2,20 @@ package com.eq.util;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.CycleDetectionStrategy;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -20,12 +24,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import com.eq.dao.entity.system.User;
 import com.eq.dao.impl.system.PropertyImpl;
+import com.eq.dao.impl.system.UserImpl;
 
 @Service
 public class BaseAction implements ApplicationContextAware {
 	@Autowired
 	public  HttpServletRequest request;  
+	@Autowired
+	public UserImpl userImpl;
 	private ApplicationContext	context;
 	public Map<String, Object>	params;
 
@@ -127,7 +135,23 @@ public class BaseAction implements ApplicationContextAware {
 			return DateUtil.getTimestamp(params.get(param).toString());
 		}
 	}
+	public User getUser() {
+		/*HttpSession session = request.getSession();
+		Enumeration<Object> enu = session.getAttributeNames();
+		while(enu.hasMoreElements()) {
+			String attrname = (String)enu.nextElement();
+			System.out.println(attrname);
+			System.out.println(session.getAttribute(attrname));
+		}*/
+		Object obj = request.getSession().getAttribute("org.apache.shiro.subject.support.DefaultSubjectContext_PRINCIPALS_SESSION_KEY");
+		User user = userImpl.selectOne(obj.toString());
+		return user;
+	}
 	public int getUserId() {
 		return 1;
+	}
+	
+	public Subject getSubject() {
+		return SecurityUtils.getSubject();
 	}
 }
