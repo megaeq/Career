@@ -10,6 +10,32 @@ public class Resource extends BaseEntity
 	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private String url;
+	private String value;
+	private String permission;
+	public int getId()
+	{
+		return id;
+	}
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+	public String getValue()
+	{
+		return value;
+	}
+	public void setValue(String value)
+	{
+		this.value = value;
+	}
+	public String getPermission()
+	{
+		return permission;
+	}
+	public void setPermission(String permission)
+	{
+		this.permission = permission;
+	}
+	
 
 }

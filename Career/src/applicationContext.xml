@@ -149,21 +149,26 @@
 	            <entry key="authc" value-ref="formAuthenticationFilter"/>  
 	        </util:map>  
 	    </property>  
+	    <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource">  
+	        
+	    </property>  
+	</bean>   
+	
+	<bean id="chainDefinitionSectionMetaSource" class="com.eq.service.shiro.ChainDefinitionSectionMetaSource">  
 	    <property name="filterChainDefinitions">  
 	        <value> 
 	            /index.jsp = anon  
 	            /unauthorized.jsp = anon  
-	            /user/add = anon
 	            /login.jsp = authc  
 	            /register.jsp=anon
 	            /logout = logout  
-	            /js/**=anon
-	            /css/**=anon
-	            /image/**=anon
+	            /js/** = anon
+	            /css/** = anon
+	            /image/** = anon
 	            /** = user  
-	        </value>  
+	        </value>   
 	    </property>  
-	</bean>   
+	</bean>  
 	
 	<!-- shiro配置结束 -->
 

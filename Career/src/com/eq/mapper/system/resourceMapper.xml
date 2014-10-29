@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="resource">
+	<select id="selectlist" parameterType="hashmap" resultType="resource" >
+		SELECT * FROM resource
+	</select>
+	<select id="selectone" parameterType="int" resultType="resource">
+		SELECT * FROM resource WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="resource" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO resource(value,permission)
+		VALUES (#{value},#{permission})
+	</insert>
+	<update id="update" parameterType="resource">
+		UPDATE resource SET value=#{value},permission=#{permission} WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM resource WHERE id=#{id}
+	</delete>
+</mapper>
