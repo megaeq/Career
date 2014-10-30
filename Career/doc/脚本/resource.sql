@@ -1,0 +1,1 @@
+INSERT INTO resource(value,permission) VALUES ("/user/add","anon");
