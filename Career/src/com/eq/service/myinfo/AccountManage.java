@@ -1,8 +1,11 @@
 package com.eq.service.myinfo;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eq.dao.entity.myinfo.Account;
+import com.eq.dao.entity.system.User;
 import com.eq.dao.impl.myinfo.AccountImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
@@ -25,10 +29,10 @@ public class AccountManage extends BaseAction {
 	@RequestMapping("getList")
 	public List<Account> getList(@RequestParam Map<String, Object> params) {
 		this.params = params;
-		// System.out.println(this.params.hashCode() + " " + params.hashCode());
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("userId", getUserId());
 		return impl.selectList(pps);
+		
 	}
 
 	@RequestMapping("add")
