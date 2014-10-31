@@ -15,6 +15,7 @@ import net.sf.json.util.CycleDetectionStrategy;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ public class BaseAction implements ApplicationContextAware {
 	public UserImpl userImpl;
 	private ApplicationContext	context;
 	public Map<String, Object>	params;
-
+	private static String PRINCIPALS_SESSION_KEY="org.apache.shiro.subject.support.DefaultSubjectContext_PRINCIPALS_SESSION_KEY";
+	private static String AUTHENTICATED_SESSION_KEY = "org.apache.shiro.subject.support.DefaultSubjectContext_AUTHENTICATED_SESSION_KEY";
 	@Override
 	public void setApplicationContext(ApplicationContext context)
 			throws BeansException {
@@ -136,19 +138,23 @@ public class BaseAction implements ApplicationContextAware {
 		}
 	}
 	public User getUser() {
-		/*HttpSession session = request.getSession();
-		Enumeration<Object> enu = session.getAttributeNames();
+		HttpSession session = request.getSession();
+		Boolean AUTHENTICATED = (Boolean)session.getAttribute(AUTHENTICATED_SESSION_KEY);
+		if(AUTHENTICATED) {
+			Object obj = session.getAttribute(PRINCIPALS_SESSION_KEY);
+			System.out.println(obj.toString());
+			User user = userImpl.selectOne(obj.toString());
+			return user;
+		} else {
+			return null;
+		}
+		/*Enumeration<Object> enu = session.getAttributeNames();
 		while(enu.hasMoreElements()) {
 			String attrname = (String)enu.nextElement();
 			System.out.println(attrname);
-			System.out.println(session.getAttribute(attrname));
+			Object obj = session.getAttribute(attrname);
+			System.out.println(obj.toString());
 		}*/
-		Object obj = request.getSession().getAttribute("org.apache.shiro.subject.support.DefaultSubjectContext_PRINCIPALS_SESSION_KEY");
-		User user = userImpl.selectOne(obj.toString());
-		return user;
-	}
-	public int getUserId() {
-		return 1;
 	}
 	
 	public Subject getSubject() {

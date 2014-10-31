@@ -30,7 +30,7 @@ public class PlanManage extends BaseAction {
 	public List<Plan> getList(@RequestParam Map<String, Object> params) {
 		this.params = params;
 		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("userId",getUserId());
+		pps.put("userId",getUser().getId());
 		return impl.selectList(pps);
 	}
 
@@ -51,7 +51,7 @@ public class PlanManage extends BaseAction {
 		plan.setName(getString("name"));
 		plan.setType(getString("type"));
 		plan.setComplete(getInt("complete"));
-		plan.setUserId(getUserId());
+		plan.setUserId(getUser().getId());
 		if (1 == impl.add(plan)) {
 			PlanHistory planHistory = new PlanHistory();
 			planHistory.setCreateTime(DateUtil.getNowTime());
@@ -128,7 +128,7 @@ public class PlanManage extends BaseAction {
 	@RequestMapping("refresh")
 	public String refresh() {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("userId", getUserId());
+		params.put("userId", getUser().getId());
 		List<Plan> planList = impl.selectList(params);
 		for(int i=0;i<planList.size();i++) {
 			Plan plan = planList.get(i);

@@ -29,8 +29,12 @@ public class AccountManage extends BaseAction {
 	@RequestMapping("getList")
 	public List<Account> getList(@RequestParam Map<String, Object> params) {
 		this.params = params;
+		getUser();
 		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("userId", getUserId());
+		if(getUser()!=null) {
+			
+		}
+		pps.put("userId", getUser());
 		return impl.selectList(pps);
 		
 	}
