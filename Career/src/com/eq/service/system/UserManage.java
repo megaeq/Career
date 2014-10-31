@@ -23,7 +23,7 @@ public class UserManage extends BaseAction
 	@Autowired
 	private UserImpl impl; 
 	@RequiresGuest
-	@RequestMapping("add")
+	@RequestMapping(value="add")
 	@ResponseBody
 	public String add(@RequestParam Map<String, Object> params) {
 		this.params = params;

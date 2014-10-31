@@ -24,28 +24,15 @@
 	<context:component-scan base-package="com.eq.dao"/>
 	<context:property-placeholder location="classpath:system.properties" />
 	<!-- utf-8编码 -->
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-	 <property name = "messageConverters">
-	  <list>
-	   <bean class = "org.springframework.http.converter.StringHttpMessageConverter">
-	   <property name = "supportedMediaTypes">
-	    <list>
-	     <bean class="org.springframework.http.MediaType">
-	      <constructor-arg index="0" value="text"/>
-	      <constructor-arg index="1" value="plain"/>
-	      <constructor-arg index="2" value="UTF-8"/>
-	     </bean>
-	     <bean class="org.springframework.http.MediaType">
-	      <constructor-arg index="0" value="*"/>
-	      <constructor-arg index="1" value="*"/>
-	      <constructor-arg index="2" value="UTF-8"/>
-	     </bean>
-	    </list>
-	   </property>
-	   </bean>
-	  </list>
-	 </property>
-	</bean>
+   	<mvc:annotation-driven conversion-service="conversion-service" validator="validator">  
+        <mvc:message-converters>  
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />  
+            <bean class="org.springframework.http.converter.FormHttpMessageConverter" />  
+            <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />  
+            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />  
+            <bean class="com.eq.util.UTF8StringHttpMessageConverter" />  
+        </mvc:message-converters>  
+    </mvc:annotation-driven>  
 
 	<!--创建jdbc数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -158,6 +145,7 @@
 	    <property name="filterChainDefinitions">  
 	        <value> 
 	            /index.jsp = anon  
+	            /user/add = anon
 	            /unauthorized.jsp = anon  
 	            /login.jsp = authc  
 	            /register.jsp=anon
