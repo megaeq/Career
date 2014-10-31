@@ -1,5 +1,7 @@
 package com.eq.service.system;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresGuest;
@@ -25,15 +27,23 @@ public class UserManage extends BaseAction
 	@ResponseBody
 	public String add(@RequestParam Map<String, Object> params) {
 		this.params = params;
-		User user = new User();
-		user.setCreateTime(DateUtil.getNowTime());
-		user.setLock(0);
-		user.setName(getString("username"));
-		user.setPwd(getString("password"));
-		new PasswordHelper().encryptPassword(user);
-		System.out.println(user.getSalt());
-		System.out.println(user.getPwd());
-		impl.add(user);
-		return "用户注册成功";
+		Map<String, Object> pps = new HashMap<String, Object>();
+		pps.put("name", getString("username"));
+		List<User> userList = impl.selectList(pps);
+		if(userList.isEmpty()) {
+			User user = new User();
+			user.setCreateTime(DateUtil.getNowTime());
+			user.setLock(0);
+			user.setName(getString("username"));
+			user.setPwd(getString("password"));
+			new PasswordHelper().encryptPassword(user);
+			System.out.println(user.getSalt());
+			System.out.println(user.getPwd());
+			impl.add(user);
+			return "用户注册成功";
+		} else {
+			return "该用户已存在";
+		}
+		
 	}
 }
