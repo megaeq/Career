@@ -40,7 +40,7 @@ public class UserManage extends BaseAction
 			System.out.println(user.getSalt());
 			System.out.println(user.getPwd());
 			impl.add(user);
-			return "用户注册成功";
+			return "用户添加成功";
 		} else {
 			return "该用户已存在";
 		}
