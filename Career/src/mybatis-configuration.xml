@@ -24,6 +24,8 @@
          <typeAlias alias="role" type="com.eq.dao.entity.system.Role"/>
          <typeAlias alias="permission" type="com.eq.dao.entity.system.Permission"/>
          <typeAlias alias="resource" type="com.eq.dao.entity.system.Resource"/>
+         <typeAlias alias="systemrole" type="com.eq.dao.entity.system.SystemRole"/>
+         <typeAlias alias="systempermission" type="com.eq.dao.entity.system.SystemPermission"/>
     </typeAliases>
 
     

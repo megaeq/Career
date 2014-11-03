@@ -226,6 +226,19 @@ CREATE TABLE `resource` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--2014/11/03 周一
+CREATE TABLE `system_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `system_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `permission` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 

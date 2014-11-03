@@ -32,7 +32,8 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
         Ini.Section section = ini.getSection(Ini.DEFAULT_SECTION_NAME); 
 		for(Resource r:list) {
 			if(StringUtils.isNotBlank(r.getValue())&&StringUtils.isNotBlank(r.getPermission())) {
-				section.put(r.getValue(),  MessageFormat.format(PREMISSION_STRING,r.getPermission()));  
+				//section.put(r.getValue(),  MessageFormat.format(PREMISSION_STRING,r.getPermission()));  
+				section.put(r.getValue(), r.getPermission());
 			}
 		}
 		return section;
