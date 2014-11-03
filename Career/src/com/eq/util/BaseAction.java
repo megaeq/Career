@@ -143,7 +143,7 @@ public class BaseAction implements ApplicationContextAware {
 		Boolean AUTHENTICATED = (Boolean)session.getAttribute(AUTHENTICATED_SESSION_KEY);
 		if(AUTHENTICATED) {
 			Object obj = session.getAttribute(PRINCIPALS_SESSION_KEY);
-			System.out.println(obj.toString());
+			//System.out.println(obj.toString());
 			User user = userImpl.selectOne(obj.toString());
 			return user;
 		} else {

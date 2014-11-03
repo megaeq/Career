@@ -34,7 +34,7 @@ public class AccountManage extends BaseAction {
 		if(getUser()!=null) {
 			
 		}
-		pps.put("userId", getUser());
+		pps.put("userId", getUser().getId());
 		return impl.selectList(pps);
 		
 	}
@@ -50,6 +50,7 @@ public class AccountManage extends BaseAction {
 		account.setIsReal(getInt("isReal"));
 		account.setName(getString("name"));
 		account.setPwd(getString("pwd"));
+		account.setUserId(getUser().getId());
 		impl.add(account);
 	}
 
