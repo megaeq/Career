@@ -27,7 +27,7 @@ function getGrid() {
 	        label: "这里是问题"
 	    });
 	});
-	require(["dojo/store/JsonRest"], function(JsonRest){
+	/* require(["dojo/store/JsonRest"], function(JsonRest){
 	   	  var store = new JsonRest({
 	   	    target: "getList2"
 	   	  });
@@ -49,7 +49,7 @@ function getGrid() {
 	   	      console.log("go on and use data ", data, " with this ", self);
 	   	    });
 	   	  });
-	   	});
+	   	}); */
 	require([
 	         "dojo/_base/declare",
 	         "dojo/request",
@@ -58,15 +58,16 @@ function getGrid() {
 	         "dgrid/OnDemandGrid",
 	         "dgrid/extensions/Pagination",
 	         "dijit/form/Button",
+	         "dojo/store/JsonRest",
 	         "dijit/form/TimeTextBox"
-	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button) {
-	         request("getList", {
-	             handleAs: "json",query:{startDate:'1991-01-01',endDate:dom.byId("endDate").value}
-	         }).then(function (response) {
+	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,JsonRest) {
+		var store = new JsonRest({
+	   	    target: "getList"
+	   	  });
 	             // Once the response is received, build an in-memory store
 	             // with the data
 	            // console.log(response);
-	             var store = new Memory({ data: response });
+	            
 	              
 	             // Create an instance of OnDemandGrid referencing the store
 	             /* var grid = new OnDemandGrid({
@@ -136,7 +137,7 @@ function getGrid() {
 	            	    // row.data == the item represented by the row
 	            	});
 	             grid.startup();
-	         });
+	        
 	        // console.log(startDate);
 	         startDate.constraints.datePattern='yyyy-MM-dd';
 	         times.constraints.timePattern='yyyy-MM-dd HH:mm:ss';
