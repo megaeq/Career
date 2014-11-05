@@ -48,4 +48,10 @@ public class IncomeAndCostImpl extends BaseDao implements
 		return null;
 	}
 
+	@Override
+	public List<IncomeAndCost> selectPageList(Map<String, Object> params)
+	{
+		return getSqlSessionTemplate().selectList("incomeandcost.selectPage", params);
+	}
+
 }

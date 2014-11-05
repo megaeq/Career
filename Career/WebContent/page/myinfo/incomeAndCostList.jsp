@@ -61,9 +61,9 @@ function getGrid() {
 	         "dojo/store/JsonRest",
 	         "dijit/form/TimeTextBox"
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,JsonRest) {
-		var store = new JsonRest({
+		/* var store = new JsonRest({
 	   	    target: "getList"
-	   	  });
+	   	  }); */
 	             // Once the response is received, build an in-memory store
 	             // with the data
 	            // console.log(response);
@@ -113,7 +113,9 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	            	 className: "dgrid-autoheight",
-	                 store: store,
+	                 store: new JsonRest({
+	         	   	    target: "getList"
+	       	   	  }),
 	                 columns: {id:{label:"id"},income:{label:"收入"},cost:{label:"消费"},date1:{label:"日期"},
 	                	 usages:{label:"用途"},memo:{label:"备注"},
 	                	 edit2:{label:"操作",renderCell: actionRenderCell}},

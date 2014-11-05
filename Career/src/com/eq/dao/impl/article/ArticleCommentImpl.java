@@ -40,4 +40,11 @@ public class ArticleCommentImpl extends BaseDao implements
 				.selectOne("articlecomment.selectone", id);
 	}
 
+	@Override
+	public List<ArticleComment> selectPageList(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

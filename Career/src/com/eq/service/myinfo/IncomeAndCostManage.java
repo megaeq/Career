@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.impl.myinfo.IncomeAndCostImpl;
+import com.eq.service.mybatis.PageParameter;
 import com.eq.util.BaseAction;
 
 /**
@@ -36,8 +37,10 @@ public class IncomeAndCostManage extends BaseAction {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("startDate", startDate);
 		params.put("endDate", endDate);
+		PageParameter page = new PageParameter(2, 12);
+		params.put("page", page);
 		response.setHeader("Content-Range", "items 0-13/56");
-		return impl.selectList(params);
+		return impl.selectPageList(params);
 	}
 
 	@ResponseBody

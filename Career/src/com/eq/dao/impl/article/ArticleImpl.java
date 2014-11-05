@@ -38,4 +38,11 @@ public class ArticleImpl extends BaseDao implements
 		return getSqlSessionTemplate().selectOne("article.selectone", id);
 	}
 
+	@Override
+	public List<Article> selectPageList(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

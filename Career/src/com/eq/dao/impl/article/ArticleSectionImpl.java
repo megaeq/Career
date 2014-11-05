@@ -40,4 +40,11 @@ public class ArticleSectionImpl extends BaseDao implements
 				.selectOne("articlesection.selectone", id);
 	}
 
+	@Override
+	public List<ArticleSection> selectPageList(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

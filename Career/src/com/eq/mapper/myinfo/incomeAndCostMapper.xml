@@ -13,6 +13,18 @@
 		</trim>
 		ORDER BY date DESC LIMIT 280
 	</select>
+	<select id="selectPage" parameterType="hashmap" resultType="incomecost">
+		SELECT * FROM income_cost
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="startDate != null">
+				date &gt;= #{startDate} AND
+			</if>
+			<if test="endDate != null">
+				date  &lt;= #{endDate} AND
+			</if>
+		</trim>
+		ORDER BY date DESC
+	</select>
 	<insert id="add" parameterType="incomecost">
 		INSERT INTO income_cost 
 		<trim prefix="(" suffixOverrides="," suffix=")">
