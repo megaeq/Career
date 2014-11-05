@@ -15,7 +15,6 @@ public class PropertyImpl extends BaseDao implements
 
 	public Object selectOne(Map<String, Object> params) {
 		return getSqlSessionTemplate().selectOne("property.select", params);
-
 	}
 
 	@Override

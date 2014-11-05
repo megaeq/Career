@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONSerializer;
@@ -25,6 +26,10 @@ import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.ServletWebRequest;
 
 import com.eq.dao.entity.system.User;
 import com.eq.dao.impl.system.PropertyImpl;
@@ -32,20 +37,27 @@ import com.eq.dao.impl.system.UserImpl;
 
 @Service
 public class BaseAction implements ApplicationContextAware {
-	@Autowired
-	public  HttpServletRequest request;  
+	protected HttpServletRequest request;  
+    protected HttpServletResponse response;  
 	@Autowired
 	public UserImpl userImpl;
+	@Autowired
+	public PropertyImpl propertyImpl;
 	private ApplicationContext	context;
 	public Map<String, Object>	params;
 	private static String PRINCIPALS_SESSION_KEY="org.apache.shiro.subject.support.DefaultSubjectContext_PRINCIPALS_SESSION_KEY";
 	private static String AUTHENTICATED_SESSION_KEY = "org.apache.shiro.subject.support.DefaultSubjectContext_AUTHENTICATED_SESSION_KEY";
+    @ModelAttribute  
+    public void setReqAndRes(HttpServletRequest request, HttpServletResponse response){  
+        this.request = request;  
+        this.response = response;  
+    } 
 	@Override
 	public void setApplicationContext(ApplicationContext context)
 			throws BeansException {
 		this.context = context;
 	}
-
+	@Deprecated
 	public Object getBean(String beanName) {
 		return context.getBean(beanName);
 	}
@@ -53,7 +65,7 @@ public class BaseAction implements ApplicationContextAware {
 	public String getProperty(String propertyKey) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("property", propertyKey);
-		PropertyImpl propertyImpl = (PropertyImpl) getBean("propertyImpl");
+		//PropertyImpl propertyImpl = (PropertyImpl) getBean("propertyImpl");
 		return ((Map<String, Object>) propertyImpl.selectOne(params)).get(
 				"value").toString();
 	}
@@ -161,4 +173,6 @@ public class BaseAction implements ApplicationContextAware {
 	public Subject getSubject() {
 		return SecurityUtils.getSubject();
 	}
+
+
 }
