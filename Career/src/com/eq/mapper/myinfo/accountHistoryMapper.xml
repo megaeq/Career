@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="accounthistory">
-	<select id="selectlist" parameterType="hashmap" resultType="accounthistory" >
+	<select id="selectPageList" parameterType="hashmap" resultType="accounthistory" >
 		SELECT * FROM account_history
 		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="accountId!=null">accountId=#{accountId} AND</if>
@@ -9,7 +9,7 @@
 			<if test="endDate!=null">createTime &lt;=#{endDate} AND</if>
 			<if test="usages!=null">usages LIKE "%"#{usages}"%" AND</if>
 		</trim>
-		ORDER BY createTime DESC LIMIT 70
+		ORDER BY createTime DESC
 	</select>
 	<select id="selectone" parameterType="int" resultType="accounthistory">
 		SELECT * FROM account_history WHERE id=#{id}

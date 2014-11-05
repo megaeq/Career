@@ -6,8 +6,10 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.eq.dao.entity.myinfo.Account;
+import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
+import com.eq.service.mybatis.PageParameter;
 
 @Component
 public class AccountImpl extends BaseDao implements
@@ -28,10 +30,6 @@ public class AccountImpl extends BaseDao implements
 		return getSqlSessionTemplate().update("account.update", entity);
 	}
 
-	@Override
-	public List<Account> selectList(Map<String, Object> params) {
-		return getSqlSessionTemplate().selectList("account.selectlist", params);
-	}
 
 	@Override
 	public Account selectOne(Integer id) {
@@ -44,6 +42,18 @@ public class AccountImpl extends BaseDao implements
 
 	public void updateWithoutPwd(Account entity) {
 		getSqlSessionTemplate().update("account.updatewithoutpwd", entity);
+	}
+
+	@Override
+	public Map<String, Object> selectPageList(Map<String, Object> params,
+			int currentPage, int pageSize) {
+		PageParameter pageParameter = new PageParameter(currentPage,pageSize);
+		params.put("page", pageParameter);
+		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("account.selectPageList", params);
+		params.clear();
+		params.put("list", list);
+		params.put("count", pageParameter.getTotalCount());
+		return params;
 	}
 
 }

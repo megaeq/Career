@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="systempermission">
-	<select id="selectlist" parameterType="hashmap" resultType="systempermission" >
+	<select id="selectPageList" parameterType="hashmap" resultType="systempermission" >
 		SELECT * FROM system_permission
 	</select>
 	<select id="selectone" parameterType="int" resultType="systempermission">

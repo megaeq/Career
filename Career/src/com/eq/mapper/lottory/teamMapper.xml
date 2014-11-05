@@ -8,7 +8,7 @@
 		<result column="orderno" property="orderno"/>
 		<result column="belong" property="belong"/>
 	</resultMap>
-	<select id="select" parameterType="hashmap" resultMap="teamResult">
+	<select id="selectPageList" parameterType="hashmap" resultMap="teamResult">
 		SELECT * FROM team_info 
 		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="chn != null">

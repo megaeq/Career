@@ -6,8 +6,10 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.eq.dao.entity.article.ArticleTag;
+import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
+import com.eq.service.mybatis.PageParameter;
 
 @Component
 public class ArticleTagImpl extends BaseDao implements
@@ -29,21 +31,21 @@ public class ArticleTagImpl extends BaseDao implements
 	}
 
 	@Override
-	public List<ArticleTag> selectList(Map<String, Object> params) {
-		return getSqlSessionTemplate().selectList("articletag.selectlist",
-				params);
-	}
-
-	@Override
 	public ArticleTag selectOne(Integer id) {
 		return getSqlSessionTemplate().selectOne("articletag.selectone", id);
 	}
 
 	@Override
-	public List<ArticleTag> selectPageList(Map<String, Object> params)
-	{
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> selectPageList(Map<String, Object> params,
+			int currentPage, int pageSize) {
+		PageParameter pageParameter = new PageParameter(currentPage,pageSize);
+		params.put("page", pageParameter);
+		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("articletag.selectPageList", params);
+		params.clear();
+		params.put("list", list);
+		params.put("count", pageParameter.getTotalCount());
+		return params;
 	}
+
 
 }

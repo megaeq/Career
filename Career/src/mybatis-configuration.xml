@@ -4,7 +4,7 @@
 <configuration>
 	<properties>
 		<property name="dialect" value="mysql" />
-		<property name="pageSqlId" value=".*Page$" />
+		<property name="pageSqlId" value=".*PageList$" />
 	</properties>
 
 	<typeAliases>

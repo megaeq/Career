@@ -5,9 +5,11 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.entity.system.Resource;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
+import com.eq.service.mybatis.PageParameter;
 @Component
 public class ResourceImpl extends BaseDao implements AbstractDao<Resource, Integer>
 {
@@ -30,16 +32,20 @@ public class ResourceImpl extends BaseDao implements AbstractDao<Resource, Integ
 		return getSqlSessionTemplate().update("resource.update", entity);
 	}
 
-	@Override
-	public List<Resource> selectList(Map<String, Object> params)
-	{
-		return getSqlSessionTemplate().selectList("resource.selectlist", params);
-	}
 
 	@Override
 	public Resource selectOne(Integer id)
 	{
 		return getSqlSessionTemplate().selectOne("resource.selectone", id);
+	}
+
+	@Override
+	public Map<String, Object> selectPageList(Map<String, Object> params,
+			int currentPage, int pageSize) {
+		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("resource.selectPageList", params);
+		params.clear();
+		params.put("list", list);
+		return params;
 	}
 
 }

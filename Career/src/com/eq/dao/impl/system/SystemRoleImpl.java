@@ -3,9 +3,11 @@ package com.eq.dao.impl.system;
 import java.util.List;
 import java.util.Map;
 
+import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.entity.system.SystemRole;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
+import com.eq.service.mybatis.PageParameter;
 
 public class SystemRoleImpl extends BaseDao implements AbstractDao<SystemRole, Integer>
 {
@@ -28,16 +30,20 @@ public class SystemRoleImpl extends BaseDao implements AbstractDao<SystemRole, I
 		return getSqlSessionTemplate().update("systemrole.update", entity);
 	}
 
-	@Override
-	public List<SystemRole> selectList(Map<String, Object> params)
-	{
-		return getSqlSessionTemplate().selectList("systemrole.selectlist", params);
-	}
 
 	@Override
 	public SystemRole selectOne(Integer id)
 	{
 		return getSqlSessionTemplate().selectOne("systemrole.selectone", id);
+	}
+
+	@Override
+	public Map<String, Object> selectPageList(Map<String, Object> params,
+			int currentPage, int pageSize) {
+		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("plan.selectPageList", params);
+		params.clear();
+		params.put("list", list);
+		return params;
 	}
 
 }

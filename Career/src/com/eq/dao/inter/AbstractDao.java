@@ -9,10 +9,8 @@ public interface AbstractDao<T, PK> {
 	public int delete(PK id);
 
 	public int update(T entity);
-
-	public List<T> selectList(Map<String, Object> params);
 	
-	public List<T> selectPageList(Map<String, Object> params);
+	public Map<String, Object> selectPageList(Map<String, Object> params,int currentPage,int pageSize);
 
 	public T selectOne(PK id);
 }

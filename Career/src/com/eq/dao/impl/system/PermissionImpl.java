@@ -5,9 +5,11 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.entity.system.Permission;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
+import com.eq.service.mybatis.PageParameter;
 @Component
 public class PermissionImpl extends BaseDao implements AbstractDao<Permission, Integer>
 {
@@ -30,16 +32,20 @@ public class PermissionImpl extends BaseDao implements AbstractDao<Permission, I
 		return getSqlSessionTemplate().update("permission.update", entity);
 	}
 
-	@Override
-	public List<Permission> selectList(Map<String, Object> params)
-	{
-		return getSqlSessionTemplate().selectList("permission.selectlist", params);
-	}
 
 	@Override
 	public Permission selectOne(Integer id)
 	{
 		return null;
+	}
+
+	@Override
+	public Map<String, Object> selectPageList(Map<String, Object> params,
+			int currentPage, int pageSize) {
+		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("permission.selectPageList", params);
+		params.clear();
+		params.put("list", list);
+		return params;
 	}
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="resource">
-	<select id="selectlist" parameterType="hashmap" resultType="resource" >
+	<select id="selectPageList" parameterType="hashmap" resultType="resource" >
 		SELECT * FROM resource
 	</select>
 	<select id="selectone" parameterType="int" resultType="resource">

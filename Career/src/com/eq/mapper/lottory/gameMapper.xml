@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="game">
-	<select id="select" parameterType="hashmap" resultType="game" >
+	<select id="selectPageList" parameterType="hashmap" resultType="game" >
 		SELECT * FROM game 
 		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="startDate != null">
@@ -37,7 +37,7 @@
 			</if>
 			
 		</trim>
-		ORDER BY code DESC LIMIT 100
+		ORDER BY code DESC
 	</select>
 	<select id="one" parameterType="int" resultType="game">
 	SELECT * FROM game WHERE id=#{id}

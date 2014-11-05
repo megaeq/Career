@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="account">
-	<select id="selectlist" parameterType="hashmap" resultType="account" >
+	<select id="selectPageList" parameterType="hashmap" resultType="account" >
 		SELECT * FROM account
 		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="belong!=null">belong=#{belong} AND</if>

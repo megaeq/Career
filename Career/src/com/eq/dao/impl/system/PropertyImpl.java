@@ -17,11 +17,6 @@ public class PropertyImpl extends BaseDao implements
 		return getSqlSessionTemplate().selectOne("property.select", params);
 	}
 
-	@Override
-	public List<Property> selectList(Map<String, Object> params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Property selectOne(String id) {
@@ -45,6 +40,13 @@ public class PropertyImpl extends BaseDao implements
 	public int add(Property entity) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Map<String, Object> selectPageList(Map<String, Object> params,
+			int currentPage, int pageSize) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

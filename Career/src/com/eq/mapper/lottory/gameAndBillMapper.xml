@@ -16,7 +16,7 @@
 		</trim>
 		)
 	</insert>
-	<select id="selectlist" parameterType="hashmap" resultType="gamebill">
+	<select id="selectPageList" parameterType="hashmap" resultType="gamebill">
 		SELECT * FROM game_bill 
 		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="gameId!=null">gameid=#{gameId} AND</if>
