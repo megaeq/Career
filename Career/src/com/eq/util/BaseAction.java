@@ -45,6 +45,9 @@ public class BaseAction implements ApplicationContextAware {
 	public PropertyImpl propertyImpl;
 	private ApplicationContext	context;
 	public Map<String, Object>	params;
+	public int pageSize = 0;
+	public int currentPage = 0;
+	public String rangeStr = "";
 	private static String PRINCIPALS_SESSION_KEY="org.apache.shiro.subject.support.DefaultSubjectContext_PRINCIPALS_SESSION_KEY";
 	private static String AUTHENTICATED_SESSION_KEY = "org.apache.shiro.subject.support.DefaultSubjectContext_AUTHENTICATED_SESSION_KEY";
     @ModelAttribute  
@@ -172,6 +175,27 @@ public class BaseAction implements ApplicationContextAware {
 	
 	public Subject getSubject() {
 		return SecurityUtils.getSubject();
+	}
+	@ModelAttribute
+	public void getPageInfo() {
+		Map<String, Object> params = new HashMap<String, Object>();
+		String range=request.getHeader("Range");
+		if(StringUtils.isNotBlank(range)) {
+			String[] pages = range.split("=")[1].split("-");
+			rangeStr = "items "+range.split("=")[1]+"/";
+			int start  = Integer.parseInt(pages[0]);
+			int end = Integer.parseInt(pages[1]);
+			pageSize = end-start+1;
+			for(int i=0;;i++) {
+				if(start%pageSize!=0) {
+					pageSize++;
+				} else {
+					break;
+				}
+			}
+			currentPage = start/pageSize;
+		} 
+		
 	}
 
 

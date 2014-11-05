@@ -33,12 +33,11 @@ public class IncomeAndCostManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("getList")
 	public List<IncomeAndCost> getIncomeAndCostList(Date startDate, Date endDate) {
-		System.out.println(request.getHeader("Range"));
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("startDate", startDate);
 		params.put("endDate", endDate);
-		response.setHeader("Content-Range", "items 0-13/56");
-		Map<String, Object> pps = impl.selectPageList(params,2,12);
+		Map<String, Object> pps = impl.selectPageList(params,currentPage,pageSize);
+		response.setHeader("Content-Range", rangeStr+pps.get("count"));
 		return (List<IncomeAndCost>)pps.get("list");
 	}
 

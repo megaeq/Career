@@ -51,7 +51,7 @@ public class IncomeAndCostImpl extends BaseDao implements
 			int pageSize) {
 		PageParameter pageParameter = new PageParameter(currentPage,pageSize);
 		params.put("page", pageParameter);
-		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("incomeandcost.selectPage", params);
+		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("incomeandcost.selectPageList", params);
 		params.clear();
 		params.put("list", list);
 		params.put("count", pageParameter.getTotalCount());

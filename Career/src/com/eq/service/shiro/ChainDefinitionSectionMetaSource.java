@@ -1,7 +1,9 @@
 package com.eq.service.shiro;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.config.Ini;
@@ -24,7 +26,8 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 	@Override
 	public Section getObject() throws Exception
 	{
-		List<Resource> list = resourceImpl.selectList(null);
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<Resource> list = (List<Resource>)resourceImpl.selectPageList(params,0,0).get("list");
 		
 		Ini ini = new Ini();  
         //加载默认的url  
