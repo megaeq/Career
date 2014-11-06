@@ -38,12 +38,9 @@ public class ArticleTagImpl extends BaseDao implements
 	@Override
 	public Map<String, Object> selectPageList(Map<String, Object> params,
 			int currentPage, int pageSize) {
-		PageParameter pageParameter = new PageParameter(currentPage,pageSize);
-		params.put("page", pageParameter);
 		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("articletag.selectPageList", params);
 		params.clear();
 		params.put("list", list);
-		params.put("count", pageParameter.getTotalCount());
 		return params;
 	}
 

@@ -15,7 +15,7 @@ import java.util.List;
 public class FileUtils
 {
 	private static List<String> filelist = new ArrayList<String>();
-	// ͨ���ļ����ȡ�ļ�
+	// Í¨ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ä¼ï¿½
 	@SuppressWarnings("finally")
 	public static String readFileByLines(String fileName, String CHARSET)
 	{
@@ -29,7 +29,7 @@ public class FileUtils
 			reader = new java.io.BufferedReader(new InputStreamReader(new FileInputStream(file), CHARSET));
 			String tempString = null;
 			int line = 1;
-			// һ�ζ���һ�У�ֱ������nullΪ�ļ�����
+			// Ò»ï¿½Î¶ï¿½ï¿½ï¿½Ò»ï¿½Ð£ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nullÎªï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
 
 			while ((tempString = reader.readLine()) != null)
 			{
@@ -112,31 +112,31 @@ public class FileUtils
 			e.printStackTrace();
 		}
 	}
-	public static boolean delAllFile(String dirName)//删除指定文件夹下所有文件 
+	public static boolean delAllFile(String dirName)//å é¤æå®æä»¶å¤¹ä¸æææä»¶ 
 	{  
 	   boolean flag=false;  
-	   //如果dir不以文件分隔符结尾，自动添加文件分隔符 
+	   //å¦ædirä¸ä»¥æä»¶åéç¬¦ç»å°¾ï¼èªå¨æ·»å æä»¶åéç¬¦ 
 	     if(!dirName.endsWith(File.separator)) 
 	     { 
 	      dirName = dirName + File.separator; 
 	      
 	     }    
 	     File dirFile = new File(dirName); 
-	     //如果dir对应的文件不存在，或者不是一个文件夹则退出 
+	     //å¦ædirå¯¹åºçæä»¶ä¸å­å¨ï¼æèä¸æ¯ä¸ä¸ªæä»¶å¤¹åéåº 
 	     if(!dirFile.exists() || (!dirFile.isDirectory())){ 
-	      System.out.println("List失败！找不到目录："+dirName); 
+	      System.out.println("Listå¤±è´¥ï¼æ¾ä¸å°ç®å½ï¼"+dirName); 
 	      return false; 
 	     } 
 	    
 	     /* 
-	     * list方法返回该目录下的所有文件（包括目录）的文件名，文件名不含路径信息 
+	     * listæ¹æ³è¿åè¯¥ç®å½ä¸çæææä»¶ï¼åæ¬ç®å½ï¼çæä»¶åï¼æä»¶åä¸å«è·¯å¾ä¿¡æ¯ 
 	     * 
 	        String[] files = dirFile.list(); 
 	      for(int i = 0; i < files.length; i++){ 
 	       System.out.println(files[i]); 
 	      } 
 	     */    
-	     //列出文件夹下所有的文件,listFiles方法返回目录下的所有文件（包括目录）的File对象 
+	     //ååºæä»¶å¤¹ä¸ææçæä»¶,listFilesæ¹æ³è¿åç®å½ä¸çæææä»¶ï¼åæ¬ç®å½ï¼çFileå¯¹è±¡ 
 	     File[] files = dirFile.listFiles();     
 	     for(int i = 0; i < files.length; i++) 
 	     { 
@@ -145,22 +145,22 @@ public class FileUtils
 	       Long nowMills = System.currentTimeMillis();
 	       
 	       Long modifiedMills = files[i].lastModified();
-	       //删除创建时间超过10分钟的文件
+	       //å é¤åå»ºæ¶é´è¶è¿10åéçæä»¶
 	       if(nowMills-modifiedMills>600000) {
 	    	   if(files[i].delete()==false) 
 		       { 
-		      System.out.print(files[i].getAbsolutePath()+"删除失败\n"); 
+		      System.out.print(files[i].getAbsolutePath()+"å é¤å¤±è´¥\n"); 
 		       } 
 		       else 
 		       { 
-		      System.out.println(files[i].getAbsolutePath() + " 删除成功\n"); 
+		      System.out.println(files[i].getAbsolutePath() + " å é¤æå\n"); 
 		       }      
 		       flag=true; 
 	       }
 	      } 
 	      else if (files[i].isDirectory()) 
 	      { 
-	       System.out.println(files[i].getAbsolutePath() + " 是目录！"); 
+	       System.out.println(files[i].getAbsolutePath() + " æ¯ç®å½ï¼"); 
 	       //ListFileUtil.listAllFiles(files[i].getAbsolutePath()); 
 	      } 
 	     } 
