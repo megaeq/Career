@@ -50,7 +50,7 @@ public class ArticleManage extends BaseAction {
 			map.put("userName", user.getName());
 			Map<String, Object> pps1 = new HashMap<String, Object>();
 			pps1.put("articleId", art.getId());
-			List<ArticleTag> tagList = (List<ArticleTag>)tagImpl.selectPageList(pps1,0,0).get("list");
+			List<ArticleTag> tagList = (List<ArticleTag>)tagImpl.selectList(pps1);
 			String[] tags = new String[tagList.size()];
 			for (int i = 0; i < tagList.size(); i++) {
 				tags[i] = tagList.get(i).getTagName();

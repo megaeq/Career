@@ -29,7 +29,7 @@ public class UserManage extends BaseAction
 		this.params = params;
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("name", getString("username"));
-		List<User> userList = (List<User>)impl.selectPageList(pps,0,1).get("list");
+		List<User> userList = impl.selectList(pps);
 		if(userList.isEmpty()) {
 			User user = new User();
 			user.setCreateTime(DateUtil.getNowTime());

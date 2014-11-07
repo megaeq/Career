@@ -119,7 +119,9 @@ public class AccountHistoryManage extends BaseAction {
 		this.params = params;
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("accountId", getInt("accountId"));
-		return impl.selectList(pps);
+		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
+		response.setHeader("Content-Range", rangeStr+pps2.get("count"));
+		return (List<AccountHistory>)pps.get("list");
 	}
 
 	@ResponseBody

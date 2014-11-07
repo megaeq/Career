@@ -54,6 +54,13 @@ public class UserImpl extends BaseDao implements AbstractDao<User, Integer> {
 		params.put("count", pageParameter.getTotalCount());
 		return params;
 	}
+
+	@Override
+	public List<User> selectList(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return getSqlSessionTemplate().selectList("user.selectPageList", params);
+	}
 	
 
 }

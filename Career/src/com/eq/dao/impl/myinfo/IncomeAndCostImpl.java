@@ -58,4 +58,11 @@ public class IncomeAndCostImpl extends BaseDao implements
 		return params;
 	}
 
+	@Override
+	public List<IncomeAndCost> selectList(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return getSqlSessionTemplate().selectList("incomeandcost.selectPageList", params);
+	}
+
 }

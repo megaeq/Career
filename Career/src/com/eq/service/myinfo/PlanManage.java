@@ -31,7 +31,9 @@ public class PlanManage extends BaseAction {
 		this.params = params;
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("userId",getUser().getId());
-		return impl.selectList(pps);
+		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
+		response.setHeader("Content-Range", rangeStr+pps2.get("count"));
+		return (List<Plan>)pps2.get("list");
 	}
 
 	@ResponseBody

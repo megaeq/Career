@@ -49,4 +49,10 @@ public class ArticleCommentImpl extends BaseDao implements
 		return params;
 	}
 
+	@Override
+	public List<ArticleComment> selectList(Map<String, Object> params)
+	{
+		return getSqlSessionTemplate().selectList("articlecomment.selectPageList", params);
+	}
+
 }

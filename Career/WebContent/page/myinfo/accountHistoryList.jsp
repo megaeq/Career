@@ -41,8 +41,9 @@ function getGrid() {
 	         'dojo/dom-style',
 	         "dijit/form/Select",
 	         "dojo/data/ObjectStore",
-	         "dojo/store/Memory"
-	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle,Select,ObjectStore,Memory) {
+	         "dojo/store/Memory",
+	         "dojo/store/JsonRest"
+	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle,Select,ObjectStore,Memory,JsonRest) {
 		request("accountHistory/getAccountList"
       			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
       				//console.log(response);
@@ -57,9 +58,6 @@ function getGrid() {
       				  }, "selectList");
       				  s.startup();
       	 }) ;    
-		request("accountHistory/getList", {
-	             handleAs: "json",query:{accountId:$.getUrlParam('accountId')}
-	         }).then(function (response) {
 	             var store = new Memory({ data: response });
 	              
 	             var actionRenderCell = function (object, data,cell) {
@@ -96,7 +94,9 @@ function getGrid() {
 	                 }, cell.appendChild(document.createElement("div")));
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
-	                 store: store,
+	            	 store: new JsonRest({
+		         	   	    target: "accountHistory/getList?accountId="+$.getUrlParam('accountId')
+		       	   	  }),
 	                 className: "dgrid-autoheight",
 	                 columns: {time:{label:"创建时间"},income:{label:"收入"},cost:{label:"支出"},
 	                	 usages:{label:"用途"},memo:{label:"备注"},
@@ -115,7 +115,6 @@ function getGrid() {
 	 	 			 sum+=";总盈余："+(response.income-response.cost)+"</h1>";
 	 				 dom.byId("sum").innerHTML=sum;
 	 			 })  ;
-	     });
 	
 }
 

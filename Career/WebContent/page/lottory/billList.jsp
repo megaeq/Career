@@ -36,12 +36,9 @@ function getGrid() {
 	         "dgrid/OnDemandGrid",
 	         "dgrid/extensions/Pagination",
 	         "dijit/form/Button",
-	         'dojo/dom-style' 
-	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle) {
-	         request("bill/getList", {
-	             handleAs: "json",query:{accountId:$.getUrlParam('accountId')}
-	         }).then(function (response) {
-	             var store = new Memory({ data: response });
+	         'dojo/dom-style' ,
+	         "dojo/store/JsonRest"
+	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle,JsonRest) {
 	              
 	             var actionRenderCell = function (object, data,cell) {
 	            	 if(0==object.flag) {
@@ -85,7 +82,8 @@ function getGrid() {
 	                 }, cell.appendChild(document.createElement("div")));
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
-	                 store: store,
+	                 store: new JsonRest({
+		         	   	    target: "getList?accountId="+$.getUrlParam('accountId')}),
 	                 className: "dgrid-autoheight",
 	                 columns: {id:{label:"id"},betAmount:{label:"投注量（元）"},sp:{label:"sp"},
 	                	 income:{label:"收入"},flag:{label:"是否完结",renderCell:function(object, data,cell) {
@@ -104,8 +102,7 @@ function getGrid() {
 	             	
 	             }, "list");
 	             grid.startup();
-	             
-	         });
+
 	         request("bill/sum"
 		 			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
 		 	 			 var sum="";

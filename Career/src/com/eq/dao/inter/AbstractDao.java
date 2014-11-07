@@ -11,6 +11,8 @@ public interface AbstractDao<T, PK> {
 	public int update(T entity);
 	
 	public Map<String, Object> selectPageList(Map<String, Object> params,int currentPage,int pageSize);
+	
+	public List<T> selectList(Map<String, Object> params);
 
 	public T selectOne(PK id);
 }

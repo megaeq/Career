@@ -60,4 +60,11 @@ public class AccountHistoryImpl extends BaseDao implements AbstractDao<AccountHi
 		return params;
 	}
 
+	@Override
+	public List<AccountHistory> selectList(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return getSqlSessionTemplate().selectList("accounthistory.selectPageList", params);
+	}
+
 }

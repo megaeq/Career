@@ -49,5 +49,9 @@ public class BillImpl extends BaseDao implements AbstractDao<Bill, Integer> {
 		params.put("count", pageParameter.getTotalCount());
 		return params;
 	}
+	
+	public List<Bill> selectList(Map<String, Object> params) {
+		return getSqlSessionTemplate().selectList("bill.selectPageList", params);
+	}
 
 }

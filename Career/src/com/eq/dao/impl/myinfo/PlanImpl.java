@@ -49,5 +49,9 @@ public class PlanImpl extends BaseDao implements AbstractDao<Plan, Integer>
 		params.put("count", pageParameter.getTotalCount());
 		return params;
 	}
+	
+	public List<Plan> selectList(Map<String, Object> params) {
+		return getSqlSessionTemplate().selectList("plan.selectPageList", params);
+	}
 
 }

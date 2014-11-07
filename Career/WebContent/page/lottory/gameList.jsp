@@ -25,16 +25,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         "dojo/dom",
  	         "dojo/store/Memory",
  	         "dgrid/OnDemandGrid",
- 	         "dgrid/extensions/Pagination"
- 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination) {
- 	         request("game/getList", {
- 	             handleAs: "json",query:{startDate:dom.byId("startDate").value,
- 	            	 endDate:dom.byId("endDate").value}
- 	         }).then(function (response) {
- 	             var store = new Memory({ data: response });
+ 	         "dgrid/extensions/Pagination",
+ 	         "dojo/store/JsonRest"
+ 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,JsonRest) {
  	              
  	             var grid = new (declare([OnDemandGrid, Pagination]))({
- 	                 store: store,
+ 	            	store: new JsonRest({
+	         	   	    target: "game/getList?startDate="+dom.byId("startDate").value+"&endDate="+dom.byId("endDate").value}),
  	                className: "dgrid-autoheight",
  	                 columns: {id:{label:"id"},code:{lable:"编号"},gameType:{label:"联赛类型"},
  	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主胜"},
@@ -56,7 +53,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	             }, "list");
  	             grid.startup();
  	         });
- 	     });
  }
 
       function change() {

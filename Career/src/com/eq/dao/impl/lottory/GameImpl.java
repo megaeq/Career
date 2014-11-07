@@ -46,5 +46,9 @@ public class GameImpl extends BaseDao implements AbstractDao<Game, Integer> {
 		params.put("count", pageParameter.getTotalCount());
 		return params;
 	}
+	
+	public List<Game> selectList(Map<String, Object> params) {
+		return getSqlSessionTemplate().selectList("game.selectPageList", params);
+	}
 
 }

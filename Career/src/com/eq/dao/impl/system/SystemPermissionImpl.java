@@ -40,10 +40,19 @@ public class SystemPermissionImpl extends BaseDao implements AbstractDao<SystemP
 	@Override
 	public Map<String, Object> selectPageList(Map<String, Object> params,
 			int currentPage, int pageSize) {
+		PageParameter pageParameter = new PageParameter(currentPage,pageSize);
+		params.put("page", pageParameter);
 		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("systempermission.selectPageList", params);
 		params.clear();
 		params.put("list", list);
+		params.put("count", pageParameter.getTotalCount());
 		return params;
+	}
+
+	@Override
+	public List<SystemPermission> selectList(Map<String, Object> params)
+	{
+		return getSqlSessionTemplate().selectList("systempermission.selectPageList", params);
 	}
 
 }

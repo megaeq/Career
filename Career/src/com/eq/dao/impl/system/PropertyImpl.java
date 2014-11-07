@@ -49,4 +49,12 @@ public class PropertyImpl extends BaseDao implements
 		return null;
 	}
 
+
+	@Override
+	public List<Property> selectList(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

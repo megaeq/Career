@@ -40,8 +40,8 @@ public class MyRealm extends AuthorizingRealm
 		String username = (String)principals.getPrimaryPrincipal();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("username", username);
-		List<Role> roleList = (List<Role>)roleImpl.selectPageList(params,0,0).get("list");
-		List<Permission> permissionList = (List<Permission>)permissionImpl.selectPageList(params,0,0).get("list");
+		List<Role> roleList = roleImpl.selectList(params);
+		List<Permission> permissionList = permissionImpl.selectList(params);
 		Set<String> roleSet = new HashSet<String>();
 		Set<String> permissionSet = new HashSet<String>();
 		for(int i=0;i<roleList.size();i++) {

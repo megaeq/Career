@@ -55,4 +55,10 @@ public class TeamImpl extends BaseDao implements AbstractDao<Team, Integer> {
 		return params;
 	}
 
+	@Override
+	public List<Team> selectList(Map<String, Object> params)
+	{
+		return getSqlSessionTemplate().selectList("team.selectPageList", params);
+	}
+
 }

@@ -48,5 +48,12 @@ public class ArticleSectionImpl extends BaseDao implements
 		return params;
 	}
 
+	@Override
+	public List<ArticleSection> selectList(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return getSqlSessionTemplate().selectList("articlesection.selectPageList", params);
+	}
+
 
 }

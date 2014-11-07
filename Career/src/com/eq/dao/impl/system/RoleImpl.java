@@ -42,10 +42,20 @@ public class RoleImpl extends BaseDao implements AbstractDao<Role, Integer>
 	@Override
 	public Map<String, Object> selectPageList(Map<String, Object> params,
 			int currentPage, int pageSize) {
+		PageParameter pageParameter = new PageParameter(currentPage,pageSize);
+		params.put("page", pageParameter);
 		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("role.selectPageList", params);
 		params.clear();
 		params.put("list", list);
+		params.put("count", pageParameter.getTotalCount());
 		return params;
+	}
+
+	@Override
+	public List<Role> selectList(Map<String, Object> params)
+	{
+		// TODO Auto-generated method stub
+		return getSqlSessionTemplate().selectList("role.selectPageList", params);
 	}
 
 }

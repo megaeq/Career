@@ -55,5 +55,9 @@ public class AccountImpl extends BaseDao implements
 		params.put("count", pageParameter.getTotalCount());
 		return params;
 	}
+	
+	public List<Account> selectList(Map<String, Object> params) {
+		return getSqlSessionTemplate().selectList("account.selectPageList", params);
+	}
 
 }

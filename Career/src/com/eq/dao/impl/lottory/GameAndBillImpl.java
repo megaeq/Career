@@ -56,5 +56,9 @@ public class GameAndBillImpl extends BaseDao implements
 		params.put("count", pageParameter.getTotalCount());
 		return params;
 	}
+	
+	public List<GameAndBill> selectList(Map<String, Object> params) {
+		return getSqlSessionTemplate().selectList("gameAndBill.selectPageList", params);
+	}
 
 }

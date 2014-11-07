@@ -27,7 +27,7 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 	public Section getObject() throws Exception
 	{
 		Map<String, Object> params = new HashMap<String, Object>();
-		List<Resource> list = (List<Resource>)resourceImpl.selectPageList(params,0,0).get("list");
+		List<Resource> list = resourceImpl.selectList(params);
 		
 		Ini ini = new Ini();  
         //加载默认的url  

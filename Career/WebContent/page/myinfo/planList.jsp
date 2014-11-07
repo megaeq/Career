@@ -37,11 +37,9 @@ function getGrid() {
 	         "dgrid/OnDemandGrid",
 	         "dgrid/extensions/Pagination",
 	         "dijit/form/Button",
-	         'dojo/dom-style' 
-	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle) {
-	         request("plan/getList", {
-	             handleAs: "json"
-	         }).then(function (response) {
+	         'dojo/dom-style' ,
+	         "dojo/store/JsonRest",
+	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle,JsonRest) {
 	             var store = new Memory({ data: response });
 	             var actionRenderCell = function (object, data,cell) {
 	                 var btn1 = new Button({
@@ -75,7 +73,9 @@ function getGrid() {
 	                 
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
-	                 store: store,
+	            	 store: new JsonRest({
+		         	   	    target: "plan/getList"
+		       	   	  }),
 	                 className: "dgrid-autoheight",
 	                 columns: {id:{label:"id"},name:{label:"名称"},levels:{label:"级别",renderCell:function(object, data,cell) {
 	                	 var div = document.createElement("div");
@@ -102,7 +102,6 @@ function getGrid() {
 	             }, "list");
 	             grid.startup();
 	         });
-	     });
 }
 
      function change() {

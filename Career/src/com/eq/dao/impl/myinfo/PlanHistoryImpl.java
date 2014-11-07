@@ -50,6 +50,12 @@ public class PlanHistoryImpl extends BaseDao implements AbstractDao<PlanHistory,
 		params.put("count", pageParameter.getTotalCount());
 		return params;
 	}
+
+	@Override
+	public List<PlanHistory> selectList(Map<String, Object> params)
+	{
+		return getSqlSessionTemplate().selectList("planhistory.selectPageList", params);
+	}
 	
 	
 

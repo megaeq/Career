@@ -40,10 +40,19 @@ public class SystemRoleImpl extends BaseDao implements AbstractDao<SystemRole, I
 	@Override
 	public Map<String, Object> selectPageList(Map<String, Object> params,
 			int currentPage, int pageSize) {
+		PageParameter pageParameter = new PageParameter(currentPage,pageSize);
+		params.put("page", pageParameter);
 		List<IncomeAndCost> list = getSqlSessionTemplate().selectList("plan.selectPageList", params);
 		params.clear();
 		params.put("list", list);
+		params.put("count", pageParameter.getTotalCount());
 		return params;
+	}
+
+	@Override
+	public List<SystemRole> selectList(Map<String, Object> params)
+	{
+		return getSqlSessionTemplate().selectList("plan.selectPageList", params);
 	}
 
 }

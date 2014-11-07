@@ -28,7 +28,9 @@ public class GameManage extends BaseAction {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("startDate", startDate);
 		params.put("endDate", endDate);
-		return impl.selectList(params);
+		Map<String, Object> pps = impl.selectPageList(params, currentPage, pageSize);
+		response.setHeader("Content-Range", rangeStr+pps.get("count"));
+		return (List<Game>)pps.get("list");
 	}
 
 	@ResponseBody
