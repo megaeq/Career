@@ -66,11 +66,7 @@ public class BaseAction implements ApplicationContextAware {
 	}
 
 	public String getProperty(String propertyKey) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("property", propertyKey);
-		//PropertyImpl propertyImpl = (PropertyImpl) getBean("propertyImpl");
-		return ((Map<String, Object>) propertyImpl.selectOne(params)).get(
-				"value").toString();
+		return propertyImpl.selectOne(propertyKey).getValue();
 	}
 
 	@InitBinder

@@ -13,15 +13,9 @@ import com.eq.dao.inter.AbstractDao;
 public class PropertyImpl extends BaseDao implements
 		AbstractDao<Property, String> {
 
-	public Object selectOne(Map<String, Object> params) {
-		return getSqlSessionTemplate().selectOne("property.select", params);
-	}
-
-
 	@Override
 	public Property selectOne(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return getSqlSessionTemplate().selectOne("property.select", id);
 	}
 
 	@Override

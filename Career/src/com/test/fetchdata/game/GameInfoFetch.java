@@ -23,6 +23,7 @@ import com.eq.dao.entity.lottory.Game;
 import com.eq.util.FileUtils;
 import com.eq.util.Mysql;
 import com.eq.util.ParserUtils;
+import com.eq.util.UrlUtil;
 
 public class GameInfoFetch {
 
@@ -40,52 +41,10 @@ public class GameInfoFetch {
 	}
 
 	private void todo() {
-		List<String> filelist = FileUtils.refreshFileList("D:\\bill2");
-		// initMysql();
-		// String sql =
-		// "select id,dirpath,date from game_complete where flag='0'";
-		// rs = stmt2.executeQuery(sql);
-
-		/*
-		 * while (rs.next()) { System.out.println(rs.getRow()); String fileName
-		 * = rs.getString("dirpath"); Date date = rs.getDate("date");
-		 * SimpleDateFormat df = new SimpleDateFormat("yyyy-"); SimpleDateFormat
-		 * df2 = new SimpleDateFormat("yyyy-MM-dd"); List<Game> gameList =
-		 * getGameInfo(Parser.createParser( FileUtils.readFileByLines(fileName,
-		 * CHARSET), CHARSET), df.format(date), df2.format(date));
-		 * insertDB(gameList, rs.getInt("id")); }
-		 */
-		for (int i = 0; i < filelist.size(); i++) {
-			String fileName = filelist.get(i);
-			String[] belongs = fileName.split("\\\\");
-			String datestr = belongs[belongs.length - 1].split("\\.")[0];
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-");
-			SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-			Date date;
-			try {
-				date = df2.parse(datestr);
-				List<Game> gameList = getGameInfo(
-						Parser.createParser(FileUtils.readFileByLines(
-								filelist.get(i), CHARSET), CHARSET),
-						df.format(date), df2.format(date));
-				insertDB(gameList);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		/*
-		 * for (String fileName : filelist) { String[] dates =
-		 * fileName.split("\\\\"); String date = dates[dates.length -
-		 * 1].split("\\.")[0]; Date date1 = Date.valueOf(date);
-		 * 
-		 * List<Game> gameList = getGameInfo(Parser.createParser(
-		 * FileUtils.readFileByLines(fileName, CHARSET), CHARSET), date);
-		 * insertDB(gameList, date1);
-		 * 
-		 * insertFile(fileName, date1); }
-		 */
+			List<Game> gameList = getGameInfo(
+					Parser.createParser(UrlUtil.getContent("http://www.okooo.com/livecenter/jingcai/", CHARSET), CHARSET),"2014-"
+					,"2014-11-10" );
+			insertDB(gameList);
 	}
 
 	private List<Game> getGameInfo(Parser parser, String year, String date) {

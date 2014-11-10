@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="property">
-	<select id="select" parameterType="hashmap" resultType="hashmap">
+	<select id="select" parameterType="String" resultType="property">
 		SELECT * FROM property 
 		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="property != null">
