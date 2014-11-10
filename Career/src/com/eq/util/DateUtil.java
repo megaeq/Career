@@ -16,6 +16,11 @@ public class DateUtil {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		return df.format(ts);
 	}
+	
+	public static String getDateStr(Date date) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(date);
+	}
 
 	public static Date getDate(String date) {
 
