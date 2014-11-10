@@ -23,6 +23,7 @@ import com.eq.dao.entity.lottory.Game;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
 import com.eq.util.ParserUtils;
+import com.eq.util.UrlUtil;
 
 @Component
 @RequestMapping("page/")
@@ -33,7 +34,11 @@ public class GameInfoMapper extends BaseAction
 	@RequestMapping()
 	public String getGameInfo(@RequestParam Map<String, Object> params){
 		this.params = params;
-		List<Game>
+		String url = getProperty("")+"?date="+getString("date");
+		List<Game> gameList = getGameInfo(Parser.createParser(UrlUtil.getContent(url, CHARSET), CHARSET), getDate("date"));
+		for(Game game:gameList) {
+			
+		}
 		return "成功";
 	}
 	
