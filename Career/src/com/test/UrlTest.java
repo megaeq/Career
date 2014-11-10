@@ -47,8 +47,8 @@ public class UrlTest
   
     }  
   
-  
-  
+    //代理服务器设置
+    @Deprecated
     public static void initProxy(String host, int port, final String username,  
   
             final String password) {  
@@ -82,13 +82,13 @@ public class UrlTest
          //String url = "http://java.sun.com";  
     	//String url = "http://www.okooo.com/jingcai/shuju/betfa/";
     	String url = "http://www.okooo.com/livecenter/jingcai/";
-         String proxy = "http://192.168.22.81";  
+         //String proxy = "http://192.168.22.81";  
   
-         int port = 80;  
+         //int port = 80;  
   
-         String username = "username";  
+        // String username = "username";  
   
-         String password = "password";  
+         //String password = "password";  
   
          String curLine = "";  
   
@@ -96,7 +96,7 @@ public class UrlTest
   
          URL server = new URL(url);  
   
-         initProxy(proxy, port, username, password);  
+         //initProxy(proxy, port, username, password);  
   
          HttpURLConnection connection = (HttpURLConnection) server  
   
