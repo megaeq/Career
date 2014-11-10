@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,30 +15,54 @@ import org.htmlparser.filters.CssSelectorNodeFilter;
 import org.htmlparser.nodes.TagNode;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eq.dao.entity.lottory.Game;
+import com.eq.dao.impl.lottory.GameImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
 import com.eq.util.ParserUtils;
 import com.eq.util.UrlUtil;
 
 @Component
-@RequestMapping("page/")
-public class GameInfoMapper extends BaseAction
+@RequestMapping("page/lottory")
+public class GameInfoManage extends BaseAction
 {
 	private final String CHARSET = "gb2312";
+	@Autowired
+	private GameImpl impl;
 	@ResponseBody
-	@RequestMapping()
+	@RequestMapping("getFootBallGameInfo")
 	public String getGameInfo(@RequestParam Map<String, Object> params){
 		this.params = params;
-		String url = getProperty("")+"?date="+getString("date");
-		List<Game> gameList = getGameInfo(Parser.createParser(UrlUtil.getContent(url, CHARSET), CHARSET), getDate("date"));
-		for(Game game:gameList) {
-			
+		Date startDate = getDate("startDate");
+		Date endDate = getDate("endDate");
+		Long starts = startDate.getTime();
+		Long ends = endDate.getTime();
+		try {
+			for(int i=0;starts<=ends;i++) {
+				Date date = new Date(starts);
+				String url = getProperty("okooozucaijingcai")+"?date="+DateUtil.getDateStr(date);
+				List<Game> gameList = getGameInfo(Parser.createParser(UrlUtil.getContent(url, CHARSET), CHARSET), date);
+				Map<String, Object> pps = new HashMap<String, Object>();
+				for(Game game:gameList) {
+					pps.clear();
+					pps.put("code", game.getCode());
+					if(impl.selectList(pps).isEmpty()) {
+						impl.add(game);
+					} else {
+						impl.update(game);
+					}
+				}
+				starts+=24l*60*60*1000;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "异常";
 		}
 		return "成功";
 	}
@@ -78,7 +103,7 @@ public class GameInfoMapper extends BaseAction
 				game.setGameType(td1.toPlainTextString());
 				// 2.获取比赛时间 td2
 				TagNode td2 = (TagNode) nodeList4.elementAt(2);
-				Timestamp ts = Timestamp.valueOf(Calendar.getInstance().get(Calendar.YEAR)+"-" + td2.toPlainTextString()
+				Timestamp ts = Timestamp.valueOf(DateUtil.getCalendar(date).get(Calendar.YEAR)+"-" + td2.toPlainTextString()
 						+ ":00");
 				game.setTime(ts);
 				// 3.获取主队 td4
@@ -143,7 +168,11 @@ public class GameInfoMapper extends BaseAction
 					game.setDrawRate(Float.parseFloat(td92.toPlainTextString()));
 					game.setLoseRate(Float.parseFloat(td93.toPlainTextString()));
 				}
-
+				if(game.getWinRate()!=null&&game.getDrawRate()!=null&&game.getLoseRate()!=null) {
+					game.setPw(1d/(1+game.getWinRate()/game.getDrawRate()+game.getWinRate()/game.getLoseRate()));
+					game.setPd(game.getPw()*game.getWinRate()/game.getDrawRate());
+					game.setPl(game.getPw()*game.getWinRate()/game.getLoseRate());
+				}
 				gameList.add(game);
 			}
 

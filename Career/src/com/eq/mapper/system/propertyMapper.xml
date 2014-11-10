@@ -3,10 +3,6 @@
 <mapper namespace="property">
 	<select id="select" parameterType="String" resultType="property">
 		SELECT * FROM property 
-		<trim prefix="WHERE" suffixOverrides="AND">
-			<if test="property != null">
-				property = #{property} AND
-			</if>
-		</trim>
+		WHERE property = #{property}
 	</select>
 </mapper>

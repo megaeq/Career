@@ -16,6 +16,9 @@
 			<if test="hometeam!=null">
 			hometeam=#{hometeam} AND
 			</if>
+			<if test="code!=null">
+			code=#{code} AND
+			</if>
 			<if test="teamname!=null">
 			(hometeam =#{teamname} OR guestteam =#{teamname}) AND
 			</if>
@@ -63,10 +66,13 @@
 		<if test="time!=null">time,</if>
 		<if test="suggest!=null">suggest,</if>
 		<if test="lettheball!=null">lettheball,</if>
+		<if test="Pw!=null">pw,</if>
+		<if test="Pd!=null">pd,</if>
+		<if test="Pl!=null">Pl,</if>
 	</trim>)
-	VALUES {
+	VALUES (
 	<trim suffixOverrides=",">
-		<if test="code!=null">#{code}</if>
+		<if test="code!=null">#{code},</if>
 		<if test="gameType!=null">#{gameType},</if>
 		<if test="homeTeamId!=null">#{homeTeamId},</if>
 		<if test="homeTeam!=null">#{homeTeam},</if>
@@ -84,8 +90,11 @@
 		<if test="time!=null">#{time},</if>
 		<if test="suggest!=null">#{suggest},</if>
 		<if test="lettheball!=null">#{lettheball},</if>
+		<if test="Pw!=null">#{Pw},</if>
+		<if test="Pd!=null">#{Pd},</if>
+		<if test="Pl!=null">#{Pl},</if>
 	</trim>
-	}
+	)
 	</insert>
 	<update id="update" parameterType="game">
 		UPDATE game SET
@@ -107,8 +116,15 @@
 		<if test="result!=null">result=#{result},</if>
 		<if test="suggest!=null">suggest=#{suggest},</if>
 		<if test="lettheball!=null">lettheball=#{lettheball},</if>
+		<if test="Pw!=null">pw=#{Pw},</if>
+		<if test="Pd!=null">pd=#{Pd},</if>
+		<if test="Pl!=null">pl=#{Pl},</if>
 	</trim>
-	WHERE id=#{id}
+	WHERE
+	<trim suffixOverrides="AND">
+		<if test="id!=null">id=#{id} AND</if>
+		<if test="code!=null">code=#{code} AND</if>
+	</trim> 
 	</update>
 	<delete id="delete" parameterType="int">
 	DELETE FROM game WHERE id=#{id}

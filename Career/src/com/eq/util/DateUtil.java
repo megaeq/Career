@@ -67,4 +67,19 @@ public class DateUtil {
 	public static Timestamp getNowTime() {
 		return new Timestamp(Calendar.getInstance().getTimeInMillis());
 	}
+	
+	public static Calendar getCalendar() {
+		return Calendar.getInstance();
+	}
+	public static Calendar getCalendar(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
+	
+	public static Calendar getCalendar(Timestamp ts) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(ts);
+		return cal;
+	}
 }

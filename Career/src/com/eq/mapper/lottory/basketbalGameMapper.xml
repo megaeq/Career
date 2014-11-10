@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="basketballgame">
+	<select id="selectPageList" parameterType="hashmap" resultType="basketballgame" >
+		SELECT * FROM basketball_game
+		<trim suffix="WHERE" prefix="AND">
+			<if test="startDate!=null">time &gt;=#{startDate} AND</if>
+			<if test="endDate!=null">time &lt;= #{endDate} AND</if>
+			<if test="code!=null">code=#{code} AND</if>
+			<if test="type!=null">type=#{type} AND</if>
+			<if test="teamname!=null">(hometeam=#{teamname} OR guestteam=#{teamname})</if>
+		</trim>
+	</select>
+	<select id="selectone" parameterType="int" resultType="basketballgame">
+		SELECT * FROM basketball_game WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="basketballgame" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO　basketball_game(
+		<trim suffixOverrides=",">
+			<if test="code!=null">code,</if>
+			<if test="type!=null">type,</if>
+			<if test="homeTeam!=null">homeTeam,</if>
+			<if test="guestTeam!=null">guestTeam,</if>
+			<if test="time!=null">time,</if>
+			<if test="homeScore!=null">homeScore,</if>
+			<if test="guestScore!=null">guestScore,</if>
+			<if test="winRate!=null">winRate,</if>
+			<if test="loseRate!=null">loseRate,</if>
+			<if test="letTheBall!=null">letTheBall,</if>
+			<if test="winRateLB!=null">winRateLB,</if>
+			<if test="loseRateLB!=null">loseRateLB,</if>
+			<if test="bigScore!=null">bigScore,</if>
+			<if test="WinRateBS!=null">WinRateBS,</if>
+			<if test="loseRateBS!=null">loseRateBS,</if>
+			<if test="Pw!=null">Pw,</if>
+			<if test="Pl!=null">Pl,</if>
+			<if test="Pwlb!=null">Pwlb,</if>
+			<if test="Pllb!=null">Pllb,</if>
+			<if test="Pwbs!=null">Pwbs,</if>
+			<if test="Plbs!=null">Plbs,</if>
+		</trim>
+		) VALUES(
+			<trim suffixOverrides=",">
+			<if test="code!=null">#{code},</if>
+			<if test="type!=null">#{type},</if>
+			<if test="homeTeam!=null">#{homeTeam},</if>
+			<if test="guestTeam!=null">#{guestTeam},</if>
+			<if test="time!=null">#{time},</if>
+			<if test="homeScore!=null">#{homeScore},</if>
+			<if test="guestScore!=null">#{guestScore},</if>
+			<if test="winRate!=null">#{winRate},</if>
+			<if test="loseRate!=null">#{loseRate},</if>
+			<if test="letTheBall!=null">#{letTheBall},</if>
+			<if test="winRateLB!=null">#{winRateLB},</if>
+			<if test="loseRateLB!=null">#{loseRateLB},</if>
+			<if test="bigScore!=null">#{bigScore},</if>
+			<if test="WinRateBS!=null">#{WinRateBS},</if>
+			<if test="loseRateBS!=null">#{loseRateBS},</if>
+			<if test="Pw!=null">#{Pw},</if>
+			<if test="Pl!=null">#{Pl},</if>
+			<if test="Pwlb!=null">#{Pwlb},</if>
+			<if test="Pllb!=null">#{Pllb},</if>
+			<if test="Pwbs!=null">#{Pwbs},</if>
+			<if test="Plbs!=null">#{Plbs},</if>
+		</trim>
+		)
+	</insert>
+	<update id="update" parameterType="basketballgame">
+		UPDATE　basketball_game SET 
+		<trim suffixOverrides=",">
+			<if test="code!=null">code=#{code},</if>
+			<if test="type!=null">type=#{type},</if>
+			<if test="homeTeam!=null">homeTeam=#{homeTeam},</if>
+			<if test="guestTeam!=null">guestTeam=#{guestTeam},</if>
+			<if test="time!=null">time=#{time},</if>
+			<if test="homeScore!=null">homeScore=#{homeScore},</if>
+			<if test="guestScore!=null">guestScore=#{guestScore},</if>
+			<if test="winRate!=null">winRate=#{winRate},</if>
+			<if test="loseRate!=null">loseRate=#{loseRate},</if>
+			<if test="letTheBall!=null">letTheBall=#{letTheBall},</if>
+			<if test="winRateLB!=null">winRateLB=#{winRateLB},</if>
+			<if test="loseRateLB!=null">loseRateLB=#{loseRateLB},</if>
+			<if test="bigScore!=null">bigScore=#{bigScore},</if>
+			<if test="WinRateBS!=null">WinRateBS=#{WinRateBS},</if>
+			<if test="loseRateBS!=null">loseRateBS=#{loseRateBS},</if>
+			<if test="Pw!=null">Pw=#{Pw},</if>
+			<if test="Pl!=null">Pl=#{Pl},</if>
+			<if test="Pwlb!=null">Pwlb=#{Pwlb},</if>
+			<if test="Pllb!=null">Pllb=#{Pllb},</if>
+			<if test="Pwbs!=null">Pwbs=#{Pwbs},</if>
+			<if test="Plbs!=null">Plbs=#{Plbs},</if>
+		</trim>
+		WHERE
+		<trim suffixOverrides="AND">
+			<if test="id!=null">id=#{id} AND</if>
+			<if test="code!=null">code=#{code} AND</if>
+		</trim>
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM basketball_game WHERE id=#{id}
+	</delete>
+</mapper>
