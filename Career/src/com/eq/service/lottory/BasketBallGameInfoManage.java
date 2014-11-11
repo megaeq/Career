@@ -162,34 +162,65 @@ public class BasketBallGameInfoManage extends BaseAction{
 					//3.获取赔率等信息 td4
 					TagNode td4 = (TagNode) nodeList4.elementAt(4);
 					parser = Parser.createParser(td4.toHtml(), CHARSET);
-					NodeFilter filter6 = new CssSelectorNodeFilter("a");
+					NodeFilter filter6 = new CssSelectorNodeFilter("div");
 					NodeList nodeList6 = parser.extractAllNodesThatMatch(filter6);
+					//胜负
 					TagNode td41 = (TagNode) nodeList6.elementAt(0);
-					game.setLoseRate(Float.parseFloat(td41.toPlainTextString()));
-					TagNode td42 = (TagNode) nodeList6.elementAt(1);
-					game.setWinRate(Float.parseFloat(td42.toPlainTextString()));
-					TagNode td43 = (TagNode) nodeList6.elementAt(2);
-					game.setLoseRateLB(Float.parseFloat(td43.toPlainTextString()));
-					TagNode td44 = (TagNode) nodeList6.elementAt(3);
-					game.setWinRateLB(Float.parseFloat(td44.toPlainTextString()));
-					TagNode td45 = (TagNode) nodeList6.elementAt(4);
-					game.setLoseRateBS(Float.parseFloat(td45.toPlainTextString()));
-					TagNode td46 = (TagNode) nodeList6.elementAt(5);
-					game.setWinRateBS(Float.parseFloat(td46.toPlainTextString()));
-					parser = Parser.createParser(td4.toHtml(), CHARSET);
-					NodeFilter filter7 = new CssSelectorNodeFilter("span");
+					parser = Parser.createParser(td41.toHtml(), CHARSET);
+					NodeFilter filter7 = new CssSelectorNodeFilter("a");
 					NodeList nodeList7 = parser.extractAllNodesThatMatch(filter7);
-					TagNode td71 = (TagNode) nodeList7.elementAt(0);
-					game.setLetTheBall(Float.parseFloat(td71.toPlainTextString()));
-					TagNode td72 = (TagNode) nodeList7.elementAt(1);
-					game.setBigScore(Float.parseFloat(td72.toPlainTextString()));
+					if(nodeList7.size()==2) {
+						TagNode td411 = (TagNode) nodeList7.elementAt(0);
+						game.setLoseRate(Float.parseFloat(td411.toPlainTextString()));
+						TagNode td412 = (TagNode) nodeList7.elementAt(1);
+						game.setWinRate(Float.parseFloat(td412.toPlainTextString()));
+					}
+					//让球
+					TagNode td42 = (TagNode) nodeList6.elementAt(1);
+					parser = Parser.createParser(td42.toHtml(), CHARSET);
+					NodeFilter filter8 = new CssSelectorNodeFilter("a");
+					NodeList nodeList8 = parser.extractAllNodesThatMatch(filter8);
+					if(nodeList8.size()==2) {
+						TagNode td421 = (TagNode) nodeList8.elementAt(0);
+						game.setLoseRateLB(Float.parseFloat(td421.toPlainTextString()));
+						TagNode td422 = (TagNode) nodeList8.elementAt(1);
+						game.setWinRateLB(Float.parseFloat(td422.toPlainTextString()));
+					}
+					//大小球
+					TagNode td43 = (TagNode) nodeList6.elementAt(2);
+					parser = Parser.createParser(td42.toHtml(), CHARSET);
+					NodeFilter filter9 = new CssSelectorNodeFilter("a");
+					NodeList nodeList9 = parser.extractAllNodesThatMatch(filter9);
+					if(nodeList9.size()==2) {
+						TagNode td431 = (TagNode) nodeList9.elementAt(0);
+						game.setLoseRateBS(Float.parseFloat(td431.toPlainTextString()));
+						TagNode td432 = (TagNode) nodeList9.elementAt(1);
+						game.setWinRateBS(Float.parseFloat(td432.toPlainTextString()));
+					}
+					parser = Parser.createParser(td4.toHtml(), CHARSET);
+					NodeFilter filter10 = new CssSelectorNodeFilter("span");
+					NodeList nodeList10 = parser.extractAllNodesThatMatch(filter10);
+					TagNode td71 = (TagNode) nodeList10.elementAt(0);
+					if(td71!=null&&!td71.toPlainTextString().contains("&nbsp;")) {
+						game.setLetTheBall(Float.parseFloat(td71.toPlainTextString()));
+					}
+					TagNode td72 = (TagNode) nodeList10.elementAt(1);
+					if(td72!=null&&!td72.toPlainTextString().contains("&nbsp;")) {
+						game.setBigScore(Float.parseFloat(td72.toPlainTextString()));
+					}
 					//概率
-					game.setPl(1d/(1+game.getLoseRate()/game.getWinRate()));
-					game.setPw(game.getLoseRate()*game.getPl()/game.getWinRate());
-					game.setPllb(1d/(1+game.getLoseRateLB()/game.getWinRateLB()));
-					game.setPwlb(game.getLoseRateLB()*game.getPllb()/game.getWinRateLB());
-					game.setPlbs(1d/(1+game.getLoseRateBS()/game.getWinRateBS()));
-					game.setPwbs(game.getLoseRateBS()*game.getPlbs()/game.getWinRateBS());
+					if(game.getLoseRate()!=null&&game.getWinRate()!=null&&game.getWinRate().floatValue()!=0) {
+						game.setPl(1d/(1+game.getLoseRate()/game.getWinRate()));
+						game.setPw(game.getLoseRate()*game.getPl()/game.getWinRate());
+					}
+					if(game.getLoseRateLB()!=null&&game.getWinRateLB()!=null&&game.getWinRateLB().floatValue()!=0) {
+						game.setPllb(1d/(1+game.getLoseRateLB()/game.getWinRateLB()));
+						game.setPwlb(game.getLoseRateLB()*game.getPllb()/game.getWinRateLB());
+					}
+					if(game.getLoseRateBS()!=null&&game.getWinRateBS()!=null&&game.getWinRateBS().floatValue()!=0) {
+						game.setPlbs(1d/(1+game.getLoseRateBS()/game.getWinRateBS()));
+						game.setPwbs(game.getLoseRateBS()*game.getPlbs()/game.getWinRateBS());
+					}
 					gameList.add(game);
 				} else{
 					break; 

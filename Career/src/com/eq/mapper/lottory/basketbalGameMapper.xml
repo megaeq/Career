@@ -3,19 +3,19 @@
 <mapper namespace="basketballgame">
 	<select id="selectPageList" parameterType="hashmap" resultType="basketballgame" >
 		SELECT * FROM basketball_game
-		<trim suffix="WHERE" prefix="AND">
+		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="startDate!=null">time &gt;=#{startDate} AND</if>
 			<if test="endDate!=null">time &lt;= #{endDate} AND</if>
 			<if test="code!=null">code=#{code} AND</if>
 			<if test="type!=null">type=#{type} AND</if>
-			<if test="teamname!=null">(hometeam=#{teamname} OR guestteam=#{teamname})</if>
+			<if test="teamname!=null">(hometeam=#{teamname} OR guestteam=#{teamname}) AND</if>
 		</trim>
 	</select>
 	<select id="selectone" parameterType="int" resultType="basketballgame">
 		SELECT * FROM basketball_game WHERE id=#{id}
 	</select>
 	<insert id="add" parameterType="basketballgame" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO　basketball_game(
+		INSERT INTO basketball_game(
 		<trim suffixOverrides=",">
 			<if test="code!=null">code,</if>
 			<if test="type!=null">type,</if>
@@ -66,7 +66,7 @@
 		)
 	</insert>
 	<update id="update" parameterType="basketballgame">
-		UPDATE　basketball_game SET 
+		UPDATE basketball_game SET 
 		<trim suffixOverrides=",">
 			<if test="code!=null">code=#{code},</if>
 			<if test="type!=null">type=#{type},</if>
