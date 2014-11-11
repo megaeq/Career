@@ -65,12 +65,19 @@ public class BasketBallGameInfoManage extends BaseAction{
 		}
 		return "成功";
 	}
-	
+	/**
+	 * 
+	 * @title getGameInfo
+	 * @description 获取game列表
+	 * @param parser
+	 * @param date
+	 * @return
+	 * @return List<BasketBallGame>
+	 * @throws
+	 */
 	private List<BasketBallGame> getGameInfo(Parser parser,Date date) {
 		List<BasketBallGame> gameList = new ArrayList<BasketBallGame>();
 		try {
-			int code1=0;
-			int code2=0;
 			NodeFilter filter = new CssSelectorNodeFilter(
 					"table[class='jcmaintable one']");
 			NodeList nodeList = parser.extractAllNodesThatMatch(filter);
@@ -96,14 +103,23 @@ public class BasketBallGameInfoManage extends BaseAction{
 		}
 		return gameList;
 	}
-	
+	/**
+	 * 
+	 * @title getGameList
+	 * @description 获取game列表
+	 * @param nodeList
+	 * @param parser
+	 * @param date
+	 * @return
+	 * @return List<BasketBallGame>
+	 * @throws
+	 */
 	private List<BasketBallGame> getGameList(NodeList nodeList,Parser parser,Date date) {
 		List<BasketBallGame> gameList = new ArrayList<BasketBallGame>();
 		try {
 			int code1=0;
 			for(int i=0;i<nodeList.size();i++) {
 				TagNode n2 = (TagNode) nodeList.elementAt(i);
-				System.out.println(n2.toPlainTextString());
 				parser = Parser.createParser(n2.toHtml(), CHARSET);
 				NodeFilter filter4 = new CssSelectorNodeFilter("td");
 				NodeList nodeList4 = parser.extractAllNodesThatMatch(filter4);
@@ -111,7 +127,6 @@ public class BasketBallGameInfoManage extends BaseAction{
 				//0.获取比赛code td0
 				TagNode td0 = (TagNode) nodeList4.elementAt(0);
 				parser = Parser.createParser(td0.toHtml(), CHARSET);
-				System.out.println(td0);
 				NodeFilter filter0 = new CssSelectorNodeFilter("span");
 				NodeList nodeList0 = parser.extractAllNodesThatMatch(filter0);
 				TagNode td01 = (TagNode) nodeList0.elementAt(0);
