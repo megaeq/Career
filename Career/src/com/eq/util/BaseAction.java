@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.ehcache.CacheManager;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.CycleDetectionStrategy;
@@ -48,13 +49,15 @@ public class BaseAction implements ApplicationContextAware {
 	public int pageSize = 0;
 	public int currentPage = 0;
 	public String rangeStr = "";
+	public CacheManager singletonManager;
 	private static String PRINCIPALS_SESSION_KEY="org.apache.shiro.subject.support.DefaultSubjectContext_PRINCIPALS_SESSION_KEY";
 	private static String AUTHENTICATED_SESSION_KEY = "org.apache.shiro.subject.support.DefaultSubjectContext_AUTHENTICATED_SESSION_KEY";
-    @ModelAttribute  
-    public void setReqAndRes(HttpServletRequest request, HttpServletResponse response){  
-        this.request = request;  
-        this.response = response;  
-    } 
+    @ModelAttribute
+    public void init(HttpServletRequest request, HttpServletResponse response) {
+    	this.request = request;  
+        this.response = response; 
+        singletonManager = CacheManager.create();
+    }
 	@Override
 	public void setApplicationContext(ApplicationContext context)
 			throws BeansException {

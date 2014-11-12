@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -34,11 +38,19 @@ public class IncomeAndCostManage extends BaseAction {
 	@RequestMapping("getList")
 	public List<IncomeAndCost> getIncomeAndCostList(Date startDate, Date endDate) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("startDate", startDate);
-		params.put("endDate", endDate);
-		Map<String, Object> pps = impl.selectPageList(params,currentPage,pageSize);
-		response.setHeader("Content-Range", rangeStr+pps.get("count"));
-		return (List<IncomeAndCost>)pps.get("list");
+		Cache cache = singletonManager.getCache("authenticationCache");
+		if(cache.get("list")!=null) {
+			return (List<IncomeAndCost>)cache.get("list").getObjectValue();
+		} else {
+			params.put("startDate", startDate);
+			params.put("endDate", endDate);
+			Map<String, Object> pps = impl.selectPageList(params,currentPage,pageSize);
+			response.setHeader("Content-Range", rangeStr+pps.get("count"));
+			Element elt = new Element("list",pps.get("list"),1l);
+			cache.put(elt);
+			return (List<IncomeAndCost>)pps.get("list");
+		}
+		
 	}
 
 	@ResponseBody
