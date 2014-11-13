@@ -126,7 +126,7 @@ public class BaseAction implements ApplicationContextAware {
 	}
 
 	public Date getDate(String param) {
-		if (params.get(param) == null) {
+		if (params.get(param) == null||StringUtils.isBlank(params.get(param).toString() )) {
 			return null;
 		} else {
 			String date = params.get(param).toString();
@@ -135,7 +135,7 @@ public class BaseAction implements ApplicationContextAware {
 	}
 
 	public String getString(String param) {
-		if (params.get(param) == null) {
+		if (params.get(param) == null||StringUtils.isBlank(params.get(param).toString() )) {
 			return null;
 		} else {
 			return params.get(param).toString();
@@ -143,7 +143,7 @@ public class BaseAction implements ApplicationContextAware {
 	}
 
 	public Timestamp getTimestamp(String param) {
-		if (params.get(param) == null) {
+		if (params.get(param) == null||StringUtils.isBlank(params.get(param).toString() )) {
 			return null;
 		} else {
 			return DateUtil.getTimestamp(params.get(param).toString());
