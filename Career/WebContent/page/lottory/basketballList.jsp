@@ -16,10 +16,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="<%=basePath%>css/coin-slider.css">
 <style type="text/css"> 
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
- @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
- .field-edit {
-        width: 200px;
-    }
+ @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css";
+ .dgrid-column-set-4{
+ 	width:5%;
+ 	text-align:center;
+ } 
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
@@ -40,8 +41,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         "dgrid/OnDemandGrid",
  	         "dgrid/extensions/Pagination",
  	        "dijit/form/Button",
- 	       "dojo/store/JsonRest"
- 	     ], function (ready,declare,request,dom, Memory, OnDemandGrid, Pagination,Button,JsonRest) {
+ 	       "dojo/store/JsonRest",
+ 	      'dgrid/ColumnSet'
+ 	     ], function (ready,declare,request,dom, Memory, OnDemandGrid, Pagination,Button,JsonRest,ColumnSet) {
  		ready(function(){
  			var chipin = function(object, data, cell) {
 	            	var on3 = new Button({
@@ -105,22 +107,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      }
                  }, cell.appendChild(document.createElement("div")));
 	             }
-	             var grid = new (declare([OnDemandGrid, Pagination]))({
+	             var grid = new (declare([OnDemandGrid, Pagination,ColumnSet]))({
 	                 store: new JsonRest({
 	         	   	    target: "basketball/getList?startDate="+dom.byId("startDate").value+"&endDate="+dom.byId("endDate").value}),
 	                className: "dgrid-autoheight",
-	                 columns: {code:{lable:"编号"},type:{label:"联赛类型"},
-	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主胜"},pw:{label:"pw"},
-	                	loseRate:{label:"主负"},pl:{label:"pl"},winRateLB:{label:"让球胜"},pwlb:{label:"pwlb"},
-	                	letTheBall:{label:"让球数"},loseRateLB:{label:"让球负"},pllb:{label:"pllb"},
-	                	winRateBS:{label:"大球胜"},pwbs:{label:"pwbs"},bigScore:{label:"大球"},
-	                	loseRateBS:{label:"大球负"},plbs:{label:"plbs"},
-	                	loseRate:{label:"主负"},time2:{label:"时间"},
-	                	edit:{label:"操作",renderCell:chipin,width:"200px"}},
+                	columnSets:[[[ {field:"code",label:"编号"}],
+                	              [{field:"type",label:"联赛类型"}]],
+                	             [[{field:"homeTeam",label:"主队"}],
+                	              [{field:"guestTeam",label:"客队"}]],
+                	             [[{field:"winRate",label:"主胜"}],
+                 	              [{field:"loseRate",label:"主负"}]],
+                	             [[{field:"pw",label:"pw"}],
+                 	              [ {field:"pl",label:"pl"}]],
+                	             [
+         	                       [{field:"letTheBall",label:"让球数"}]
+         	                      ],
+                	              [[{field:"winRateLB",label:"让球胜"}],
+                	                [{field:"loseRateLB",label:"让球负"}]],
+                	               [[{field:"pwlb",label:"pwlb"}],
+                	                [{field:"pllb",label:"pllb"}]],
+                	               [[
+                	                 {field:"bigScore",label:"大球"}
+                	                 ]],
+                	                [[{field:"winRateBS",label:"大球胜"}],
+                	                  [{field:"loseRateBS",label:"大球负"}]],
+                	                   [[{field:"pwbs",label:"pwbs"}],
+                	                    [{field:"plbs",label:"plbs"}]],
+                	                 [[{field:"time2",label:"时间"}]]
+                	            ],
 	                 rowsPerPage:14,
 	                 pagingTextBox:true,
 	                 pagingLinks:4
-	             	
 	             }, "list");
 	             grid.on(".dgrid-header .dgrid-cell:click", function(evt){
 	            	    var cell = grid.cell(evt);
