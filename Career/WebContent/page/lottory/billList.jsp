@@ -83,7 +83,7 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: new JsonRest({
-		         	   	    target: "getList?accountId="+$.getUrlParam('accountId')}),
+		         	   	    target: "bill/getList?accountId="+$.getUrlParam('accountId')}),
 	                 className: "dgrid-autoheight",
 	                 columns: {id:{label:"id"},betAmount:{label:"投注量（元）"},sp:{label:"sp"},
 	                	 income:{label:"收入"},flag:{label:"是否完结",renderCell:function(object, data,cell) {

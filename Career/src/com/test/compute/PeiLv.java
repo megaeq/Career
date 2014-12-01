@@ -4,7 +4,9 @@ public class PeiLv {
 	private static Double shui=1d;
 	
 	public static void main(String[] args) {
-		getShui(4d,3.6,2d);
+		getShui(3.5d,3.8d,2.1d);
+		getShui(3.2d,3.5d,1.8d);
+		getShui(3d,3d,3d);
 	}
 	
 	public static void getX (Double p1) {
