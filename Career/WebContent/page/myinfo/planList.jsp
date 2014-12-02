@@ -40,7 +40,7 @@ function getGrid() {
 	         'dojo/dom-style' ,
 	         "dojo/store/JsonRest",
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle,JsonRest) {
-	             var store = new Memory({ data: response });
+	             
 	             var actionRenderCell = function (object, data,cell) {
 	                 var btn1 = new Button({
 	                     rowId : object.id,

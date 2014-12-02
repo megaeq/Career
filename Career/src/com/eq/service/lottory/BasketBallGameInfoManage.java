@@ -209,15 +209,15 @@ public class BasketBallGameInfoManage extends BaseAction{
 						game.setBigScore(Float.parseFloat(td72.toPlainTextString()));
 					}
 					//概率
-					if(game.getLoseRate()!=null&&game.getWinRate()!=null&&game.getWinRate().floatValue()!=0) {
+					if(game.getLoseRate()!=null&&game.getWinRate()!=null&&game.getWinRate().floatValue()!=0&&game.getLoseRate().floatValue()!=0) {
 						game.setPl(1d/(1+game.getLoseRate()/game.getWinRate()));
 						game.setPw(game.getLoseRate()*game.getPl()/game.getWinRate());
 					}
-					if(game.getLoseRateLB()!=null&&game.getWinRateLB()!=null&&game.getWinRateLB().floatValue()!=0) {
+					if(game.getLoseRateLB()!=null&&game.getWinRateLB()!=null&&game.getWinRateLB().floatValue()!=0&&game.getLoseRateLB().floatValue()!=0) {
 						game.setPllb(1d/(1+game.getLoseRateLB()/game.getWinRateLB()));
 						game.setPwlb(game.getLoseRateLB()*game.getPllb()/game.getWinRateLB());
 					}
-					if(game.getLoseRateBS()!=null&&game.getWinRateBS()!=null&&game.getWinRateBS().floatValue()!=0) {
+					if(game.getLoseRateBS()!=null&&game.getWinRateBS()!=null&&game.getWinRateBS().floatValue()!=0&&game.getLoseRateBS()!=0) {
 						game.setPlbs(1d/(1+game.getLoseRateBS()/game.getWinRateBS()));
 						game.setPwbs(game.getLoseRateBS()*game.getPlbs()/game.getWinRateBS());
 					}

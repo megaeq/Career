@@ -10,6 +10,7 @@
 			<if test="type!=null">type=#{type} AND</if>
 			<if test="teamname!=null">(hometeam=#{teamname} OR guestteam=#{teamname}) AND</if>
 		</trim>
+		ORDER BY code DESC
 	</select>
 	<select id="selectone" parameterType="int" resultType="basketballgame">
 		SELECT * FROM basketball_game WHERE id=#{id}

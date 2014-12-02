@@ -87,7 +87,16 @@ function getGrid() {
 	                 } else if(object.destinationType==2||3==object.destinationType){
 	                	 var btn3 = new Button({
 		                     rowId : object.id,
-		                     label: "投注",
+		                     label: "足球投注",
+		                     onClick: function() {
+		                    	 //console.log("##"+object.destinationType);
+		                    		 location.href="<%=basePath%>page/lottory/chip.jsp?accountId="+object.id;
+		                    	 
+		                     },
+		                 }, cell.appendChild(document.createElement("div")));
+	                	 var btn3 = new Button({
+		                     rowId : object.id,
+		                     label: "篮球投注",
 		                     onClick: function() {
 		                    	 //console.log("##"+object.destinationType);
 		                    		 location.href="<%=basePath%>page/lottory/chip.jsp?accountId="+object.id;
@@ -96,7 +105,7 @@ function getGrid() {
 		                 }, cell.appendChild(document.createElement("div")));
 	                	 var btn4= new Button({
 		                     rowId : object.id,
-		                     label: "投注记录",
+		                     label: "足球投注记录",
 		                     onClick: function() {
 		                    	 //console.log("##"+object.destinationType);
 	                    		 location.href="<%=basePath%>page/lottory/billList.jsp?accountId="+object.id;

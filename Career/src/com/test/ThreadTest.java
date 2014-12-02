@@ -4,6 +4,15 @@ public class ThreadTest
 {
 	public static void batchRun(String threadname)
 	{
+
+	}
+}
+package com.test;
+
+public class ThreadTest
+{
+	public static void batchRun(String threadname)
+	{
 	       long start = System.currentTimeMillis();
 	       System.out.println(threadname + "_开始时间:" + start);
 	        List<BasicNameValuePair> params = new LinkedList<BasicNameValuePair>();

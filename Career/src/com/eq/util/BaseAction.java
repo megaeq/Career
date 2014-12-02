@@ -129,7 +129,7 @@ public class BaseAction implements ApplicationContextAware {
 	}
 
 	public Date getDate(String param) {
-		if (params.get(param) == null) {
+d		if (params.get(param) == null) {
 			return null;
 		} else {
 			String date = params.get(param).toString();
