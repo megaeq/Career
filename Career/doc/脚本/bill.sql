@@ -238,7 +238,40 @@ CREATE TABLE `system_permission` (
   `permission` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+---2014/12/02 周二
+CREATE TABLE `football_bifa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) DEFAULT NULL,
+  `homeTeam` varchar(40) DEFAULT NULL,
+  `homeBelong` varchar(40) DEFAULT NULL,
+  `homeNo` int(3) DEFAULT NULL,
+  `guestTeam` varchar(40) DEFAULT NULL,
+  `guestBelong` varchar(40) DEFAULT NULL,
+  `guestNo` int(3) DEFAULT NULL,
+  `letTheBall` int(2) DEFAULT NULL,
+  `type` varchar(40) DEFAULT NULL,
+  `time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+CREATE TABLE `football_bifa_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bifaId` int(11) NOT NULL,
+  `type` varchar(40) DEFAULT NULL,
+  `buys` int(11) DEFAULT NULL,
+  `buyRate` float(9,6) DEFAULT NULL,
+  `sales` int(11) DEFAULT NULL,
+  `saleRate` float(9,6) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `hot` int(11) DEFAULT NULL,
+  `market` int(11) DEFAULT NULL,
+  `bifa` float(9,6) DEFAULT NULL,
+  `bifaPercent` float(9,6) DEFAULT NULL,
+  `averageRate` float(9,6) DEFAULT NULL,
+  `averagePercent` float(9,6) DEFAULT NULL,
+  `jincaiPercent` float(9,6) DEFAULT NULL,
+  `simulate` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
