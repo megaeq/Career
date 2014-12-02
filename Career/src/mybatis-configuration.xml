@@ -13,6 +13,9 @@
 		<typeAlias alias="bill" type="com.eq.dao.entity.lottory.Bill" />
 		<typeAlias alias="gamebill" type="com.eq.dao.entity.lottory.GameAndBill" />
 		<typeAlias alias="basketballgame" type="com.eq.dao.entity.lottory.BasketBallGame" />
+		<typeAlias alias="footballbifa" type="com.eq.dao.entity.lottory.FootballBifa" />
+		<typeAlias alias="footballbifadetail" type="com.eq.dao.entity.lottory.FootballBifaDetail" />
+		
 
 		<typeAlias alias="incomecost" type="com.eq.dao.entity.myinfo.IncomeAndCost" />
 		<typeAlias alias="account" type="com.eq.dao.entity.myinfo.Account" />
