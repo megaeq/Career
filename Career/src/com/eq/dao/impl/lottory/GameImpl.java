@@ -50,5 +50,9 @@ public class GameImpl extends BaseDao implements AbstractDao<Game, Integer> {
 	public List<Game> selectList(Map<String, Object> params) {
 		return getSqlSessionTemplate().selectList("game.selectPageList", params);
 	}
+	
+	public String getMaxCode() {
+		return getSqlSessionTemplate().selectOne("game.getmaxcode");
+	}
 
 }

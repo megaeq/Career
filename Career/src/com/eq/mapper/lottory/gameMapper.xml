@@ -45,6 +45,9 @@
 	<select id="one" parameterType="int" resultType="game">
 	SELECT * FROM game WHERE id=#{id}
 	</select>
+	<select id="getlasttime" resultType="string">
+	SELECT max(code) FROM game 
+	</select>
 	<insert id="add" parameterType="game" useGeneratedKeys="true" keyProperty="id">
 	INSERT INTO game (
 	<trim suffixOverrides=",">

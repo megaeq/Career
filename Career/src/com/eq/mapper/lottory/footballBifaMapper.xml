@@ -7,6 +7,9 @@
 	<select id="selectone" parameterType="int" resultType="footballbifa">
 		SELECT * FROM football_bifa WHERE id=#{id}
 	</select>
+	<select id="getmaxcode" resultType="string">
+		SELECT max(code) FROM football_bifa 
+	</select>
 	<insert id="add" parameterType="footballbifa" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO football_bifa
 		<trim prefix="(" suffix=")" suffixOverrides=",">

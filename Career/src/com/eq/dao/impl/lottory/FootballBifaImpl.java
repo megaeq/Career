@@ -1,7 +1,10 @@
 package com.eq.dao.impl.lottory;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
+
+import org.jfree.data.time.TimeSeries;
 
 import com.eq.dao.entity.lottory.FootballBifa;
 import com.eq.dao.entity.myinfo.IncomeAndCost;
@@ -52,6 +55,10 @@ public class FootballBifaImpl extends BaseDao implements AbstractDao<FootballBif
 	public FootballBifa selectOne(Integer id)
 	{
 		return getSqlSessionTemplate().selectOne("footballbifa.selectone", id);
+	}
+	
+	public String getMaxCode() {
+		return getSqlSessionTemplate().selectOne("footballbifa.getmaxcode");
 	}
 
 }

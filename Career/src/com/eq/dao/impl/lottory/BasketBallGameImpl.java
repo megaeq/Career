@@ -49,5 +49,9 @@ public class BasketBallGameImpl extends BaseDao implements AbstractDao<BasketBal
 	public BasketBallGame selectOne(Integer id) {
 		return getSqlSessionTemplate().selectOne("basketballgame.selectone", id);
 	}
+	
+	public String getMaxCode() {
+		return getSqlSessionTemplate().selectOne("basketballgame.getmaxcode");
+	}
 
 }

@@ -15,6 +15,9 @@
 	<select id="selectone" parameterType="int" resultType="basketballgame">
 		SELECT * FROM basketball_game WHERE id=#{id}
 	</select>
+	<select id="getmaxcode" resultType="string">
+		SELECT max(code) FROM basketball_game 
+	</select>
 	<insert id="add" parameterType="basketballgame" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO basketball_game(
 		<trim suffixOverrides=",">
@@ -100,4 +103,5 @@
 	<delete id="delete" parameterType="int">
 		DELETE FROM basketball_game WHERE id=#{id}
 	</delete>
+	
 </mapper>
