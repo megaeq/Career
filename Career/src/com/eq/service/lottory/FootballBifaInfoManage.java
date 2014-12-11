@@ -48,7 +48,14 @@ public class FootballBifaInfoManage extends BaseAction
 			for(int i=0;starts<=ends;i++) {
 				Date date = new Date(starts);
 				String url = getProperty("okooozuqiubifa")+DateUtil.getDateStr(date);
-				List<FootballBifa> bifaList = getBifaInfo(Parser.createParser(UrlUtil.getContent(url, CHARSET), CHARSET), date);
+				for(int j=1;;i++) {
+					String pageUrl = url+"?PageID="+j;
+					List<FootballBifa> bifaList = getBifaInfo(Parser.createParser(UrlUtil.getContent(pageUrl, CHARSET), CHARSET), date);
+					if(bifaList.size()==0) {
+						break;
+					}
+				}
+				
 				Map<String, Object> pps = new HashMap<String, Object>();
 				starts+=24l*60*60*1000;
 			}
