@@ -1,6 +1,7 @@
 package com.eq.dao.entity.lottory;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.eq.dao.entity.BaseEntity;
 
@@ -22,6 +23,12 @@ public class FootballBifa extends BaseEntity
 	private Integer letTheBall;
 	private String type;
 	private Timestamp time;
+	//欧 洲
+	private String europe;
+	private String asia;
+	//分析
+	private String analyze; 
+	private List<FootballBifaDetail> detailList;
 	public Integer getId()
 	{
 		return id;
@@ -109,6 +116,38 @@ public class FootballBifa extends BaseEntity
 	public void setTime(Timestamp time)
 	{
 		this.time = time;
+	}
+	public List<FootballBifaDetail> getDetailList()
+	{
+		return detailList;
+	}
+	public void setDetailList(List<FootballBifaDetail> detailList)
+	{
+		this.detailList = detailList;
+	}
+	public String getEurope()
+	{
+		return europe;
+	}
+	public void setEurope(String europe)
+	{
+		this.europe = europe;
+	}
+	public String getAsia()
+	{
+		return asia;
+	}
+	public void setAsia(String asia)
+	{
+		this.asia = asia;
+	}
+	public String getAnalyze()
+	{
+		return analyze;
+	}
+	public void setAnalyze(String analyze)
+	{
+		this.analyze = analyze;
 	}
 	
 	

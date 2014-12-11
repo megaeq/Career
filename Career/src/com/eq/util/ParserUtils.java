@@ -29,7 +29,7 @@ public class ParserUtils
 	{
 		/*String s = "<td class=\"show_score\" val=\"637712\">" + "<a href=\"/soccer/match/637712/\" target=\"_blank\" onClick=\"google_p(['赛事比分直播页', '点击比分']);\">"
 				+ "<b class=\"font_red ctrl_homescore\"></b>" + "<b class=\"font_red ctrl_scoresplit\"></b>" + " <b class=\"font_red ctrl_awayscore\"></b>" + "  </a>" + "</td>";*/
-		String[] ss = toPlainText("b", "11<b></b>2<b>2</b>11");
+		String[] ss = toPlainText("em", "11<em></em>2<em>2</em>11");
 		System.out.println(ss[0]+" " +ss[1]);
 		//String []ss=s.split(">");
 	}
