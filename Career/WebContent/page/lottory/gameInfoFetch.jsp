@@ -9,6 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=basePath%>js/dojojs/dijit/themes/claro/claro.css">
+<link rel="stylesheet" href="<%=basePath%>css/style.css">
+<link rel="stylesheet" href="<%=basePath%>css/coin-slider.css">
 <style type="text/css"> 
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
@@ -16,6 +18,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
+ <script type="text/javascript" src="<%=basePath%>js/cufon-yui.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/script.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/coin-slider.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/jquery/jquery-extension.js"></script>
  <script type="text/javascript">
  require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
  function getGame() {
@@ -61,8 +67,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 }
  </script>
 </head>
-<body class="claro">
-<div id="dateTextBox">
+<body class="claro" onload="$initmenu(0)">
+<div class="main" id="menu">
+	  </div>
+	  <div class="content">
+	  
+    <div class="content_resize">
+    <div id="dateTextBox">
 	<label for="date1">起始时间：</label>
 	<input type="text" id="startDate" 
     data-dojo-type="dijit/form/DateTextBox"
@@ -74,6 +85,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <button data-dojo-type="dijit/form/Button" onclick="getGame()">足球</button>
     <button data-dojo-type="dijit/form/Button" onclick="getBasketBallGame()">篮球</button>
 </div>
+
+      <div class="clr"></div>
+    </div>
+  </div>
+	</div>
+
 
 </body>
 </html>
