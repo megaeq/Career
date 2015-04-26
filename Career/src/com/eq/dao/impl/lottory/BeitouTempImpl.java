@@ -3,10 +3,12 @@ package com.eq.dao.impl.lottory;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.eq.dao.entity.lottory.BeitouTemp;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
-
+@Component
 public class BeitouTempImpl extends BaseDao implements AbstractDao<BeitouTemp, Integer>{
 
 	@Override

@@ -17,7 +17,7 @@
 		<typeAlias alias="footballbifadetail" type="com.eq.dao.entity.lottory.FootballBifaDetail" />
 		<typeAlias alias="beitou" type="com.eq.dao.entity.lottory.Beitou" />
 		<typeAlias alias="beitoutemp" type="com.eq.dao.entity.lottory.BeitouTemp" />
-		<typeAlias alias="beitougame" type="com.eq.dao.entity.lottory.BeitouGame" />
+		<typeAlias alias="beitougame" type="com.eq.dao.entity.lottory.BeiTouGame" />
 
 		<typeAlias alias="incomecost" type="com.eq.dao.entity.myinfo.IncomeAndCost" />
 		<typeAlias alias="account" type="com.eq.dao.entity.myinfo.Account" />
