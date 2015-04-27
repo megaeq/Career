@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.jfree.data.time.TimeSeries;
+import org.springframework.stereotype.Component;
 
 import com.eq.dao.entity.lottory.FootballBifa;
 import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
 import com.eq.service.mybatis.PageParameter;
-
+@Component
 public class FootballBifaImpl extends BaseDao implements AbstractDao<FootballBifa, Integer>
 {
 

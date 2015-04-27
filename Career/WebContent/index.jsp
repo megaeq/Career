@@ -22,7 +22,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="main" id="menu">
 	  </div>
 	  <div class="content">
+	  
     <div class="content_resize">
+    
+<a href="<%=basePath%>page/lottory/gameInfoFetch.jsp">获取数据</a>
       <div class="clr"></div>
     </div>
   </div>

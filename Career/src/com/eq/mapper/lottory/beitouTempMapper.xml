@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="beitoutemp">
+	<select id="selectPageList" parameterType="hashmap" resultType="beitoutemp" >
+	</select>
+	<select id="selectone" parameterType="int" resultType="beitoutemp">
+		SELECT * FROM beitou_temp WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="beitoutemp" useGeneratedKeys="true" keyProperty="id">
+	</insert>
+	<update id="update" parameterType="beitoutemp">
+		UPDATE beitou_temp SET
+		<trim suffixOverrides=",">
+			<if test="bottom!=null">bottom=#{bottom},</if>
+			<if test="profit!=null">profit=#{profit},</if>
+			<if test="beitouId!=null">beitouId=#{beitouId},</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		
+	</delete>
+</mapper>
