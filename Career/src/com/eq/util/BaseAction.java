@@ -163,13 +163,6 @@ public class BaseAction implements ApplicationContextAware {
 		} else {
 			return null;
 		}
-		/*Enumeration<Object> enu = session.getAttributeNames();
-		while(enu.hasMoreElements()) {
-			String attrname = (String)enu.nextElement();
-			System.out.println(attrname);
-			Object obj = session.getAttribute(attrname);
-			System.out.println(obj.toString());
-		}*/
 	}
 	
 	public Subject getSubject() {
