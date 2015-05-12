@@ -14,6 +14,15 @@
 <script src="js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
 <script type="text/javascript">
         $(document).ready(function() {
+        	$.ajax({
+	             type: "post",
+	             url: "loginManage/hasLogin",
+	             success: function(data,textStatus){
+						 if(data=="hasLogin") {
+							 window.location.href = "index.jsp";
+						 }
+                     }
+        	});
             $(".logininput").blur(function() {
                 if ($(this).val() == "") {
                     $(this).css("border-color", "red");
@@ -22,25 +31,28 @@
                     $(this).css("border-color", "#D9D6C4");
             });
         });
-
-           function submit1() {
-                var k = 0;
-                var ajaxhtml = "";
-                $(".logininput").each(function(i, obj) {
-                    if ($(obj).val().trim() == "") {
-                        k++;
-                        $(this).css("border-color", "red");
-                        $(this).focus();
-                        return false;
-                    }
-                });
-                if (k != 0) return;
-                ajaxhtml = $("#loginbtn").html();
-                $("#loginbtn").html("Loading....  <img src='image/loading.gif' alt='Announcement' /> ");
-                $("#loginbtn").attr("disabled", "disabled");
-				$("#form").submit();
-            }
-        
+        function submit1() {
+             var k = 0;
+             var ajaxhtml = "";
+             $(".logininput").each(function(i, obj) {
+                 if ($(obj).val().trim() == "") {
+                     k++;
+                     $(this).css("border-color", "red");
+                     $(this).focus();
+                     return false;
+                 }
+             });
+             if (k != 0) return;
+             ajaxhtml = $("#loginbtn").html();
+             $("#loginbtn").html("Loading....  <img src='image/loading.gif' alt='Announcement' /> ");
+             $("#loginbtn").attr("disabled", "disabled");
+             if(jQuery("#rememberMe1").is(":checked")) {
+     			jQuery("#rememberMe").val(true);
+     		} else {
+     			jQuery("#rememberMe").val(false);
+     		}
+			$("#form").submit();
+         }
         
     </script>
 </head>
@@ -74,22 +86,17 @@
                         <input class="logininput ui-keyboard-input ui-widget-content ui-corner-all"   name="password" id="password" type="password" />
                     </span>
                 </p>
-                <input type="submit" value="登陆">
                 <button id="loginbtn" type="button" class="positive" onclick="submit1();">
                     <img src="image/key.png" alt="Announcement" />登录</button>
                 <ul id="forgottenpassword">
                     <li class="boldtext">|</li>
                     <li>
-                        <input id="remember" type="checkbox" name="remember" id="rememberMe"><label for="rememberMe">记住</label></li>
+                        <input type="checkbox" name="rememberMe1" id="rememberMe1"><label for="rememberMe1">记住</label>
+                        <input type="text" name="rememberMe" id="rememberMe" style="display:none;"></li>
                 </ul>
             </fieldset>
             </form>
     	</div>
-    </div>
-    <div id="wrapperbottom_branding">
-        <div id="wrapperbottom_branding_text">
-            Language:<a href="#" style='text-decoration: none'>Japanese </a>| <a href="#" style='text-decoration: none'>
-                English</a></div>
     </div>
 </body>
 </html>
