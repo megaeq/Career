@@ -28,6 +28,8 @@ public class MathModel extends BaseEntity
 	private Integer id;
 	private String mathModel;
 	private String name;
+	//对于那种数据的数学模型
+	private String type;
 	private String explaination;
 	private String score;
 	public Integer getId()
@@ -69,6 +71,14 @@ public class MathModel extends BaseEntity
 	public void setScore(String score)
 	{
 		this.score = score;
+	}
+	public String getType()
+	{
+		return type;
+	}
+	public void setType(String type)
+	{
+		this.type = type;
 	}
 	
 
