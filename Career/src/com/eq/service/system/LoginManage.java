@@ -45,7 +45,6 @@ public class LoginManage extends BaseAction
 	public String getBaseInfo(@RequestParam Map<String, Object> params) {
 		JSONObject json = new JSONObject();
 		User user = getUser();
-		System.out.println(user.getName());
 		json.put("name", user.getName());
 		json.put("imagePath", user.getImagePath());
 		return json.toString();
