@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="">
-	<select id="selectPageList" parameterType="hashmap" resultType="" >
+<mapper namespace="mathData">
+	<select id="selectPageList" parameterType="hashmap" resultType="mathData" >
+		SELECT * FROM mathdata
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="mathModelId!=null">mathModelId=#{mathModelId} AND</if>
+		</trim>
+		ORDER BY result DESC
 	</select>
-	<select id="selectone" parameterType="int" resultType="">
+	<select id="selectone" parameterType="int" resultType="mathData">
+		SELECT * FROM mathdata WHERE id=#{id}
 	</select>
-	<insert id="add" parameterType="" useGeneratedKeys="true" keyProperty="id">
+	<insert id="add" parameterType="mathData" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO mathdata (
+		<trim suffixOverrides=",">
+			<if test="mathModelId!=null">mathModelId,</if>
+			<if test="result!=null">result,</if>
+			<if test="times!=null">times,</if>
+			<if test="scoreSum!=null">scoreSum,</if>
+			<if test="scoreAverage!=null">scoreAverage,</if>
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			<if test="mathModelId!=null">#{mathModelId},</if>
+			<if test="result!=null">#{result},</if>
+			<if test="times!=null">#{times},</if>
+			<if test="scoreSum!=null">#{scoreSum},</if>
+			<if test="scoreAverage!=null">#{scoreAverage},</if>
+		</trim>
+		)
 	</insert>
-	<update id="update" parameterType="">
-		
+	<update id="update" parameterType="mathData">
+		UPDATE mathdata SET
+		<trim suffixOverrides=",">
+			<if test="mathModelId!=null">mathModelId=#{mathModelId},</if>
+			<if test="result!=null">result=#{result},</if>
+			<if test="times!=null">times=#{times},</if>
+			<if test="scoreSum!=null">scoreSum=#{scoreSum},</if>
+			<if test="scoreAverage!=null">scoreAverage=#{scoreAverage},</if>
+		</trim>
+		WHERE id=#{id}
 	</update>
 	<delete id="delete" parameterType="int">
-		
+		DELETE FROM mathdata WHERE id=#{id}
 	</delete>
 </mapper>

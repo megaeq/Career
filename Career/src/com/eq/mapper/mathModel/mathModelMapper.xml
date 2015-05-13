@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="mathModel">
+	<select id="selectPageList" parameterType="hashmap" resultType="mathModel" >
+		SELECT * FROM mathmodel
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="type!=null">type=#{type} AND</if>
+		</trim>
+		ORDER BY id 
+	</select>
+	<select id="selectone" parameterType="int" resultType="mathModel">
+		SELECT * FROM mathmodel WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="mathModel" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO mathmodel (
+		<trim suffixOverrides=",">
+			<if test="mathModel!=null">mathModel,</if>
+			<if test="name!=null">name,</if>
+			<if test="type!=null">type,</if>
+			<if test="explaination!=null">explaination,</if>
+			<if test="score!=null">score,</if>
+		</trim>
+		)
+		VALUES (
+		<trim suffixOverrides=",">
+			<if test="mathModel!=null">#{mathModel},</if>
+			<if test="name!=null">#{name},</if>
+			<if test="type!=null">#{type},</if>
+			<if test="explaination!=null">#{explaination},</if>
+			<if test="score!=null">#{score},</if>
+		</trim>	
+		)
+		
+	</insert>
+	<update id="update" parameterType="mathModel">
+		UPDATE mathmodel SET
+		<trim suffixOverrides=",">
+			<if test="mathModel!=null">mathModel=#{mathModel},</if>
+			<if test="name!=null">name=#{name},</if>
+			<if test="type!=null">type=#{type},</if>
+			<if test="explaination!=null">explaination=#{explaination},</if>
+			<if test="score!=null">score=#{score},</if>
+		</trim>	
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM mathmodel WHERE id=#{id}
+	</delete>
+</mapper>

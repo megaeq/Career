@@ -37,6 +37,9 @@
 		<typeAlias alias="resource" type="com.eq.dao.entity.system.Resource" />
 		<typeAlias alias="systemrole" type="com.eq.dao.entity.system.SystemRole" />
 		<typeAlias alias="systempermission" type="com.eq.dao.entity.system.SystemPermission" />
+		
+		<typeAlias alias="mathData" type="com.eq.dao.entity.mathModel.MathData" />
+		<typeAlias alias="mathModel" type="com.eq.dao.entity.mathModel.MathModel" />
 	</typeAliases>
 
 	<plugins>

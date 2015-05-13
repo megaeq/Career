@@ -1,11 +1,11 @@
 /**
  * Copyright(C) 2011-2012 BillionHealth Software Technology LTD. All Rights Reserved.
- * @title MathDataImpl.java
+ * @title MathModelImpl.java
  * @package com.eq.dao.impl.mathModel
  * @compiler JDK1.6
  * @description TODO
  * @author Mega.Yan
- * @date 2015-5-13 下午4:37:12
+ * @date 2015-5-13 下午6:11:49
  * @version V1.0  
  */
 package com.eq.dao.impl.mathModel;
@@ -16,36 +16,37 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.eq.dao.entity.mathModel.MathData;
+import com.eq.dao.entity.mathModel.MathModel;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
 import com.eq.service.mybatis.PageParameter;
 
 /**
- * @className MathDataImpl
+ * @className MathModelImpl
  * @description TODO
  * @author Mega.Yan
- * @date 2015-5-13 下午4:37:12
+ * @date 2015-5-13 下午6:11:49
  */
 @Component
-public class MathDataImpl extends BaseDao implements AbstractDao<MathData, Integer>
+public class MathModelImpl extends BaseDao implements AbstractDao<MathModel, Integer>
 {
 
 	@Override
-	public int add(MathData entity)
+	public int add(MathModel entity)
 	{
-		return getSqlSessionTemplate().insert("mathData.add", entity);
+		return getSqlSessionTemplate().insert("mathModel.add", entity);
 	}
 
 	@Override
 	public int delete(Integer id)
 	{
-		return getSqlSessionTemplate().delete("mathData.delete", id);
+		return getSqlSessionTemplate().delete("mathModel.delete", id);
 	}
 
 	@Override
-	public int update(MathData entity)
+	public int update(MathModel entity)
 	{
-		return getSqlSessionTemplate().update("mathData.update", entity);
+		return getSqlSessionTemplate().update("mathModel.update", entity);
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class MathDataImpl extends BaseDao implements AbstractDao<MathData, Integ
 	{
 		PageParameter pageParameter = new PageParameter(currentPage,pageSize);
 		params.put("page", pageParameter);
-		List<MathData> list = getSqlSessionTemplate().selectList("mathData.selectPageList", params);
+		List<MathModel> list = getSqlSessionTemplate().selectList("mathModel.selectPageList", params);
 		params.clear();
 		params.put("list", list);
 		params.put("count", pageParameter.getTotalCount());
@@ -61,15 +62,15 @@ public class MathDataImpl extends BaseDao implements AbstractDao<MathData, Integ
 	}
 
 	@Override
-	public List<MathData> selectList(Map<String, Object> params)
+	public List<MathModel> selectList(Map<String, Object> params)
 	{
-		return getSqlSessionTemplate().selectList("mathData.selectPageList", params);
+		return getSqlSessionTemplate().selectList("mathModel.selectPageList", params);
 	}
 
 	@Override
-	public MathData selectOne(Integer id)
+	public MathModel selectOne(Integer id)
 	{
-		return getSqlSessionTemplate().selectOne("mathData.selectone",id);
+		return getSqlSessionTemplate().selectOne("mathModel.selectone", id);
 	}
 
 }

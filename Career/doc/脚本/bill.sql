@@ -274,4 +274,27 @@ CREATE TABLE `football_bifa_detail` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--2015 05 13
+CREATE TABLE `mathdata` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `mathmodelid` int(10) DEFAULT NULL,
+  `result` float(12,6) DEFAULT NULL,
+  `times` int(10) DEFAULT NULL,
+  `scoresum` float(16,6) DEFAULT NULL,
+  `scoreaverage` float(16,6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `mathmodel` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `mathmodel` varchar(100) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `explaination` varchar(1000) DEFAULT NULL,
+  `score` float(16,6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 
