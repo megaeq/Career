@@ -169,7 +169,7 @@ public class GameInfoManage extends BaseAction
 					game.setLoseRate(Float.parseFloat(td93.toPlainTextString()));
 				}
 				if(game.getWinRate()!=null&&game.getDrawRate()!=null&&game.getLoseRate()!=null) {
-					game.setPw(1d/(1+game.getWinRate()/game.getDrawRate()+game.getWinRate()/game.getLoseRate()));
+					game.setPw(1/(1+game.getWinRate()/game.getDrawRate()+game.getWinRate()/game.getLoseRate()));
 					game.setPd(game.getPw()*game.getWinRate()/game.getDrawRate());
 					game.setPl(game.getPw()*game.getWinRate()/game.getLoseRate());
 				}

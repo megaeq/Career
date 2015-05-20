@@ -5,6 +5,7 @@
 		SELECT * FROM mathdata
 		<trim prefix="WHERE" suffixOverrides="AND">
 			<if test="mathModelId!=null">mathModelId=#{mathModelId} AND</if>
+			<if test="result!=null">result=#{result} AND</if>
 		</trim>
 		ORDER BY result DESC
 	</select>

@@ -34,10 +34,18 @@ public class Game extends BaseEntity
 	private Timestamp time;
 	private String time2;
 	private String suggest;
-	private Double Pw;
-	private Double Pd;
-	private Double Pl;
-
+	private Float Pw;
+	private Float Pd;
+	private Float Pl;
+	public Float getScore() {
+		if(homeScore>guestScore) {
+			return winRate*Pw;
+		} else if(homeScore<guestScore) {
+			return loseRate*Pl;
+		} else {
+			return drawRate*Pd;
+		}
+	}
 	public Integer getId()
 	{
 		return id;
@@ -238,35 +246,31 @@ public class Game extends BaseEntity
 	{
 		this.time2 = time2;
 	}
-
-	public Double getPw()
+	public Float getPw()
 	{
 		return Pw;
 	}
-
-	public void setPw(Double pw)
+	public void setPw(Float pw)
 	{
 		Pw = pw;
 	}
-
-	public Double getPd()
+	public Float getPd()
 	{
 		return Pd;
 	}
-
-	public void setPd(Double pd)
+	public void setPd(Float pd)
 	{
 		Pd = pd;
 	}
-
-	public Double getPl()
+	public Float getPl()
 	{
 		return Pl;
 	}
-
-	public void setPl(Double pl)
+	public void setPl(Float pl)
 	{
 		Pl = pl;
 	}
+
+	
 
 }

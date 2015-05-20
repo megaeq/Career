@@ -16,8 +16,9 @@ package com.eq.util.mathModel;
  * @author Mega.Yan
  * @date 2015-5-4 上午9:03:11
  */
-public interface MathModel<T>
+public interface MathModel
 {
-	public Float getResult(T t);
+	public Float getResult();
+	public void add();
 	
 }
