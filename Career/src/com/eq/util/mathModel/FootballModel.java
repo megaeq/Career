@@ -10,11 +10,15 @@
  */
 package com.eq.util.mathModel;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.wltea.expression.ExpressionEvaluator;
+import org.wltea.expression.datameta.Variable;
 
 import com.eq.dao.entity.lottory.Game;
 import com.eq.dao.entity.mathModel.MathData;
@@ -42,12 +46,16 @@ public class FootballModel implements MathModel
 	@Override
 	public Float getResult()
 	{
-		if(t.getWinRate()!=null&&t.getDrawRate()!=null&&t.getLoseRate()!=null) {
-			return t.getWinRate()*t.getDrawRate()*t.getLoseRate();
-		} else {
-			return -1f;
-		}
-		
+		Collection<Variable> col = new ArrayList<Variable>();
+		col.add(Variable.createVariable("Rd", t.getDrawRate()));
+		col.add(Variable.createVariable("Rw", t.getWinRate()));
+		col.add(Variable.createVariable("Rl", t.getLoseRate()));
+		col.add(Variable.createVariable("Pw", t.getPw()));
+		col.add(Variable.createVariable("Pd", t.getPd()));
+		col.add(Variable.createVariable("Pl", t.getPl()));
+		com.eq.dao.entity.mathModel.MathModel model = mathModelImpl.selectOne(mathModelId);
+		Object result = ExpressionEvaluator.evaluate(model.getExpression(),col);
+		return Float.parseFloat(result.toString());
 	}
 	@Override
 	public void add()
@@ -78,6 +86,9 @@ public class FootballModel implements MathModel
 				data.setTimes(times+1);
 				mathDataImpl.update(data);
 			}
+			com.eq.dao.entity.mathModel.MathModel model = mathModelImpl.selectOne(mathModelId);
+			model.setMaxId(t.getId());
+			mathModelImpl.update(model);
 		}
 	}
 

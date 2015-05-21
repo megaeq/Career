@@ -31,6 +31,8 @@ public class MathModel extends BaseEntity
 	//对于那种数据的数学模型
 	private String type;
 	private String explaination;
+	private String expression;
+	private Integer maxId;
 	public Integer getId()
 	{
 		return id;
@@ -70,6 +72,22 @@ public class MathModel extends BaseEntity
 	public void setType(String type)
 	{
 		this.type = type;
+	}
+	public String getExpression()
+	{
+		return expression;
+	}
+	public void setExpression(String expression)
+	{
+		this.expression = expression;
+	}
+	public Integer getMaxId()
+	{
+		return maxId;
+	}
+	public void setMaxId(Integer maxId)
+	{
+		this.maxId = maxId;
 	}
 	
 

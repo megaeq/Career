@@ -17,6 +17,7 @@ public class Test
 		col.add(Variable.createVariable("b", 2));
 		col.add(Variable.createVariable("a", 1));
 		col.add(Variable.createVariable("c", 3));
+		col.add(Variable.createVariable("d", 4));
 		System.out.println("(1+2)*3="+ExpressionEvaluator.evaluate("(a+b)*c",col));
 		System.out.println("(1+2)*3的逆波兰表达式为："+ExpressionEvaluator.compile("(a+b)*c",col));
 		System.out.println("(1+2)*3的逆波兰表达式为："+ExpressionEvaluator.compile("(1+2)*3"));

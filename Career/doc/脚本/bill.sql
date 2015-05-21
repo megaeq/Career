@@ -291,7 +291,8 @@ CREATE TABLE `mathmodel` (
   `name` varchar(100) DEFAULT NULL,
   `type` varchar(50) DEFAULT NULL,
   `explaination` varchar(1000) DEFAULT NULL,
-  `score` float(16,6) DEFAULT NULL,
+  `expression` varchar(500) DEFAULT NULL,
+  `maxid` int(10) ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -37,6 +37,7 @@ public class Game extends BaseEntity
 	private Float Pw;
 	private Float Pd;
 	private Float Pl;
+	private String hasFinish;
 	public Float getScore() {
 		if(homeScore>guestScore) {
 			return winRate*Pw;
@@ -269,6 +270,14 @@ public class Game extends BaseEntity
 	public void setPl(Float pl)
 	{
 		Pl = pl;
+	}
+	public String getHasFinish()
+	{
+		return hasFinish;
+	}
+	public void setHasFinish(String hasFinish)
+	{
+		this.hasFinish = hasFinish;
 	}
 
 	
