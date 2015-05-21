@@ -31,8 +31,8 @@
 	</bean>
 	
 	<!-- 用户函数配置  请在这里定制您自己的函数-->
-<!-- 
-	<bean class="org.wltea.expression.test.TestFunctions">
+
+	<!-- <bean class="org.wltea.expression.test.TestFunctions">
 		<constructor-args>
 			<constructor-arg type="java.lang.Integer">123</constructor-arg>
 			<constructor-arg type="java.lang.String">aa</constructor-arg>
@@ -40,8 +40,12 @@
 		<function name="问好" method="sayHello">
 			<parameter-type>java.lang.String</parameter-type>
 		</function>
-	</bean>
- -->
+	</bean> -->
+ 	<bean class="com.eq.util.IK.IKMathFunctions">
+ 		<function name="开方" method="sqrt">
+ 			<parameter-type>java.lang.Double</parameter-type>
+ 		</function>
+ 	</bean>
 
 
 </function-configuration>
