@@ -148,7 +148,11 @@ public class GameInfoFetch {
 					game.setDrawRate(Float.parseFloat(td92.toPlainTextString()));
 					game.setLoseRate(Float.parseFloat(td93.toPlainTextString()));
 				}
-
+				if(game.getHomeScore()!=null&&game.getGuestScore()!=null&&game.getWinRate()!=null&&game.getDrawRate()!=null&&game.getLoseRate()!=null) {
+					game.setHasFinish("1");
+				} else {
+					game.setHasFinish("0");
+				}
 				gameList.add(game);
 			}
 

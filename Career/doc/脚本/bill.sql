@@ -296,6 +296,10 @@ CREATE TABLE `mathmodel` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+--20150522 添加hasfinish字段
+update `game` set hasfinish=(case when winrate is not null and winrate >0 
+and drawrate is not null and drawrate>0 
+and loserate is not null and loserate>0
+and homescore is not null and homescore>-1 and guestscore>-1 and guestscore is not null then 1 ELSE 0 end);
 
 
