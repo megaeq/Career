@@ -33,6 +33,8 @@ public class MathModel extends BaseEntity
 	private String explaination;
 	private String expression;
 	private Integer maxId;
+	//精度
+	private Integer precision;
 	public Integer getId()
 	{
 		return id;
@@ -88,6 +90,14 @@ public class MathModel extends BaseEntity
 	public void setMaxId(Integer maxId)
 	{
 		this.maxId = maxId;
+	}
+	public Integer getPrecision()
+	{
+		return precision;
+	}
+	public void setPrecision(Integer precision)
+	{
+		this.precision = precision;
 	}
 	
 

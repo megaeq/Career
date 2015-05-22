@@ -42,7 +42,11 @@
 		</function>
 	</bean> -->
  	<bean class="com.eq.util.IK.IKMathFunctions">
- 		<function name="开方" method="sqrt">
+ 		<function name="SQRT" method="sqrt">
+ 			<parameter-type>java.lang.Double</parameter-type>
+ 		</function>
+ 		<function name="POW" method="pow">
+ 			<parameter-type>java.lang.Double</parameter-type>
  			<parameter-type>java.lang.Double</parameter-type>
  		</function>
  	</bean>

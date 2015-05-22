@@ -13,6 +13,9 @@
 			<if test="id!=null">
 			id=#{id} AND
 			</if>
+			<if test="maxId!=null">
+			id>#{maxId} AND
+			</if>
 			<if test="hometeam!=null">
 			hometeam=#{hometeam} AND
 			</if>
@@ -38,7 +41,9 @@
 			<if test="weather!=null">
 			weather=#{weather} AND
 			</if>
-			
+			<if test="hasFinish!=null">
+			hasFinish=#{hasFinish} AND
+			</if>
 		</trim>
 		ORDER BY code DESC
 	</select>
@@ -72,6 +77,7 @@
 		<if test="Pw!=null">pw,</if>
 		<if test="Pd!=null">pd,</if>
 		<if test="Pl!=null">Pl,</if>
+		<if test="hasFinish!=null">hasFinish,</if>
 	</trim>)
 	VALUES (
 	<trim suffixOverrides=",">
@@ -96,6 +102,7 @@
 		<if test="Pw!=null">#{Pw},</if>
 		<if test="Pd!=null">#{Pd},</if>
 		<if test="Pl!=null">#{Pl},</if>
+		<if test="hasFinish!=null">#{hasFinish},</if>
 	</trim>
 	)
 	</insert>
@@ -122,6 +129,7 @@
 		<if test="Pw!=null">pw=#{Pw},</if>
 		<if test="Pd!=null">pd=#{Pd},</if>
 		<if test="Pl!=null">pl=#{Pl},</if>
+		<if test="hasFinish!=null">hasFinish=#{hasFinish},</if>
 	</trim>
 	WHERE
 	<trim suffixOverrides="AND">

@@ -10,6 +10,7 @@
  */
 package com.eq.util.mathModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.wltea.expression.ExpressionEvaluator;
 import org.wltea.expression.datameta.Variable;
 
@@ -31,20 +33,15 @@ import com.eq.dao.impl.mathModel.MathModelImpl;
  * @author Mega.Yan
  * @date 2015-5-13 上午10:38:31
  */
-public class FootballModel implements MathModel
+@Component
+public class FootballModel implements MathModel<Game>
 {
-	private int mathModelId;
-	private Game t;
 	@Autowired
-	private MathDataImpl mathDataImpl;
+	private MathDataImpl mathDataImpl; 
 	@Autowired
 	private MathModelImpl mathModelImpl;
-	public FootballModel(int mathModelId,Game t) {
-		this.mathModelId = mathModelId;
-		this.t = t;
-	}
 	@Override
-	public Float getResult()
+	public Float getResult(Game t,Integer mathModelId)
 	{
 		Collection<Variable> col = new ArrayList<Variable>();
 		col.add(Variable.createVariable("Rd", t.getDrawRate()));
@@ -55,12 +52,14 @@ public class FootballModel implements MathModel
 		col.add(Variable.createVariable("Pl", t.getPl()));
 		com.eq.dao.entity.mathModel.MathModel model = mathModelImpl.selectOne(mathModelId);
 		Object result = ExpressionEvaluator.evaluate(model.getExpression(),col);
-		return Float.parseFloat(result.toString());
+		BigDecimal bd = new BigDecimal(Double.parseDouble(result.toString()));
+		bd.setScale(model.getPrecision(), 4);
+		return bd.floatValue();
 	}
 	@Override
-	public void add()
+	public void add(Game t,Integer mathModelId)
 	{
-		float result = getResult();
+		float result = getResult(t,mathModelId);
 		Map<String, Object> params = new HashMap<String, Object>();
 		if(-1!=result) {
 			params.put("mathModelId", mathModelId);
@@ -86,9 +85,6 @@ public class FootballModel implements MathModel
 				data.setTimes(times+1);
 				mathDataImpl.update(data);
 			}
-			com.eq.dao.entity.mathModel.MathModel model = mathModelImpl.selectOne(mathModelId);
-			model.setMaxId(t.getId());
-			mathModelImpl.update(model);
 		}
 	}
 
