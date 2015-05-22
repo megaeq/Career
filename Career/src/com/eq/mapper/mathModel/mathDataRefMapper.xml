@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="mathDataRef">
+	<select id="selectPageList" parameterType="hashmap" resultType="mathDataRef" >
+		SELECT * FROM math_data_ref
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="mathDataId!=null">mathDataId=#{mathDataId} AND</if>
+			<if test="gameId!=null">gameId=#{gameId} AND</if>
+		</trim>
+	</select>
+	<select id="selectone" parameterType="int" resultType="mathDataRef">
+		SELECT * FROM math_data_ref WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="mathDataRef" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO math_data_ref (
+		<trim suffixOverrides=",">
+			<if test="mathDataId!=null">mathDataId,</if>
+			<if test="gameId!=null">gameId,</if>
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			<if test="mathDataId!=null">#{mathDataId},</if>
+			<if test="gameId!=null">#{gameId},</if>
+		</trim>	
+		)
+	</insert>
+	<update id="update" parameterType="mathDataRef">
+		
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM math_data_ref WHERE id=#{id}
+	</delete>
+</mapper>

@@ -302,4 +302,12 @@ and drawrate is not null and drawrate>0
 and loserate is not null and loserate>0
 and homescore is not null and homescore>-1 and guestscore>-1 and guestscore is not null then 1 ELSE 0 end);
 
+--20150522 
+CREATE TABLE `math_data_ref` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `mathdataid` int(10) DEFAULT NULL,
+  `gameid` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
