@@ -24,7 +24,9 @@ import org.wltea.expression.datameta.Variable;
 
 import com.eq.dao.entity.lottory.Game;
 import com.eq.dao.entity.mathModel.MathData;
+import com.eq.dao.entity.mathModel.MathDataRef;
 import com.eq.dao.impl.mathModel.MathDataImpl;
+import com.eq.dao.impl.mathModel.MathDataRefImpl;
 import com.eq.dao.impl.mathModel.MathModelImpl;
 
 /**
@@ -40,6 +42,8 @@ public class FootballModel implements MathModel<Game>
 	private MathDataImpl mathDataImpl; 
 	@Autowired
 	private MathModelImpl mathModelImpl;
+	@Autowired
+	private MathDataRefImpl mathDataRefImpl;
 	@Override
 	public Float getResult(Game t,Integer mathModelId)
 	{
@@ -65,6 +69,7 @@ public class FootballModel implements MathModel<Game>
 			params.put("mathModelId", mathModelId);
 			params.put("result", result);
 			List<MathData> list = mathDataImpl.selectList(params);
+			int mathDataId = 0;
 			if(list.isEmpty()) {
 				MathData data = new MathData();
 				data.setMathModelId(mathModelId);
@@ -72,9 +77,10 @@ public class FootballModel implements MathModel<Game>
 				data.setScoreAverage(t.getScore());
 				data.setScoreSum(t.getScore());
 				data.setTimes(1);
-				mathDataImpl.add(data);
+				mathDataId = mathDataImpl.add(data);
 			} else {
 				MathData data = list.get(0);
+				mathDataId = data.getId();
 				Float scoreSum = data.getScoreSum();
 				Float scoreAverage = data.getScoreAverage();
 				Integer times = data.getTimes();
@@ -85,6 +91,10 @@ public class FootballModel implements MathModel<Game>
 				data.setTimes(times+1);
 				mathDataImpl.update(data);
 			}
+			MathDataRef dataRef = new MathDataRef();
+			dataRef.setGameId(t.getId());
+			dataRef.setMathDataId(mathDataId);
+			mathDataRefImpl.add(dataRef);
 		}
 	}
 

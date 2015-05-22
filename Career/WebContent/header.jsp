@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,12 +24,12 @@
 		
 	}
 </style>
-<script src="js/jquery/jquery-1.11.1.min.js"></script>
+<script src="<%=basePath %>js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery.ajax({
 	         type: "post",
-	         url: "loginManage/getBaseInfo",
+	         url: "<%=basePath %>loginManage/getBaseInfo",
 	         success: function(data,textStatus){
         	 	 var json = JSON.parse(data);
 				 $(".name").append(json.name);
@@ -37,9 +40,9 @@
 	function logout() {
 		jQuery.ajax({
             type: "post",
-            url: "loginManage/loginOut",
+            url: "<%=basePath %>loginManage/loginOut",
             success: function(data,textStatus){
-		 		window.location.href = "login.jsp";
+		 		window.location.href = "<%=basePath %>login.jsp";
             }
    		});
 	}
