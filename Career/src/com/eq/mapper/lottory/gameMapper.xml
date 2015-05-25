@@ -45,7 +45,9 @@
 			hasFinish=#{hasFinish} AND
 			</if>
 		</trim>
-		ORDER BY code DESC
+		<if test="order==1">ORDER BY id </if>
+		<if test="order==null">ORDER BY code DESC </if>
+		
 	</select>
 	<select id="one" parameterType="int" resultType="game">
 	SELECT * FROM game WHERE id=#{id}

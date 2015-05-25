@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="mathModelRef">
+	<select id="selectPageList" parameterType="hashmap" resultType="mathModelRef" >
+		SELECT * FROM math_model_ref
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="mathModelId!=null">mathModelId=#{mathModelId} AND</if>
+			<if test="gameId!=null">gameId=#{gameId} AND</if>
+			<if test="maxResult!=null">result&lt;#{maxResult} AND</if>
+			<if test="minResult!=null">result&gt;#{minResult} AND</if>
+		</trim>
+	</select>
+	<select id="selectone" parameterType="int" resultType="mathModelRef">
+		SELECT * FROM math_model_ref WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="mathModelRef" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO math_model_ref (
+		<trim suffixOverrides=",">
+			<if test="mathModelId!=null">mathModelId,</if>
+			<if test="gameId!=null">gameId,</if>
+			<if test="result!=null">result,</if>
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			<if test="mathModelId!=null">#{mathModelId},</if>
+			<if test="gameId!=null">#{gameId},</if>
+			<if test="result!=null">#{result},</if>
+		</trim>	
+		)
+	</insert>
+	<update id="update" parameterType="mathModelRef">
+		
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM math_model_ref WHERE id=#{id}
+	</delete>
+</mapper>

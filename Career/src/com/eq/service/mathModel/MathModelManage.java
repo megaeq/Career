@@ -56,19 +56,27 @@ public class MathModelManage extends BaseAction
 		//FootballModel footballModel = new FootballModel();
 		Long i=0l;
 		for(MathModel model:modelList) {
-			pps.clear();
-			pps.put("maxId", model.getMaxId());
-			pps.put("hasFinish", "1");
-			List<Game> gameList = gameImpl.selectList(pps);
-			for(Game game:gameList) {
-				footballModel.add(game, model.getId());
+			for(int j=0;;j++) {
+				pps.clear();
+				pps.put("maxId", model.getMaxId());
+				pps.put("hasFinish", "1");
+				pps.put("order", "1");
+				List<Game> gameList = (List<Game>)gameImpl.selectPageList(pps, 0, 200).get("list");
+				if(gameList.isEmpty()) {
+					break;
+				}
+				for(Game game:gameList) {
+					footballModel.add(game, model.getId());
+					i++;
+					if(i%128==0) {
+						logger.info("处理第 "+i+" 条数据……");
+					}
+				}
+				model.setMaxId(gameList.get(gameList.size()-1).getId());
+				mathModelImpl.update(model);
+				
 			}
-			model.setMaxId(gameList.get(gameList.size()-1).getId());
-			mathModelImpl.update(model);
-			i++;
-			if(i%128==0) {
-				logger.info("处理第 "+i+" 条数据……");
-			}
+			
 		}
 		return "成功";
 	}

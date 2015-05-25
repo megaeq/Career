@@ -18,7 +18,6 @@
 			<if test="name!=null">name,</if>
 			<if test="type!=null">type,</if>
 			<if test="explaination!=null">explaination,</if>
-			<if test="score!=null">score,</if>
 		</trim>
 		)
 		VALUES (
@@ -27,7 +26,6 @@
 			<if test="name!=null">#{name},</if>
 			<if test="type!=null">#{type},</if>
 			<if test="explaination!=null">#{explaination},</if>
-			<if test="score!=null">#{score},</if>
 		</trim>	
 		)
 		
@@ -39,7 +37,7 @@
 			<if test="name!=null">name=#{name},</if>
 			<if test="type!=null">type=#{type},</if>
 			<if test="explaination!=null">explaination=#{explaination},</if>
-			<if test="score!=null">score=#{score},</if>
+			<if test="maxId!=null">maxId=#{maxId},</if>
 		</trim>	
 		WHERE id=#{id}
 	</update>

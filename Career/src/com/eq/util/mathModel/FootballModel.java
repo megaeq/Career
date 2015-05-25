@@ -25,9 +25,11 @@ import org.wltea.expression.datameta.Variable;
 import com.eq.dao.entity.lottory.Game;
 import com.eq.dao.entity.mathModel.MathData;
 import com.eq.dao.entity.mathModel.MathDataRef;
+import com.eq.dao.entity.mathModel.MathModelRef;
 import com.eq.dao.impl.mathModel.MathDataImpl;
 import com.eq.dao.impl.mathModel.MathDataRefImpl;
 import com.eq.dao.impl.mathModel.MathModelImpl;
+import com.eq.dao.impl.mathModel.MathModelRefImpl;
 
 /**
  * @className PMulti
@@ -39,11 +41,9 @@ import com.eq.dao.impl.mathModel.MathModelImpl;
 public class FootballModel implements MathModel<Game>
 {
 	@Autowired
-	private MathDataImpl mathDataImpl; 
-	@Autowired
 	private MathModelImpl mathModelImpl;
 	@Autowired
-	private MathDataRefImpl mathDataRefImpl;
+	private MathModelRefImpl mathModelRefImpl;
 	@Override
 	public Float getResult(Game t,Integer mathModelId)
 	{
@@ -54,48 +54,25 @@ public class FootballModel implements MathModel<Game>
 		col.add(Variable.createVariable("Pw", t.getPw()));
 		col.add(Variable.createVariable("Pd", t.getPd()));
 		col.add(Variable.createVariable("Pl", t.getPl()));
+		Float Pmax = t.getPw()>=t.getPd()&&t.getPw()>=t.getPl()?t.getPw():(t.getPd()>=t.getPl()?t.getPd():t.getPl());
+		Float Pmin = t.getPw()<=t.getPd()&&t.getPw()<=t.getPl()?t.getPw():(t.getPd()<=t.getPl()?t.getPd():t.getPl());
+		Float Pmid = t.getPw()!=Pmin&&t.getPw()!=Pmax?t.getPw():(t.getPd()!=Pmin&&t.getPd()!=Pmax?t.getPd():t.getPl());
+		col.add(Variable.createVariable("Pmax", Pmax));
+		col.add(Variable.createVariable("Pmid", Pmid));
+		col.add(Variable.createVariable("Pmin", Pmin));
 		com.eq.dao.entity.mathModel.MathModel model = mathModelImpl.selectOne(mathModelId);
 		Object result = ExpressionEvaluator.evaluate(model.getExpression(),col);
-		BigDecimal bd = new BigDecimal(Double.parseDouble(result.toString()));
-		bd.setScale(model.getPrecision(), 4);
-		return bd.floatValue();
+		return Float.parseFloat(result.toString());
 	}
 	@Override
 	public void add(Game t,Integer mathModelId)
 	{
 		float result = getResult(t,mathModelId);
-		Map<String, Object> params = new HashMap<String, Object>();
-		if(-1!=result) {
-			params.put("mathModelId", mathModelId);
-			params.put("result", result);
-			List<MathData> list = mathDataImpl.selectList(params);
-			int mathDataId = 0;
-			if(list.isEmpty()) {
-				MathData data = new MathData();
-				data.setMathModelId(mathModelId);
-				data.setResult(result);
-				data.setScoreAverage(t.getScore());
-				data.setScoreSum(t.getScore());
-				data.setTimes(1);
-				mathDataId = mathDataImpl.add(data);
-			} else {
-				MathData data = list.get(0);
-				mathDataId = data.getId();
-				Float scoreSum = data.getScoreSum();
-				Float scoreAverage = data.getScoreAverage();
-				Integer times = data.getTimes();
-				scoreSum += t.getScore();
-				scoreAverage = scoreSum/(1+times);
-				data.setScoreSum(scoreSum);
-				data.setScoreAverage(scoreAverage);
-				data.setTimes(times+1);
-				mathDataImpl.update(data);
-			}
-			MathDataRef dataRef = new MathDataRef();
-			dataRef.setGameId(t.getId());
-			dataRef.setMathDataId(mathDataId);
-			mathDataRefImpl.add(dataRef);
-		}
+		MathModelRef modelRef = new MathModelRef();
+		modelRef.setGameId(t.getId());
+		modelRef.setMathModelId(mathModelId);
+		modelRef.setResult(result);
+		mathModelRefImpl.add(modelRef);
 	}
 
 }

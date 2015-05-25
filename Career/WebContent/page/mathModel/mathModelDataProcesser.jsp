@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	top:1px;
 } 
  </style> 
- <script src="<%=basePath %>js/jquery/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
   <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-extension.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
@@ -73,9 +73,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         "dojo/dom",
  	        "dijit/Dialog"
  	     ], function (request,dom,Dialog) {
- 		$.blockUI();
+ 		//$.blockUI();
  		request("footballModelDataProcesser").then(function(response) {
-					 $.unblockUI();
+					 //$.unblockUI();
 				 	myDialog = new Dialog({
 				        title: "结果",
 				        content: response,

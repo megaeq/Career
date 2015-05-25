@@ -310,4 +310,11 @@ CREATE TABLE `math_data_ref` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+--201505222329
+CREATE TABLE `math_model_ref` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `gameid` int(10) DEFAULT NULL,
+  `mathmodelid` int(10) DEFAULT NULL,
+  `result` float(12,5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
