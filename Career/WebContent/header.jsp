@@ -12,21 +12,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>Insert title here</title>
 <style type="text/css">
 	.header {
-		width:90%;
+		background:#EDEDED;
+		width:100%;
 		text-align:right;
-		padding-left: 5%;
-	    padding-right: 5%;
-	    padding-top:2%;
-	    padding-bottom:2%;
+	    padding-top:10px;
+	    padding-bottom:20px;
 	    font-size:12px;
 	}
 	.name {
 		
 	}
+	#nav { display:block;list-style:none;}
+	#nav .jquery_out {float:left;line-height:32px;display:block; border-right:1px solid #2C00DB; text-align:center; color:#2C00DB;font:18px/32px "微软雅黑"; }
+	#nav .jquery_out .smile {padding-left:1em;}
+	#nav .jquery_inner {margin-left:16px;}
+	#nav .jquery {margin-right:1px;padding:0 2em;}
+	#nav .mainlevel { float:left;width:100px;border:1px solid #EDEDED;/*IE6 only*/}
+	#nav .mainlevel:hover { background:#ffffff;}
+	#nav .mainlevel a {color:#000000; text-decoration:none; line-height:32px; display:block; padding:0 20px; width:60px;}
+	#nav .mainlevel a:hover {color:#2C00DB; text-decoration:none;}
+	#nav .mainlevel ul {display:none; position:absolute;}
+	#nav .mainlevel li { background:#ffffff;list-style:none;width:100px;border:1px solid #EDEDED;/*IE6 only*/}
+	#nav .mainlevel li:hover { background:#EDEDED;}
 </style>
 <script src="<%=basePath %>js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		jQuery.navlevel2 = function(level1,dytime) {
+			
+			  $(level1).mouseenter(function(){
+				  varthis = $(this);
+				  delytime=setTimeout(function(){
+					varthis.find('ul').slideDown();
+				},dytime);
+				
+			  });
+			  $(level1).mouseleave(function(){
+				 clearTimeout(delytime);
+				 $(this).find('ul').slideUp();
+			  });
+			  
+			};
+		  $.navlevel2("li.mainlevel",200);
 		jQuery.ajax({
 	         type: "post",
 	         url: "<%=basePath %>loginManage/getBaseInfo",
@@ -50,8 +77,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 	<div class="header">
+		<ul id="nav">
+			<li class="mainlevel"><a href="<%=basePath %>">首页</a>
+		    </li>
+		    <li class="mainlevel"><a href="<%=basePath %>page/mathModel/mathModelDataProcesser.jsp">数据挖掘</a>
+		        <ul>
+		        	<li><a href="#">网页特效</a></li>
+		        </ul>
+		    </li>
+		</ul>
 		<span class="name"></span>
-		<a href="#" onclick="logout();">退出</a>
+		<a href="#" onclick="logout();">退出</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
 </body>
 </html>

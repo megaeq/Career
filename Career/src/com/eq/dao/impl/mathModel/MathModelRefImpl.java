@@ -57,5 +57,13 @@ public class MathModelRefImpl extends BaseDao implements AbstractDao<MathModelRe
 	public MathModelRef selectOne(Integer id) {
 		return getSqlSessionTemplate().selectOne("mathModelRef.selectone", id);
 	}
+	
+	public Float selectMaxResult(Map<String, Object> params) {
+		return getSqlSessionTemplate().selectOne("mathModelRef.selectMaxResult", params);
+	}
+	
+	public Float selectMinResult(Map<String, Object> params) {
+		return getSqlSessionTemplate().selectOne("mathModelRef.selectMinResult", params);
+	}
 
 }

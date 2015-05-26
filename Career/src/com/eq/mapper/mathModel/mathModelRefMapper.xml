@@ -10,6 +10,18 @@
 			<if test="minResult!=null">result&gt;#{minResult} AND</if>
 		</trim>
 	</select>
+	<select id="selectMaxResult" parameterType="hashmap" resultType="float" >
+		SELECT max(result) FROM math_model_ref
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="mathModelId!=null">mathModelId=#{mathModelId} AND</if>
+		</trim>
+	</select>
+	<select id="selectMinResult" parameterType="hashmap" resultType="float" >
+		SELECT min(result) FROM math_model_ref
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="mathModelId!=null">mathModelId=#{mathModelId} AND</if>
+		</trim>
+	</select>
 	<select id="selectone" parameterType="int" resultType="mathModelRef">
 		SELECT * FROM math_model_ref WHERE id=#{id}
 	</select>

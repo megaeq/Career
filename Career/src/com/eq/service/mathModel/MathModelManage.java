@@ -25,6 +25,7 @@ import com.eq.dao.entity.lottory.Game;
 import com.eq.dao.entity.mathModel.MathModel;
 import com.eq.dao.impl.lottory.GameImpl;
 import com.eq.dao.impl.mathModel.MathModelImpl;
+import com.eq.dao.impl.mathModel.MathModelRefImpl;
 import com.eq.service.lottory.GameManage;
 import com.eq.util.BaseAction;
 import com.eq.util.mathModel.FootballModel;
@@ -46,6 +47,8 @@ public class MathModelManage extends BaseAction
 	private GameImpl gameImpl;
 	@Autowired
 	private FootballModel footballModel;
+	@Autowired
+	private MathModelRefImpl mathModelRefImpl;
 	@ResponseBody
 	@RequestMapping("footballModelDataProcesser")
 	public String FootballModelDataProcesser(@RequestParam Map<String, Object> params) {
@@ -72,6 +75,12 @@ public class MathModelManage extends BaseAction
 						logger.info("处理第 "+i+" 条数据……");
 					}
 				}
+				pps.clear();
+				pps.put("mathModelId", model.getId());
+				Float maxResult = mathModelRefImpl.selectMaxResult(pps);
+				Float minResult = mathModelRefImpl.selectMinResult(pps);
+				model.setMaxResult(maxResult);
+				model.setMinResult(minResult);
 				model.setMaxId(gameList.get(gameList.size()-1).getId());
 				mathModelImpl.update(model);
 				

@@ -35,6 +35,8 @@ public class MathModel extends BaseEntity
 	private Integer maxId;
 	//精度
 	private Integer precision;
+	private Float maxResult;
+	private Float minResult;
 	public Integer getId()
 	{
 		return id;
@@ -98,6 +100,22 @@ public class MathModel extends BaseEntity
 	public void setPrecision(Integer precision)
 	{
 		this.precision = precision;
+	}
+	public Float getMaxResult()
+	{
+		return maxResult;
+	}
+	public void setMaxResult(Float maxResult)
+	{
+		this.maxResult = maxResult;
+	}
+	public Float getMinResult()
+	{
+		return minResult;
+	}
+	public void setMinResult(Float minResult)
+	{
+		this.minResult = minResult;
 	}
 	
 
