@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eq.dao.entity.lottory.Game;
 import com.eq.dao.impl.lottory.GameImpl;
 import com.eq.util.BaseAction;
+import com.eq.util.DateUtil;
 
 @Controller
 @RequestMapping("page/lottory/game")
@@ -23,15 +24,23 @@ public class GameManage extends BaseAction {
 
 	@RequestMapping("getList")
 	@ResponseBody
-	public List<Game> getList(Date startDate, Date endDate) {
-
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("startDate", startDate);
-		params.put("endDate", endDate);
-		Map<String, Object> pps = impl.selectPageList(params, currentPage, pageSize);
-		response.setHeader("Content-Range", rangeStr+pps.get("count"));
-		return (List<Game>)pps.get("list");
+	public List<Game> getList(@RequestParam Map<String, Object> params) {
+		this.params = params;
+		Map<String, Object> pps = new HashMap<String, Object>();
+		if(getDate("startDate")!=null){
+			pps.put("startDate", getDate("startDate"));
+		}
+		if(getDate("endDate")!=null){
+			pps.put("endDate", getDate("endDate"));
+		}
+		if("now".equals(getString("isNow"))) {
+			pps.put("startDate", DateUtil.getNowTime());
+		}
+		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
+		response.setHeader("Content-Range", rangeStr+pps2.get("count"));
+		return (List<Game>)pps2.get("list");
 	}
+	
 
 	@ResponseBody
 	@RequestMapping("getListByName")

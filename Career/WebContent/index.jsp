@@ -11,13 +11,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=2.0,user-scalable=yes" />
 <title>首页</title>
 <link rel="stylesheet" href="<%=basePath%>css/my.css">
-<link rel="stylesheet" href="<%=basePath%>css/pure.css">
 <LINK href="<%=basePath%>favicon.ico" type="image/x-icon" rel=icon>
 <link rel="stylesheet" href="<%=basePath%>css/style.css">
 <script type="text/javascript" src="js/jquery/jquery-1.11.1.js"></script>
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="/header.jsp"></jsp:include>
+<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>

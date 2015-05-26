@@ -18,6 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    padding-top:10px;
 	    padding-bottom:20px;
 	    font-size:12px;
+	    z-index:99999;
 	}
 	.name {
 		
@@ -84,6 +85,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        <ul>
 		        	<li><a href="#">网页特效</a></li>
 		        </ul>
+		    </li>
+		    <li class="mainlevel"><a href="<%=basePath %>page/lottory/nowGameList.jsp">足球现场</a>
 		    </li>
 		</ul>
 		<span class="name"></span>
