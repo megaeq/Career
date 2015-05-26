@@ -15,6 +15,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <style type="text/css"> 
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
+ .field-code {
+ 	
+ }
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
@@ -29,25 +32,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         "dojo/store/Memory",
  	         "dgrid/OnDemandGrid",
  	         "dgrid/extensions/Pagination",
- 	         "dojo/store/JsonRest"
- 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,JsonRest) {
+ 	         "dojo/store/JsonRest",
+ 	        'dgrid/ColumnSet',
+ 	       "dijit/form/Button"
+ 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,JsonRest,Button) {
  	              
  	             var grid = new (declare([OnDemandGrid, Pagination]))({
  	            	store: new JsonRest({
 	         	   	    target: "game/getList?isNow=now"}),
  	                className: "dgrid-autoheight",
- 	                 columns: {code:{lable:"编号"},gameType:{label:"联赛类型"},
- 	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主胜"},
- 	                	drawRate:{label:"平局"},loseRate:{label:"主负"},time2:{label:"时间"},
+ 	                 columns: {code:{label:"编号"},gameType:{label:"联赛类型"},
+ 	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主赔"},
+ 	                	drawRate:{label:"平赔"},loseRate:{label:"客赔"},time2:{label:"时间"},
  	                	edit:{label:"操作",renderCell:function(object,data,cell) {
+ 	                		console.log(cell);
  	                		var btn1 = new Button({
  			                     rowId : object.id,
  			                     label: "往绩",
  			                     onClick: function () {
- 			                    	location.href="<%=basePath%>page/lottory/gameHistoryList.jsp?gameId="+object.id;
+ 			                    	location.href="#";
  			                     }
- 			                 }, cell.appendChild(document.createElement("div")));
- 	                	}}},
+ 			                 }, cell.+(document.createElement("div")));
+ 	                	}}
+ 	                	},
  	                 rowsPerPage:14,
  	                 pagingTextBox:true,
  	                 pagingLinks:8

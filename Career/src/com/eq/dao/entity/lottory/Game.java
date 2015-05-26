@@ -38,7 +38,7 @@ public class Game extends BaseEntity
 	private Float Pd;
 	private Float Pl;
 	private String hasFinish;
-	public Float getScore() {
+	public Float score() {
 		if(homeScore>guestScore) {
 			return winRate*Pw;
 		} else if(homeScore<guestScore) {

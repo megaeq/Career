@@ -83,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    </li>
 		    <li class="mainlevel"><a href="<%=basePath %>page/mathModel/mathModelDataProcesser.jsp">数据挖掘</a>
 		        <ul>
-		        	<li><a href="#">网页特效</a></li>
+		        	<li><a href="page/lottory/gameInfoFetch.jsp">信息获取</a></li>
 		        </ul>
 		    </li>
 		    <li class="mainlevel"><a href="<%=basePath %>page/lottory/nowGameList.jsp">足球现场</a>

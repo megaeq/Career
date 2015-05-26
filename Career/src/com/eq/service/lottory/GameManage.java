@@ -27,12 +27,8 @@ public class GameManage extends BaseAction {
 	public List<Game> getList(@RequestParam Map<String, Object> params) {
 		this.params = params;
 		Map<String, Object> pps = new HashMap<String, Object>();
-		if(getDate("startDate")!=null){
-			pps.put("startDate", getDate("startDate"));
-		}
-		if(getDate("endDate")!=null){
-			pps.put("endDate", getDate("endDate"));
-		}
+		pps.put("startDate", getDate("startDate"));
+		pps.put("endDate", getDate("endDate"));
 		if("now".equals(getString("isNow"))) {
 			pps.put("startDate", DateUtil.getNowTime());
 		}
