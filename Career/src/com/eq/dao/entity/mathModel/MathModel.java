@@ -10,7 +10,10 @@
  */
 package com.eq.dao.entity.mathModel;
 
+import java.util.List;
+
 import com.eq.dao.entity.BaseEntity;
+import com.eq.dao.entity.lottory.Game;
 
 /**
  * @className MathModel
@@ -37,6 +40,8 @@ public class MathModel extends BaseEntity
 	private Integer precision;
 	private Float maxResult;
 	private Float minResult;
+	private Float averageScore;
+	private List<Game> gameList;
 	public Integer getId()
 	{
 		return id;
@@ -116,6 +121,22 @@ public class MathModel extends BaseEntity
 	public void setMinResult(Float minResult)
 	{
 		this.minResult = minResult;
+	}
+	public Float getAverageScore()
+	{
+		return averageScore;
+	}
+	public void setAverageScore(Float averageScore)
+	{
+		this.averageScore = averageScore;
+	}
+	public List<Game> getGameList()
+	{
+		return gameList;
+	}
+	public void setGameList(List<Game> gameList)
+	{
+		this.gameList = gameList;
 	}
 	
 

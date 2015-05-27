@@ -24,6 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
  <script type="text/javascript">
  require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
+ var store1;
  function getGrid() {
  	require([
  	         "dojo/_base/declare",
@@ -36,7 +37,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	        'dgrid/ColumnSet',
  	       "dijit/form/Button"
  	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,JsonRest,Button) {
- 	              
+ 		         store1 = new JsonRest({
+	         	   	    target: "game/getList?isNow=now"});
  	             var grid = new (declare([OnDemandGrid, Pagination]))({
  	            	store: new JsonRest({
 	         	   	    target: "game/getList?isNow=now"}),
@@ -52,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  			                     onClick: function () {
  			                    	location.href="#";
  			                     }
- 			                 }, cell.+(document.createElement("div")));
+ 			                 }, cell.appendChild(document.createElement("div")));
  	                	}}
  	                	},
  	                 rowsPerPage:14,
@@ -64,32 +66,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         });
  }
 
-      function change() {
-     	 document.getElementById("list").innerHTML="";
-     	 getGrid();
-      }
-      function addinfo() {
-     	 require(["dojo/request","dojo/dom",],function(request,dom) {
-     		 request("add",{query:{income:dom.byId("income").value,
-     			 cost:dom.byId("cost").value,addDate:dom.byId("addDate").value,
-     			 usages:dom.byId("usages").value,memo:dom.byId("memo").value}
-     			 }).then(function() {
-    				 document.getElementById("list").innerHTML="";
-    		    	 getGrid();
-     			 $.unblockUI();
-     		 });
-     	 });
-     	 
-      }
-      function divclose() {
-     	 $.unblockUI();
-      }
-      function openAddDiv() {
-     	 $.blockUI({ message: $('#add') });
-      }
  </script>
  </head>
-<body onload="getGrid()">
+<body class="claro" onload="getGrid()">
 <jsp:include page="/header.jsp"></jsp:include>
 <br/>
 <div id="list"></div>
