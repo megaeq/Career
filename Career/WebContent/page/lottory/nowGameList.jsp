@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>足球现场</title>
 <link rel="stylesheet" href="<%=basePath%>css/my.css">
 <LINK href="<%=basePath%>favicon.ico" type="image/x-icon" rel=icon>
 <link rel="stylesheet" href="<%=basePath%>css/style.css">
@@ -24,7 +24,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
  <script type="text/javascript">
  require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
- var store1;
  function getGrid() {
  	require([
  	         "dojo/_base/declare",
@@ -34,11 +33,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         "dgrid/OnDemandGrid",
  	         "dgrid/extensions/Pagination",
  	         "dojo/store/JsonRest",
- 	        'dgrid/ColumnSet',
  	       "dijit/form/Button"
  	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,JsonRest,Button) {
- 		         store1 = new JsonRest({
-	         	   	    target: "game/getList?isNow=now"});
  	             var grid = new (declare([OnDemandGrid, Pagination]))({
  	            	store: new JsonRest({
 	         	   	    target: "game/getList?isNow=now"}),
@@ -47,12 +43,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主赔"},
  	                	drawRate:{label:"平赔"},loseRate:{label:"客赔"},time2:{label:"时间"},
  	                	edit:{label:"操作",renderCell:function(object,data,cell) {
- 	                		console.log(cell);
  	                		var btn1 = new Button({
  			                     rowId : object.id,
- 			                     label: "往绩",
+ 			                     label: "数据分析",
  			                     onClick: function () {
- 			                    	location.href="#";
+ 			                    	location.href="<%=basePath%>page/lottory/footballDataAnanlysisResultList.jsp?id="+object.id;
  			                     }
  			                 }, cell.appendChild(document.createElement("div")));
  	                	}}
@@ -70,7 +65,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  </head>
 <body class="claro" onload="getGrid()">
 <jsp:include page="/header.jsp"></jsp:include>
-<br/>
 <div id="list"></div>
 <jsp:include page="/footer.jsp"></jsp:include>
 </body>

@@ -26,8 +26,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         "dojo/store/Memory",
  	         "dgrid/OnDemandGrid",
  	         "dgrid/extensions/Pagination",
- 	         "dojo/store/JsonRest"
- 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,JsonRest) {
+ 	         "dojo/store/JsonRest",
+ 	        "dijit/form/Button"
+ 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,JsonRest,Button) {
  	              
  	             var grid = new (declare([OnDemandGrid, Pagination]))({
  	            	store: new JsonRest({

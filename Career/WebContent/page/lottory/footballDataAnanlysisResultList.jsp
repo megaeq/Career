@@ -18,6 +18,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  .field-code {
  	
  }
+ .resultTable {
+ 	border:1px solid #000000;
+ }
+ .gameListTable {
+ 	border:1px solid #000000;
+ }
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
@@ -43,12 +49,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        	 var resultHtml = "";
 		        	 for(var i=0;i<resultList.length;i++) {
 		        		 var result = resultList[i];
-		        		 resultHtml+="<div onclick=\"slide(this,\"gameList"+result.id+"\")\" slide=\"up\"><table><tr>";
+		        		 resultHtml+="<div onclick=\"slide(this,\"gameList"+result.id+"\")\" slide=\"up\"><table class=\"resultTable\"><tr>";
 		        		 resultHtml+="<td>"+result.name+"</td>";
 		        		 resultHtml+="<td>"+result.averageScore+"</td>";
 		        		 resultHtml+="</tr></table></div>";
 		        		 var gameList = result.gameList;
-		        		 resultHtml+="<div id=\"gameList"+result.id+"\" class=\"gameList\" style=\"display:none;\"><table>";
+		        		 resultHtml+="<div id=\"gameList"+result.id+"\" class=\"gameList\" style=\"display:none;\"><table class=\"gameListTable\">";
 		        		 for(var j=0;j<gameList.length;j++) {
 		        			 resultHtml+="<tr>";
 		        			 var game = gameList[j];

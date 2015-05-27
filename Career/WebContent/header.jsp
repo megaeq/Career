@@ -43,12 +43,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			  $(level1).mouseenter(function(){
 				  varthis = $(this);
+				  jQuery(".header").height(varthis.attr("hgt"));
 				  delytime=setTimeout(function(){
 					varthis.find('ul').slideDown();
 				},dytime);
 				
 			  });
 			  $(level1).mouseleave(function(){
+				  jQuery(".header").height(15);
 				 clearTimeout(delytime);
 				 $(this).find('ul').slideUp();
 			  });
@@ -79,14 +81,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div class="header">
 		<ul id="nav">
-			<li class="mainlevel"><a href="<%=basePath %>">首页</a>
+			<li class="mainlevel" hgt="15"><a href="<%=basePath %>">首页</a>
 		    </li>
-		    <li class="mainlevel"><a href="<%=basePath %>page/mathModel/mathModelDataProcesser.jsp">数据挖掘</a>
+		    <li class="mainlevel" hgt="45"><a href="<%=basePath %>page/mathModel/mathModelDataProcesser.jsp">数据挖掘</a>
 		        <ul>
 		        	<li><a href="page/lottory/gameInfoFetch.jsp">信息获取</a></li>
 		        </ul>
 		    </li>
-		    <li class="mainlevel"><a href="<%=basePath %>page/lottory/nowGameList.jsp">足球现场</a>
+		    <li class="mainlevel" hgt="15"><a href="<%=basePath %>page/lottory/nowGameList.jsp">足球现场</a>
 		    </li>
 		</ul>
 		<span class="name"></span>
