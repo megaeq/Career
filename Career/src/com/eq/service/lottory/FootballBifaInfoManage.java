@@ -65,7 +65,6 @@ public class FootballBifaInfoManage extends BaseAction
 					}
 				}
 				
-				Map<String, Object> pps = new HashMap<String, Object>();
 				starts+=24l*60*60*1000;
 			}
 		} catch (Exception e) {
