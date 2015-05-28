@@ -36,7 +36,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	#nav .mainlevel li { background:#ffffff;list-style:none;width:100px;border:1px solid #EDEDED;/*IE6 only*/}
 	#nav .mainlevel li:hover { background:#EDEDED;}
 </style>
-<script src="<%=basePath %>js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery.navlevel2 = function(level1,dytime) {
@@ -85,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    </li>
 		    <li class="mainlevel" hgt="45"><a href="<%=basePath %>page/mathModel/mathModelDataProcesser.jsp">数据挖掘</a>
 		        <ul>
-		        	<li><a href="page/lottory/gameInfoFetch.jsp">信息获取</a></li>
+		        	<li><a href="<%=basePath %>page/lottory/gameInfoFetch.jsp">信息获取</a></li>
 		        </ul>
 		    </li>
 		    <li class="mainlevel" hgt="15"><a href="<%=basePath %>page/lottory/nowGameList.jsp">足球现场</a>

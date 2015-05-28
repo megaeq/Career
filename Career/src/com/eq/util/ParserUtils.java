@@ -1,7 +1,14 @@
 package com.eq.util;
 
+import org.htmlparser.NodeFilter;
+import org.htmlparser.Parser;
+import org.htmlparser.filters.CssSelectorNodeFilter;
+import org.htmlparser.util.NodeList;
+import org.htmlparser.util.ParserException;
+
 public class ParserUtils
 {
+	private static String CHARSET = "gb2312";
 	public static String[] toPlainText(String tagName,String html)
 	{
 		String[] ss = html.split("</"+tagName+">");
@@ -24,6 +31,21 @@ public class ParserUtils
 			}
 		}
 		return ss1;
+	}
+	
+	public static NodeList getNodeList(String html,String cssFilter) {
+		Parser	parser = Parser.createParser(html, CHARSET);
+		NodeFilter filter3 = new CssSelectorNodeFilter(cssFilter);
+		NodeList nodeList = null;
+		try
+		{
+			nodeList =  parser.extractAllNodesThatMatch(filter3);
+		}
+		catch (ParserException e)
+		{
+			e.printStackTrace();
+		}
+		return nodeList;
 	}
 	public static void main(String[] args)
 	{

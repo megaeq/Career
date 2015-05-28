@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
  </style> 
- <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
+ <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
  <script type="text/javascript">

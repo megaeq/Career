@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eq.dao.entity.lottory.BasketBallGame;
 import com.eq.dao.entity.lottory.FootballBifa;
+import com.eq.dao.entity.lottory.FootballBifaDetail;
 import com.eq.dao.impl.lottory.FootballBifaDetailImpl;
 import com.eq.dao.impl.lottory.FootballBifaImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.MathUtils;
 import com.eq.util.ParserUtils;
 import com.eq.util.UrlUtil;
 @Component
@@ -50,7 +52,14 @@ public class FootballBifaInfoManage extends BaseAction
 				String url = getProperty("okooozuqiubifa")+DateUtil.getDateStr(date);
 				for(int j=1;;i++) {
 					String pageUrl = url+"?PageID="+j;
-					List<FootballBifa> bifaList = getBifaInfo(Parser.createParser(UrlUtil.getContent(pageUrl, CHARSET), CHARSET), date);
+					List<FootballBifa> bifaList = getBifaInfo(UrlUtil.getContent(pageUrl, CHARSET), date);
+					for(FootballBifa bifa:bifaList) {
+						Integer bifaId = bifaImpl.add(bifa);
+						for(FootballBifaDetail detail:bifa.getDetailList()) {
+							detail.setBifaId(bifaId);
+							bifaDetailImpl.add(detail);
+						}
+					}
 					if(bifaList.size()==0) {
 						break;
 					}
@@ -66,129 +75,148 @@ public class FootballBifaInfoManage extends BaseAction
 		return "成功";
 	}
 	
-	private List<FootballBifa> getBifaInfo(Parser parser,Date date) {
+	private List<FootballBifa> getBifaInfo(String html,Date date) {
 		List<FootballBifa> bifaList = new ArrayList<FootballBifa>();
-		try
-		{
-			NodeFilter filter = new CssSelectorNodeFilter(
-					"div[class='clearfix container_wrapper betfa']");
-			NodeList nodeList = parser.extractAllNodesThatMatch(filter);
+			NodeList nodeList = ParserUtils.getNodeList(html, "div[class='clearfix container_wrapper betfa']");
 			for(int i=0;i<nodeList.size();i++) {
 				TagNode n1 = (TagNode) nodeList.elementAt(i);
-				parser = Parser.createParser(n1.toHtml(), CHARSET);
-				
-				NodeFilter filter2 = new CssSelectorNodeFilter(
-						"p[class='float_l']");
-				NodeList nodeList2 = parser.extractAllNodesThatMatch(filter2);
+				//时间，编号等
+				NodeList nodeList2 = ParserUtils.getNodeList(n1.toHtml(),"p[class='float_l'");
 				TagNode n2 = (TagNode) nodeList2.elementAt(0);
 				String[] types = ParserUtils.toPlainText("b", n2.toHtml());
 				String code = DateUtil.getDateStr(date)+types[0].substring(2, 5);
 				String type = types[1];
 				String time = types[2];
-				NodeFilter filter3 = new CssSelectorNodeFilter(
-						"p[class='pai_p1']");
-				NodeList nodeList3 = parser.extractAllNodesThatMatch(filter3);
-				TagNode n30 = (TagNode) nodeList3.elementAt(0);
-				String homeNo = n30.toPlainTextString().substring(1,n30.toPlainTextString().length());
-				TagNode n31 = (TagNode) nodeList3.elementAt(1);
-				String guestNo = n31.toPlainTextString().substring(1,n31.toPlainTextString().length());
-				NodeFilter filter4 = new CssSelectorNodeFilter(
-						"p[class='pai_p2']");
-				NodeList nodeList4 = parser.extractAllNodesThatMatch(filter4);
-				TagNode n40 = (TagNode) nodeList4.elementAt(0);
-				String homeBelong = n40.toPlainTextString().substring(1, n40.toPlainTextString().length());
-				TagNode n41 = (TagNode) nodeList4.elementAt(1);
-				String guestBelong = n41.toPlainTextString().substring(1, n41.toPlainTextString().length());
-				NodeFilter filter5 = new CssSelectorNodeFilter(
-						"div[class='titnamebox titname_box']");
-				NodeList nodeList5 = parser.extractAllNodesThatMatch(filter5);
+				//排名，所属(主)
+				NodeList nodeList3 = ParserUtils.getNodeList(n1.toHtml(),"div[class='pai']");
+				TagNode n3 = (TagNode) nodeList3.elementAt(0);
+				NodeList nodeList4 = ParserUtils.getNodeList(n3.toHtml(),"p");
+				String homeNo = "";
+				if(StringUtils.isNotBlank(nodeList4.elementAt(0).toPlainTextString())) {
+					homeNo = nodeList4.elementAt(0).toPlainTextString().substring(1,nodeList4.elementAt(0).toPlainTextString().length()-1);
+				}
+				String homeBelong = "";
+				if(StringUtils.isNotBlank(nodeList4.elementAt(1).toPlainTextString())) {
+					homeBelong = nodeList4.elementAt(1).toPlainTextString().substring(1,nodeList4.elementAt(1).toPlainTextString().length()-1);
+				}
+				//排名，所属（客）
+				NodeList nodeList5 = ParserUtils.getNodeList(n1.toHtml(),"div[class='pai']");
 				TagNode n5 = (TagNode) nodeList5.elementAt(0);
-				String [] spans = ParserUtils.toPlainText("span", n5.toHtml());
+				NodeList nodeList6 = ParserUtils.getNodeList(n5.toHtml(),"p");
+				String guestNo = "";
+				if(StringUtils.isNotBlank(nodeList6.elementAt(0).toPlainTextString())) {
+					guestNo = nodeList6.elementAt(0).toPlainTextString().substring(1,nodeList6.elementAt(0).toPlainTextString().length()-1);
+				}
+				String guestBelong = "";
+				if(StringUtils.isNotBlank(nodeList6.elementAt(1).toPlainTextString())) {
+					guestBelong = nodeList6.elementAt(1).toPlainTextString().substring(1,nodeList6.elementAt(1).toPlainTextString().length()-1);
+				}
+				//主客
+				NodeList nodeList7 = ParserUtils.getNodeList(n1.toHtml(),"div[class='titnamebox titname_box']");
+				TagNode n7 = (TagNode) nodeList7.elementAt(0);
+				String [] spans = ParserUtils.toPlainText("span", n7.toHtml());
 				String homeTeam = spans[0];
-				String [] ems = ParserUtils.toPlainText("em", n5.toHtml());
-				String lettheball = ems[0].substring(1, 2);
-				String [] bs = ParserUtils.toPlainText("b", n5.toHtml());
+				String [] ems = ParserUtils.toPlainText("em", n7.toHtml());
+				String lettheball = ems[0].substring(1, ems[0].length()-1);
+				String [] bs = ParserUtils.toPlainText("b", n7.toHtml());
 				String guestTeam = bs[0];
-				NodeFilter filter6 = new CssSelectorNodeFilter(
-						"p[class='float_r']");
-				NodeList nodeList6 = parser.extractAllNodesThatMatch(filter6);
-				TagNode n6 = (TagNode) nodeList6.elementAt(0);
-				parser = Parser.createParser(n6.toHtml(), CHARSET);
-				NodeFilter filter7 = new CssSelectorNodeFilter(
-						"a");
-				NodeList nodeList7 = parser.extractAllNodesThatMatch(filter7);
-				TagNode n70 = (TagNode) nodeList7.elementAt(0);
-				String europe = n70.getAttribute("href");
-				TagNode n71 = (TagNode) nodeList7.elementAt(1);
-				String asia = n71.getAttribute("href");
-				TagNode n72 = (TagNode) nodeList7.elementAt(2);
-				String analysis = n72.getAttribute("href");
-				parser = Parser.createParser(n1.toHtml(), CHARSET);
-				NodeFilter filter8 = new CssSelectorNodeFilter(
-						"table");
-				NodeList nodeList8 = parser.extractAllNodesThatMatch(filter8);
+				//链接
+				NodeList nodeList8 = ParserUtils.getNodeList(n1.toHtml(),"p[class='float_r']");
 				TagNode n8 = (TagNode) nodeList8.elementAt(0);
-				parser = Parser.createParser(n8.toHtml(), CHARSET);
-				NodeFilter filter9 = new CssSelectorNodeFilter(
-						"tr");
-				NodeList nodeList9 = parser.extractAllNodesThatMatch(filter9);
+				NodeList nodeList9 = ParserUtils.getNodeList(n8.toHtml(),"a");
+				TagNode n90 = (TagNode) nodeList9.elementAt(0);
+				String europe = n90.getAttribute("href");
+				TagNode n91 = (TagNode) nodeList9.elementAt(1);
+				String asia = n91.getAttribute("href");
+				TagNode n92 = (TagNode) nodeList9.elementAt(2);
+				String analysis = n92.getAttribute("href");
+				//数据
+				NodeList nodeList10 = ParserUtils.getNodeList(n1.toHtml(),"table");
+				TagNode n10 = (TagNode) nodeList10.elementAt(0);
+				NodeList nodeList11 = ParserUtils.getNodeList(n10.toHtml(),"tr");
+				FootballBifa bifaEntity = new FootballBifa();
+				bifaEntity.setCode(code);
+				bifaEntity.setType(type);
+				bifaEntity.setTime(DateUtil.getTimestamp(date.getYear()+time+":00"));
+				if(StringUtils.isNotBlank(homeNo)) {
+					bifaEntity.setHomeNo(Integer.parseInt(homeNo));
+				}
+				if(StringUtils.isNotBlank(guestNo)) {
+					bifaEntity.setGuestNo(Integer.parseInt(guestNo));
+				}
+				bifaEntity.setHomeBelong(homeBelong);
+				bifaEntity.setGuestBelong(guestBelong);
+				bifaEntity.setEurope(europe);
+				bifaEntity.setAsia(asia);
+				bifaEntity.setAnalyze(analysis);
+				bifaEntity.setHomeTeam(homeTeam);
+				bifaEntity.setGuestTeam(guestTeam);
+				List<FootballBifaDetail> bifaDetailList = new ArrayList<FootballBifaDetail>();
 				for(int j=1;j<4;j++) {
-					TagNode n9 = (TagNode) nodeList9.elementAt(j);
-					parser = Parser.createParser(n9.toHtml(), CHARSET);
-					NodeFilter filter10 = new CssSelectorNodeFilter(
-							"td");
-					NodeList nodeList10 = parser.extractAllNodesThatMatch(filter10);
-					TagNode n100 = (TagNode) nodeList10.elementAt(0);
-					TagNode n101 = (TagNode) nodeList10.elementAt(1);
-					TagNode n102 = (TagNode) nodeList10.elementAt(2);
-					TagNode n103 = (TagNode) nodeList10.elementAt(3);
-					TagNode n104 = (TagNode) nodeList10.elementAt(4);
-					TagNode n105 = (TagNode) nodeList10.elementAt(5);
-					TagNode n106 = (TagNode) nodeList10.elementAt(6);
-					TagNode n107 = (TagNode) nodeList10.elementAt(7);
-					TagNode n108 = (TagNode) nodeList10.elementAt(8);
-					TagNode n109 = (TagNode) nodeList10.elementAt(9);
-					TagNode n110 = (TagNode) nodeList10.elementAt(10);
-					TagNode n111 = (TagNode) nodeList10.elementAt(11);
-					TagNode n112 = (TagNode) nodeList10.elementAt(12);
-					TagNode n113 = (TagNode) nodeList10.elementAt(13);
-					if(StringUtils.isBlank(n101.toPlainTextString())) {
+					TagNode n11 = (TagNode) nodeList11.elementAt(j);
+					NodeList nodeList12 = ParserUtils.getNodeList(n11.toHtml(),"td");
+					TagNode n12_0 = (TagNode) nodeList12.elementAt(0);
+					TagNode n12_1 = (TagNode) nodeList12.elementAt(1);
+					TagNode n12_2 = (TagNode) nodeList12.elementAt(2);
+					TagNode n12_3 = (TagNode) nodeList12.elementAt(3);
+					TagNode n12_4 = (TagNode) nodeList12.elementAt(4);
+					TagNode n12_5 = (TagNode) nodeList12.elementAt(5);
+					TagNode n12_6 = (TagNode) nodeList12.elementAt(6);
+					TagNode n12_7 = (TagNode) nodeList12.elementAt(7);
+					TagNode n12_8 = (TagNode) nodeList12.elementAt(8);
+					TagNode n12_9 = (TagNode) nodeList12.elementAt(9);
+					TagNode n12_10 = (TagNode) nodeList12.elementAt(10);
+					TagNode n12_11 = (TagNode) nodeList12.elementAt(11);
+					TagNode n12_12 = (TagNode) nodeList12.elementAt(12);
+					TagNode n12_13 = (TagNode) nodeList12.elementAt(13);
+					if(StringUtils.isBlank(n12_1.toPlainTextString())) {
 						break;
 					}
 					String s310 = "";
-					if("主胜".equals(n100.toPlainTextString())) {
+					if("主胜".equals(n12_0.toPlainTextString())) {
 						s310 = "3";
-					} else if("平局".equals(n100.toPlainTextString())){
+					} else if("平局".equals(n12_0.toPlainTextString())){
 						s310 = "1";
-					} else if("主负".equals(n100.toPlainTextString())) {
+					} else if("主负".equals(n12_0.toPlainTextString())) {
 						s310 = "0";
 					}
-					String buys = n101.toPlainTextString();
-					String buyrate = n102.toPlainTextString();
-					String sales = n103.toPlainTextString();
-					String salerate = n104.toPlainTextString();
-					String total = n105.toPlainTextString();
-					String hot = ParserUtils.toPlainText("span", n106.toHtml())[0];
-					String market = n107.toPlainTextString();
-					String bifa = n108.toPlainTextString();
-					String bifaPercent = n109.toPlainTextString().substring(0, n109.toPlainTextString().length());
-					String averageRate = n110.toPlainTextString();
-					String averagePercent = n111.toPlainTextString().substring(0, n111.toPlainTextString().length());
-					String jincaiPercent =  n112.toPlainTextString().substring(0, n112.toPlainTextString().length());
-					String simulate = ParserUtils.toPlainText("span", n113.toHtml())[0];
+					String buys = n12_1.toPlainTextString();
+					String buyrate = n12_2.toPlainTextString();
+					String sales = n12_3.toPlainTextString();
+					String salerate = n12_4.toPlainTextString();
+					String total = n12_5.toPlainTextString();
+					String hot = ParserUtils.toPlainText("span", n12_6.toHtml())[0];
+					String market = n12_7.toPlainTextString();
+					String bifa = n12_8.toPlainTextString();
+					String bifaPercent = n12_9.toPlainTextString().substring(0, n12_9.toPlainTextString().length());
+					String averageRate = n12_10.toPlainTextString();
+					String averagePercent = n12_11.toPlainTextString().substring(0, n12_11.toPlainTextString().length());
+					String jincaiPercent =  n12_12.toPlainTextString().substring(0, n12_12.toPlainTextString().length());
+					String simulate = ParserUtils.toPlainText("span", n12_13.toHtml())[0];
+					//
+					
+					if(StringUtils.isNotBlank(lettheball)) {
+						bifaEntity.setLetTheBall(Integer.parseInt(lettheball));
+					}
+					FootballBifaDetail bifaDetail = new FootballBifaDetail();
+					bifaDetail.setBuys(MathUtils.getFloat(buys));
+					bifaDetail.setBuyRate(MathUtils.getFloat(buyrate));
+					bifaDetail.setSales(MathUtils.getFloat(sales));
+					bifaDetail.setSaleRate(MathUtils.getFloat(salerate));
+					bifaDetail.setTotal(MathUtils.getFloat(total));
+					bifaDetail.setHot(MathUtils.getFloat(hot));
+					bifaDetail.setMarket(MathUtils.getFloat(market));
+					bifaDetail.setBifa(MathUtils.getFloat(bifa));
+					bifaDetail.setBifaPercent(MathUtils.getFloat(bifaPercent));
+					bifaDetail.setAverageRate(MathUtils.getFloat(averageRate));
+					bifaDetail.setAveragePercent(MathUtils.getFloat(averagePercent));
+					bifaDetail.setJincaiPercent(MathUtils.getFloat(jincaiPercent));
+					bifaDetail.setSimulate(MathUtils.getFloat(simulate));
+					bifaDetailList.add(bifaDetail);
 				}
-				
-						
-						
-						
-				
+				bifaEntity.setDetailList(bifaDetailList);
 			}
 			
-		}
-		catch (ParserException e)
-		{
-			e.printStackTrace();
-		}
 		return bifaList;
 	}
 	
@@ -198,7 +226,7 @@ public class FootballBifaInfoManage extends BaseAction
 		String url = "http://www.okooo.com/jingcai/shuju/betfa/";
 		Date date = new Date();
 		FootballBifaInfoManage manage = new FootballBifaInfoManage();
-		List<FootballBifa> bifaList = manage.getBifaInfo(Parser.createParser(UrlUtil.getContent(url, CHARSET), CHARSET), date);
+		List<FootballBifa> bifaList = manage.getBifaInfo(UrlUtil.getContent(url, CHARSET), date);
 		for(int i=0;i<bifaList.size();i++) {
 			
 		}

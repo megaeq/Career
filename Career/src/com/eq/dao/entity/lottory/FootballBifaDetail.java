@@ -13,19 +13,19 @@ public class FootballBifaDetail extends BaseEntity
 	private Integer bifaId;
 	//310
 	private String type;
-	private Integer buys;
+	private Float buys;
 	private Float buyRate;
-	private Integer sales;
+	private Float sales;
 	private Float saleRate;
-	private Integer total;
-	private Integer hot;
-	private Integer market;
+	private Float total;
+	private Float hot;
+	private Float market;
 	private Float bifa;
 	private Float bifaPercent;
 	private Float averageRate;
 	private Float averagePercent;
 	private Float jincaiPercent;
-	private Integer simulate;
+	private Float simulate;
 	public Integer getId()
 	{
 		return id;
@@ -50,11 +50,11 @@ public class FootballBifaDetail extends BaseEntity
 	{
 		this.type = type;
 	}
-	public Integer getBuys()
+	public Float getBuys()
 	{
 		return buys;
 	}
-	public void setBuys(Integer buys)
+	public void setBuys(Float buys)
 	{
 		this.buys = buys;
 	}
@@ -66,11 +66,11 @@ public class FootballBifaDetail extends BaseEntity
 	{
 		this.buyRate = buyRate;
 	}
-	public Integer getSales()
+	public Float getSales()
 	{
 		return sales;
 	}
-	public void setSales(Integer sales)
+	public void setSales(Float sales)
 	{
 		this.sales = sales;
 	}
@@ -82,27 +82,27 @@ public class FootballBifaDetail extends BaseEntity
 	{
 		this.saleRate = saleRate;
 	}
-	public Integer getTotal()
+	public Float getTotal()
 	{
 		return total;
 	}
-	public void setTotal(Integer total)
+	public void setTotal(Float total)
 	{
 		this.total = total;
 	}
-	public Integer getHot()
+	public Float getHot()
 	{
 		return hot;
 	}
-	public void setHot(Integer hot)
+	public void setHot(Float hot)
 	{
 		this.hot = hot;
 	}
-	public Integer getMarket()
+	public Float getMarket()
 	{
 		return market;
 	}
-	public void setMarket(Integer market)
+	public void setMarket(Float market)
 	{
 		this.market = market;
 	}
@@ -146,14 +146,14 @@ public class FootballBifaDetail extends BaseEntity
 	{
 		this.jincaiPercent = jincaiPercent;
 	}
-	public Integer getSimulate()
+	public Float getSimulate()
 	{
 		return simulate;
 	}
-	public void setSimulate(Integer simulate)
+	public void setSimulate(Float simulate)
 	{
 		this.simulate = simulate;
-	} 
+	}
 	
 	
 
