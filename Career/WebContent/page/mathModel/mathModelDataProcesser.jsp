@@ -73,13 +73,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         "dojo/dom",
  	        "dijit/Dialog"
  	     ], function (request,dom,Dialog) {
- 		//$.blockUI();
+ 		$.blockUI();
  		request("footballModelDataProcesser").then(function(response) {
-					 //$.unblockUI();
+					 $.unblockUI();
 				 	myDialog = new Dialog({
 				        title: "结果",
 				        content: response,
-				        styles: "width: 300px"
+				        style: "width: 300px"
 				    });
 				 	myDialog.show();
 		 		});
@@ -87,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  }
  </script>
 </head>
-<body>
+<body class="claro">
 <jsp:include page="/header.jsp"></jsp:include>
 <div style="text-align:center;">
 <button onclick="dataCatch()" class="dataCatch">数据挖掘</button>

@@ -20,10 +20,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  }
  .resultTable {
  	border:1px solid #000000;
+ 	width:70%;
  }
  .gameListTable {
  	border:1px solid #000000;
+ 	width:90%;
  }
+ td{
+       border: solid #000 1px;
+   }
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
@@ -45,13 +50,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		         request("dataAnalysis/getResultList", {
 		             handleAs: "json",query:{id:$.getUrlParam('id')}
 		         }).then(function (response) {
-		        	 var resultList = JSON.parse(response);
+		        	 var resultList = response;
 		        	 var resultHtml = "";
 		        	 for(var i=0;i<resultList.length;i++) {
 		        		 var result = resultList[i];
-		        		 resultHtml+="<div onclick=\"slide(this,\"gameList"+result.id+"\")\" slide=\"up\"><table class=\"resultTable\"><tr>";
-		        		 resultHtml+="<td>"+result.name+"</td>";
-		        		 resultHtml+="<td>"+result.averageScore+"</td>";
+		        		 resultHtml+="<div onclick=\"slide(this,'gameList"+result.id+"')\" slide=\"up\"><table class=\"resultTable\"><tr>";
+		        		 resultHtml+="<td width=\"50%\">"+result.name+"</td>";
+		        		 resultHtml+="<td width=\"25%\">"+result.averageScore+"</td>";
+		        		 resultHtml+="<td width=\"25%\">"+result.gameList.length+"</td>";
 		        		 resultHtml+="</tr></table></div>";
 		        		 var gameList = result.gameList;
 		        		 resultHtml+="<div id=\"gameList"+result.id+"\" class=\"gameList\" style=\"display:none;\"><table class=\"gameListTable\">";
@@ -79,18 +85,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  }
  
  function slide(obj,divId) {
-	 if(obj.attr("slide")=="up") {
-		 jQuery(divId).slideDown();
-		 obj.attr("slide","down");
+	 if(obj.getAttribute("slide")=="up") {
+		 jQuery("#"+divId).slideDown();
+		 obj.setAttribute("slide","down");
 		 var gameLists = jQuery(".gameList");
 		 for(var i=0;i<gameLists.length;i++) {
-			 if(gameLists[i].attr('id')!=divId) {
-				 gameLists[i].slideUp();
+			 if(gameLists[i].getAttribute('id')!=divId) {
+				 jQuery("#"+gameLists[i].getAttribute('id')).slideUp();
 			 }
 		 }
 	 } else {
-		 jQuery(divId).slideUp();
-		 obj.attr("slide","up");
+		 jQuery("#"+divId).slideUp();
+		 obj.setAttribute("slide","up");
 	 }
  }
 

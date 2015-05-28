@@ -9,6 +9,7 @@
 			<if test="maxResult!=null">result&lt;#{maxResult} AND</if>
 			<if test="minResult!=null">result&gt;#{minResult} AND</if>
 		</trim>
+		<if test="order==1">ORDER BY gameid DESC</if>
 	</select>
 	<select id="selectMaxResult" parameterType="hashmap" resultType="float" >
 		SELECT max(result) FROM math_model_ref

@@ -58,11 +58,12 @@ public class FootballDataAnalysis extends BaseAction
 		for(MathModel model:modelList) {
 			Float result = footballModel.getResult(game, model.getId());
 			//间距
-			Float interval = (model.getMaxResult()-model.getMinResult())/400;
+			Float interval = (model.getMaxResult()-model.getMinResult())/(400*5);
 			pps.clear();
 			pps.put("mathModelId", model.getId());
 			pps.put("maxResult", result+interval/2);
 			pps.put("minResult", result-interval/2);
+			pps.put("order", "1");
 			List<MathModelRef> modelRefList = mathModelRefImpl.selectList(pps);
 			List<Game> gameList = new ArrayList<Game>();
 			Float score = 0f;
@@ -88,6 +89,11 @@ public class FootballDataAnalysis extends BaseAction
 				break;
 			}
 		}
-		return modelList.subList(0, 9);
+		if(modelList.size()>10) {
+			return modelList.subList(0, 9);
+		} else {
+			return modelList;
+		}
+		
 	}
 }
