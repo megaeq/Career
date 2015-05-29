@@ -32,6 +32,12 @@ public class GameManage extends BaseAction {
 		if("now".equals(getString("isNow"))) {
 			pps.put("startDate", DateUtil.getNowTime());
 		}
+		pps.put("Rw", getFloat("Rw"));
+		pps.put("Rd", getFloat("Rd"));
+		pps.put("Rl", getFloat("Rl"));
+		pps.put("R1", getFloat("R1"));
+		pps.put("R2", getFloat("R2"));
+		pps.put("R3", getFloat("R3"));
 		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
 		response.setHeader("Content-Range", rangeStr+pps2.get("count"));
 		return (List<Game>)pps2.get("list");
@@ -70,5 +76,11 @@ public class GameManage extends BaseAction {
 		game.setId(getInt("id"));
 		game.setSuggest(getString("suggest"));
 		impl.update(game);
+	}
+	@ResponseBody
+	@RequestMapping("getGameInfo")
+	public Game getGameInfo(@RequestParam Map<String, Object> params) {
+		this.params = params;
+		return impl.selectOne(getInt("id"));
 	}
 }

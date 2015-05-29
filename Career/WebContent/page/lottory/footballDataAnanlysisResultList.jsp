@@ -11,6 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="<%=basePath%>css/my.css">
 <LINK href="<%=basePath%>favicon.ico" type="image/x-icon" rel=icon>
 <link rel="stylesheet" href="<%=basePath%>css/style.css">
+<link rel="stylesheet" href="<%=basePath%>css/table.css">
 <link rel="stylesheet" href="<%=basePath%>js/dojojs/dijit/themes/claro/claro.css">
 <style type="text/css"> 
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
@@ -19,16 +20,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	
  }
  .resultTable {
- 	border:1px solid #000000;
  	width:70%;
  }
  .gameListTable {
- 	border:1px solid #000000;
  	width:90%;
  }
- td{
-       border: solid #000 1px;
-   }
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
@@ -54,13 +50,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        	 var resultHtml = "";
 		        	 for(var i=0;i<resultList.length;i++) {
 		        		 var result = resultList[i];
-		        		 resultHtml+="<div onclick=\"slide(this,'gameList"+result.id+"')\" slide=\"up\"><table class=\"resultTable\"><tr>";
+		        		 resultHtml+="<div onclick=\"slide(this,'gameList"+result.id+"')\" slide=\"up\"><table class=\"bordered\" style=\"width:70%;\"><tr>";
 		        		 resultHtml+="<td width=\"50%\">"+result.name+"</td>";
 		        		 resultHtml+="<td width=\"25%\">"+result.averageScore+"</td>";
 		        		 resultHtml+="<td width=\"25%\">"+result.gameList.length+"</td>";
 		        		 resultHtml+="</tr></table></div>";
 		        		 var gameList = result.gameList;
-		        		 resultHtml+="<div id=\"gameList"+result.id+"\" class=\"gameList\" style=\"display:none;\"><table class=\"gameListTable\">";
+		        		 resultHtml+="<div id=\"gameList"+result.id+"\" class=\"gameList\" style=\"display:none;\"><table class=\"zebra\" style=\"width:90%;\">";
+		        		 resultHtml+="<tr><thread><th>所属</th><th>主队</th><th>客队</th><th>胜赔</th><th>平赔</th><th>负配</th><th>主</th><th>客</th><th>时间</th></thread></tr>";
 		        		 for(var j=0;j<gameList.length;j++) {
 		        			 resultHtml+="<tr>";
 		        			 var game = gameList[j];

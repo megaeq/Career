@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>足球现场</title>
+<title>Insert title here</title>
 <link rel="stylesheet" href="<%=basePath%>css/my.css">
 <LINK href="<%=basePath%>favicon.ico" type="image/x-icon" rel=icon>
 <link rel="stylesheet" href="<%=basePath%>css/style.css">
@@ -21,9 +21,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/jquery/jquery-extension.js"></script>
  <script type="text/javascript" src="<%=basePath%>js/dojojs/dojo/dojo.js" data-dojo-config="parseOnLoad: true,  async: true,isdebug:true"></script>
  <script type="text/javascript">
- require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
+require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
+ function getBaseInfo() {
+	 var game = $.ajaxResp('get',"game/getGameInfo?id="+$.getUrlParam('id'),false);
+	 console.log(game.id);
+ }
  function getGrid() {
  	require([
  	         "dojo/_base/declare",
@@ -35,29 +40,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         "dojo/store/JsonRest",
  	       "dijit/form/Button"
  	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,JsonRest,Button) {
- 	             var grid = new (declare([OnDemandGrid, Pagination]))({
+ 					var grid = new (declare([OnDemandGrid, Pagination]))({
  	            	store: new JsonRest({
-	         	   	    target: "<%=basePath%>game/getList?isNow=now"}),
+	         	   	    target: "game/getList?R1="+$.getUrlParam('Rw')+"&R2="+$.getUrlParam('Rd')+"&R3="+$.getUrlParam('Rl')}),
  	                className: "dgrid-autoheight",
- 	                 columns: {code:{label:"编号"},gameType:{label:"联赛类型"},
+ 	                 columns: {gameType:{label:"联赛类型"},
  	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主赔"},
- 	                	drawRate:{label:"平赔"},loseRate:{label:"客赔"},time2:{label:"时间"},
- 	                	edit:{label:"操作",renderCell:function(object,data,cell) {
- 	                		var btn1 = new Button({
- 			                     rowId : object.id,
- 			                     label: "数据分析",
- 			                     onClick: function () {
- 			                    	location.href="<%=basePath%>page/lottory/footballDataAnanlysisResultList.jsp?id="+object.id;
- 			                     }
- 			                 }, cell.appendChild(document.createElement("div")));
- 	                		var btn2 = new Button({
-			                     rowId : object.id,
-			                     label: "同赔率",
-			                     onClick: function () {
-			                    	location.href="gameRateList.jsp?id="+object.id+"&Rw="+object.winRate+"&Rd="+object.drawRate+"&Rl="+object.loseRate;
-			                     }
-			                 }, cell.appendChild(document.createElement("div")));
- 	                	}}
+ 	                	drawRate:{label:"平赔"},loseRate:{label:"客赔"},
+ 	                	homeScore:{label:"主"},guestScore:{label:"客"},time2:{label:"时间"}
  	                	},
  	                 rowsPerPage:14,
  	                 pagingTextBox:true,
@@ -67,11 +57,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	             grid.startup();
  	         });
  }
-
  </script>
- </head>
-<body class="claro" onload="getGrid()">
+</head>
+<body onload="getBaseInfo();getGrid();">
 <jsp:include page="/header.jsp"></jsp:include>
+<div class="baseInfo"></div>
 <div id="list"></div>
 <jsp:include page="/footer.jsp"></jsp:include>
 </body>

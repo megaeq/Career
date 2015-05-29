@@ -44,6 +44,27 @@
 			<if test="hasFinish!=null">
 			hasFinish=#{hasFinish} AND
 			</if>
+			<if test="R1!=null">
+			(winRate=#{R1} OR drawRate=#{R1} OR loseRate=#{R1}) AND
+			</if>
+			<if test="R2!=null">
+			(winRate=#{R2} OR drawRate=#{R2} OR loseRate=#{R2}) AND
+			</if>
+			<if test="R3!=null">
+			(winRate=#{R3} OR drawRate=#{R3} OR loseRate=#{R3}) AND
+			</if>
+			<if test="Rw!=null">
+			winRate = #{Rw} AND
+			</if>
+			<if test="Rd!=null">
+			drawRate = #{Rd} AND
+			</if>
+			<if test="Rl!=null">
+			loseRate = #{Rl} AND
+			</if>
+			<if test="hasFinish!=null">
+			hasFinish=#{hasFinish} AND
+			</if>
 		</trim>
 		<if test="order==1">ORDER BY id </if>
 		<if test="order==null">ORDER BY code DESC </if>
