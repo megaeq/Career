@@ -25,7 +25,7 @@ import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
 
 @Controller
-@RequestMapping("page/lottory/bill")
+@RequestMapping("bill")
 public class BillManage extends BaseAction {
 	@Autowired
 	private BillImpl		impl;

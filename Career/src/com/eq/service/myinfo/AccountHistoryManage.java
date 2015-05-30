@@ -22,7 +22,7 @@ import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
 
 @Controller
-@RequestMapping("page/myinfo/accountHistory")
+@RequestMapping("accountHistory")
 public class AccountHistoryManage extends BaseAction {
 	@Autowired
 	private AccountHistoryImpl	impl;

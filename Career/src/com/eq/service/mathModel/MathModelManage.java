@@ -37,7 +37,7 @@ import com.eq.util.mathModel.FootballModel;
  * @date 2015-5-22 上午8:53:48
  */
 @Component
-@RequestMapping("page/mathModel")
+@RequestMapping("mathModel")
 public class MathModelManage extends BaseAction
 {
 	private Logger logger = Logger.getLogger(this.getClass());

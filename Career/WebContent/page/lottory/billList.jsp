@@ -47,7 +47,7 @@ function getGrid() {
 		                     label: "结算",
 		                     onClick: function () {
 		                    	 $.blockUI();
-		                         request("bill/clearing",{query:{billId:object.id}}).then(function() {
+		                         request("<%=basePath%>bill/clearing",{query:{billId:object.id}}).then(function() {
 		                        	 document.getElementById("list").innerHTML="";
 		               		    	 getGrid();
 		                			 $.unblockUI();
@@ -59,7 +59,7 @@ function getGrid() {
 	                     rowId : object.id,
 	                     label: "详情",
 	                     onClick: function () {
-	                         request("bill/detail",{handleAs: "json",
+	                         request("<%=basePath%>bill/detail",{handleAs: "json",
 	                        	 query:{billId:object.id}}).then(function(response) {
 	                        	 document.getElementById("detailbody").innerHTML="";
 	                        	 for(var i=0;i<response.length;i++) {
@@ -83,7 +83,7 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: new JsonRest({
-		         	   	    target: "bill/getList?accountId="+$.getUrlParam('accountId')}),
+		         	   	    target: "<%=basePath%>bill/getList?accountId="+$.getUrlParam('accountId')}),
 	                 className: "dgrid-autoheight",
 	                 columns: {id:{label:"id"},betAmount:{label:"投注量（元）"},sp:{label:"sp"},
 	                	 income:{label:"收入"},flag:{label:"是否完结",renderCell:function(object, data,cell) {
@@ -103,7 +103,7 @@ function getGrid() {
 	             }, "list");
 	             grid.startup();
 
-	         request("bill/sum"
+	         request("<%=basePath%>bill/sum"
 		 			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
 		 	 			 var sum="";
 		 	 			 sum+="<h1>总收入:"+response.income+",总花费:"+response.cost;
@@ -124,7 +124,7 @@ function getGrid() {
      function clearAll() {
     	 $.blockUI();
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
-       		 request("bill/clearAll",{query:{accountId:$.getUrlParam('accountId')}
+       		 request("<%=basePath%>bill/clearAll",{query:{accountId:$.getUrlParam('accountId')}
        			 }).then(function() {
       				 document.getElementById("list").innerHTML="";
       		    	 getGrid();

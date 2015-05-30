@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		         "dijit/form/Button",
 		         'dojo/dom-style' 
 		     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle) {
-		         request("dataAnalysis/getResultList", {
+		         request("<%=basePath%>footballDataAnalysis/getResultList", {
 		             handleAs: "json",query:{id:$.getUrlParam('id')}
 		         }).then(function (response) {
 		        	 var resultList = response;

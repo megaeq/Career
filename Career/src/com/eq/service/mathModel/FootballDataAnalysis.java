@@ -37,7 +37,7 @@ import com.eq.util.mathModel.FootballModel;
  * @date 2015-5-27 上午8:47:53
  */
 @Controller
-@RequestMapping("page/lottory/dataAnalysis")
+@RequestMapping("footballDataAnalysis")
 public class FootballDataAnalysis extends BaseAction
 {
 	@Autowired

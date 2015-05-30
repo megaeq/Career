@@ -26,7 +26,7 @@ import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
 
 @Controller
-@RequestMapping("page/lottory/chip")
+@RequestMapping("chip")
 public class ChipManage extends BaseAction {
 	@Autowired
 	private BillImpl			billImpl;

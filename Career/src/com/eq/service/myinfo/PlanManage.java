@@ -18,7 +18,7 @@ import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
 
 @Controller
-@RequestMapping("page/myinfo/plan")
+@RequestMapping("plan")
 public class PlanManage extends BaseAction {
 	@Autowired
 	private PlanImpl	impl;

@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	              
  	             var grid = new (declare([OnDemandGrid, Pagination]))({
  	            	store: new JsonRest({
-	         	   	    target: "game/getList?startDate="+dom.byId("startDate").value+"&endDate="+dom.byId("endDate").value}),
+	         	   	    target: "<%=basePath%>game/getList?startDate="+dom.byId("startDate").value+"&endDate="+dom.byId("endDate").value}),
  	                className: "dgrid-autoheight",
  	                 columns: {id:{label:"id"},code:{lable:"编号"},gameType:{label:"联赛类型"},
  	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主胜"},

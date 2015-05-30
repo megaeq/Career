@@ -17,7 +17,7 @@ import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
 
 @Controller
-@RequestMapping("page/lottory/game")
+@RequestMapping("game")
 public class GameManage extends BaseAction {
 	@Autowired
 	private GameImpl	impl;

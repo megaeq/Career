@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  <script type="text/javascript">
 require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
  function getBaseInfo() {
-	 var game = $.ajaxResp('get',"game/getGameInfo?id="+$.getUrlParam('id'),false);
+	 var game = $.ajaxResp('get',"<%=basePath%>game/getGameInfo?id="+$.getUrlParam('id'),false);
 	 console.log(game.id);
  }
  function getGrid() {
@@ -42,7 +42,7 @@ require(["dojo/parser", "dijit/form/DateTextBox","dijit/form/Button"]);
  	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,JsonRest,Button) {
  					var grid = new (declare([OnDemandGrid, Pagination]))({
  	            	store: new JsonRest({
-	         	   	    target: "game/getList?R1="+$.getUrlParam('Rw')+"&R2="+$.getUrlParam('Rd')+"&R3="+$.getUrlParam('Rl')}),
+	         	   	    target: "<%=basePath%>game/getList?R1="+$.getUrlParam('Rw')+"&R2="+$.getUrlParam('Rd')+"&R3="+$.getUrlParam('Rl')}),
  	                className: "dgrid-autoheight",
  	                 columns: {gameType:{label:"联赛类型"},
  	                	homeTeam:{label:"主队"},guestTeam:{label:"客队"},winRate:{label:"主赔"},

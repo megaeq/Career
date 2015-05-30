@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	        "dijit/Dialog"
  	     ], function (request,dom,Dialog) {
  		$.blockUI();
- 		request("footballModelDataProcesser").then(function(response) {
+ 		request("<%=basePath%>mathModel/footballModelDataProcesser").then(function(response) {
 					 $.unblockUI();
 				 	myDialog = new Dialog({
 				        title: "结果",

@@ -44,7 +44,7 @@ function getGrid() {
 	         "dojo/store/Memory",
 	         "dojo/store/JsonRest"
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle,Select,ObjectStore,Memory,JsonRest) {
-		request("accountHistory/getAccountList"
+		request("<%=basePath%>accountHistory/getAccountList"
       			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
       				//console.log(response);
       				 var store = new Memory({
@@ -66,7 +66,7 @@ function getGrid() {
 	                     label: "删除",
 	                     onClick: function () {
 	                    	 $.blockUI();
-	                         request("accountHistory/delete",{query:{id:this.rowId}}).then(function() {
+	                         request("<%=basePath%>accountHistory/delete",{query:{id:this.rowId}}).then(function() {
 	                        	 document.getElementById("list").innerHTML="";
 	               		    	 getGrid();
 	                			 $.unblockUI();
@@ -85,7 +85,7 @@ function getGrid() {
 	                    	 $("#date").val(object.time);
 	                    	 $("#addButton").hide();
 	                       	 $("#updateButton").show();
-	                       	 request("accountHistory/getAccountList"
+	                       	 request("<%=basePath%>accountHistory/getAccountList"
 	                       			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
 									$.addSelect("destinationList","accountSelect",response)	                       				
 	                       	 })
@@ -95,7 +95,7 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	            	 store: new JsonRest({
-		         	   	    target: "accountHistory/getList?accountId="+$.getUrlParam('accountId')
+		         	   	    target: "<%=basePath%>accountHistory/getList?accountId="+$.getUrlParam('accountId')
 		       	   	  }),
 	                 className: "dgrid-autoheight",
 	                 columns: {time:{label:"创建时间"},income:{label:"收入"},cost:{label:"支出"},
@@ -108,7 +108,7 @@ function getGrid() {
 	             }, "list");
 	             grid.startup();
 	         });
-		request("accountHistory/sum"
+		request("<%=basePath%>accountHistory/sum"
 	 			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
 	 	 			 var sum="";
 	 	 			 sum+="<h1>总收入:"+response.income+",总花费:"+response.cost;
@@ -125,7 +125,7 @@ function getGrid() {
      function addinfo() {
     	 
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
-    		 request("accountHistory/add",{query:{income:dom.byId("income").value,
+    		 request("<%=basePath%>accountHistory/add",{query:{income:dom.byId("income").value,
     			 cost:dom.byId("cost").value,usages:dom.byId("usages").value,
     			 accountId:$.getUrlParam('accountId'),memo:dom.byId("memo").value,
     			 date:dom.byId("date").value,destinationId:dom.byId("accountSelect").value}
@@ -147,7 +147,7 @@ function getGrid() {
      }
      function updateInfo() {
        	 require(["dojo/request","dojo/dom",],function(request,dom) {
-       		 request("accountHistory/update",{query:{id:dom.byId("id").value,
+       		 request("<%=basePath%>accountHistory/update",{query:{id:dom.byId("id").value,
        			 income:dom.byId("income").value,memo:dom.byId("memo").value,
     			 cost:dom.byId("cost").value,usages:dom.byId("usages").value,
     			 date:dom.byId("date").value,destinationId:dom.byId("accountSelect").value}
@@ -170,7 +170,7 @@ function getGrid() {
     	 require([
     		         "dojo/request",
     		     ], function (request) {
-    		 request("accountHistory/getAccountList"
+    		 request("<%=basePath%>accountHistory/getAccountList"
           			 ,{handleAs: "json",query:{accountId:$.getUrlParam('accountId')}}).then(function(response) {
     				$.addSelect("destinationList","accountSelect",response)	                       				
           	 })

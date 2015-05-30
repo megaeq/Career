@@ -47,7 +47,7 @@ function getGrid() {
 	                     label: "删除",
 	                     onClick: function () {
 	                    	 processing.show();
-	                         request("plan/delete",{query:{id:this.rowId}}).then(function() {
+	                         request("<%=basePath%>plan/delete",{query:{id:this.rowId}}).then(function() {
 	                        	 document.getElementById("list").innerHTML="";
 	               		    	 getGrid();
 	                			 processing.hide();
@@ -74,7 +74,7 @@ function getGrid() {
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	            	 store: new JsonRest({
-		         	   	    target: "plan/getList"
+		         	   	    target: "<%=basePath%>plan/getList"
 		       	   	  }),
 	                 className: "dgrid-autoheight",
 	                 columns: {id:{label:"id"},name:{label:"名称"},levels:{label:"级别",renderCell:function(object, data,cell) {
@@ -110,7 +110,7 @@ function getGrid() {
      }
      function addinfo() {
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
-    		 request("plan/add",{query:{name:dom.byId("name").value,memo:dom.byId("memo").value,
+    		 request("<%=basePath%>plan/add",{query:{name:dom.byId("name").value,memo:dom.byId("memo").value,
     			 level:level.value,complete:dom.byId("complete").value,
     			 type:types.value
     			 }
@@ -132,7 +132,7 @@ function getGrid() {
      }
      function updateInfo() {
        	 require(["dojo/request","dojo/dom",],function(request,dom) {
-       		 request("plan/update",{query:{id:dom.byId("id").value,name:dom.byId("name").value,
+       		 request("<%=basePath%>plan/update",{query:{id:dom.byId("id").value,name:dom.byId("name").value,
        			 memo:dom.byId("memo").value,level:level.value,
        			 complete:dom.byId("complete").value,type:types.value}
        			 }).then(function() {
@@ -157,7 +157,7 @@ function getGrid() {
     	
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
     		 processing.show();
-    		 request("plan/refresh").then(function() {
+    		 request("<%=basePath%>plan/refresh").then(function() {
    				 document.getElementById("list").innerHTML="";
    		    	 getGrid();
    		    	

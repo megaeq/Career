@@ -30,7 +30,7 @@ import com.eq.util.MathUtils;
 import com.eq.util.ParserUtils;
 import com.eq.util.UrlUtil;
 @Component
-@RequestMapping("page/lottory/football/bifa")
+@RequestMapping("footballBifaInfo")
 public class FootballBifaInfoManage extends BaseAction
 {
 	private final String CHARSET = "gb2312";
@@ -50,7 +50,7 @@ public class FootballBifaInfoManage extends BaseAction
 			for(int i=0;starts<=ends;i++) {
 				Date date = new Date(starts);
 				String url = getProperty("okooozuqiubifa")+DateUtil.getDateStr(date);
-				for(int j=1;;i++) {
+				for(int j=1;;j++) {
 					String pageUrl = url+"?PageID="+j;
 					List<FootballBifa> bifaList = getBifaInfo(UrlUtil.getContent(pageUrl, CHARSET), date);
 					for(FootballBifa bifa:bifaList) {
@@ -116,7 +116,10 @@ public class FootballBifaInfoManage extends BaseAction
 				String [] spans = ParserUtils.toPlainText("span", n7.toHtml());
 				String homeTeam = spans[0];
 				String [] ems = ParserUtils.toPlainText("em", n7.toHtml());
-				String lettheball = ems[0].substring(1, ems[0].length()-1);
+				String lettheball = "";
+				if(ems.length>=0&&StringUtils.isNotBlank(ems[0])) {
+					lettheball = ems[0].substring(1, ems[0].length()-1);
+				}
 				String [] bs = ParserUtils.toPlainText("b", n7.toHtml());
 				String guestTeam = bs[0];
 				//链接
@@ -136,7 +139,7 @@ public class FootballBifaInfoManage extends BaseAction
 				FootballBifa bifaEntity = new FootballBifa();
 				bifaEntity.setCode(code);
 				bifaEntity.setType(type);
-				bifaEntity.setTime(DateUtil.getTimestamp(date.getYear()+time+":00"));
+				//bifaEntity.setTime(DateUtil.getTimestamp(date.getYear()+time+":00"));
 				if(StringUtils.isNotBlank(homeNo)) {
 					bifaEntity.setHomeNo(Integer.parseInt(homeNo));
 				}
@@ -214,6 +217,7 @@ public class FootballBifaInfoManage extends BaseAction
 					bifaDetailList.add(bifaDetail);
 				}
 				bifaEntity.setDetailList(bifaDetailList);
+				bifaList.add(bifaEntity);
 			}
 			
 		return bifaList;

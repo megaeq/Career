@@ -32,7 +32,7 @@ function getGrid() {
 	         "dijit/form/Button",
 	         'dojo/dom-style' 
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle) {
-	         request("game/getListByName", {
+	         request("<%=basePath%>game/getListByName", {
 	             handleAs: "json",query:{gameId:$.getUrlParam('gameId'),hg:"home"}
 	         }).then(function (response) {
 	             var store = new Memory({ data: response });

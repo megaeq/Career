@@ -30,7 +30,7 @@ import com.eq.util.BaseAction;
  * 
  */
 @Controller
-@RequestMapping("page/myinfo")
+@RequestMapping("incomeAndCost")
 public class IncomeAndCostManage extends BaseAction {
 	@Autowired
 	IncomeAndCostImpl impl;

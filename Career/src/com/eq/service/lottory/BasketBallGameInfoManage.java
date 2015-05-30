@@ -29,7 +29,7 @@ import com.eq.util.DateUtil;
 import com.eq.util.ParserUtils;
 import com.eq.util.UrlUtil;
 @Component
-@RequestMapping("page/lottory")
+@RequestMapping("basketBallGameInfo")
 public class BasketBallGameInfoManage extends BaseAction{
 	private final String CHARSET = "gb2312";
 	@Autowired

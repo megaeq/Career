@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	        "dijit/Dialog"
  	     ], function (request,dom,Dialog) {
  		$.blockUI();
- 		request("getFootBallGameInfo",{query:{startDate:dom.byId("startDate").value,
+ 		request("<%=basePath%>gameInfo/getFootBallGameInfo",{query:{startDate:dom.byId("startDate").value,
 			 endDate:dom.byId("endDate").value}
 			 }).then(function(response) {
 					 $.unblockUI();
@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	        "dijit/Dialog"
 	 	     ], function (request,dom,Dialog) {
 	 		$.blockUI();
-	 		request("football/bifa/getFootBallGameInfo",{query:{startDate:dom.byId("startDate").value,
+	 		request("<%=basePath%>footballBifaInfo/getFootBallGameInfo",{query:{startDate:dom.byId("startDate").value,
 				 endDate:dom.byId("endDate").value}
 				 }).then(function(response) {
 						 $.unblockUI();
@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	        "dijit/Dialog"
 	 	     ], function (request,dom,Dialog) {
 	 		$.blockUI();
-	 		request("getBasketBallBallGameInfo",{query:{startDate:dom.byId("startDate").value,
+	 		request("<%=basePath%>basketBallGameInfo/getBasketBallBallGameInfo",{query:{startDate:dom.byId("startDate").value,
 				 endDate:dom.byId("endDate").value}
 				 }).then(function(response) {
 						 $.unblockUI();

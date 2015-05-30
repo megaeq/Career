@@ -109,7 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	             }
 	             var grid = new (declare([OnDemandGrid, Pagination,ColumnSet]))({
 	                 store: new JsonRest({
-	         	   	    target: "basketball/getList?startDate="+dom.byId("startDate").value+"&endDate="+dom.byId("endDate").value}),
+	         	   	    target: "<%=basePath%>basketball/getList?startDate="+dom.byId("startDate").value+"&endDate="+dom.byId("endDate").value}),
 	                className: "dgrid-autoheight",
                 	columnSets:[[[ {field:"code",label:"编号"}],
                 	              [{field:"type",label:"联赛类型"}]],
@@ -172,7 +172,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		chip+=array[i]+";";  
     	  }
     	  require(["dojo/request","dojo/dom"],function(request,dom) {
-    		  request("chip/chipin",{query:{money:dom.byId("money").value,
+    		  request("<%=basePath%>chip/chipin",{query:{money:dom.byId("money").value,
     			  chip:chip,accountId:$.getUrlParam('accountId'),
     			  accountId:$.getUrlParam('accountId')}}).then(function() {
     				  require(["dojo/request","dojo/dom"],function(request,dom) {
@@ -189,7 +189,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       }
       function updateInfo() {
         	 require(["dojo/request","dojo/dom",],function(request,dom) {
-        		 request("game/update",{query:{id:dom.byId("id").value,suggest:dom.byId("suggest").value,
+        		 request("<%=basePath%>game/update",{query:{id:dom.byId("id").value,suggest:dom.byId("suggest").value,
         			 }
         			 }).then(function() {
        				 document.getElementById("list").innerHTML="";

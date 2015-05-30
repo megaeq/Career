@@ -41,7 +41,7 @@ function getGrid() {
 	         "dijit/form/Button",
 	         'dojo/dom-style' 
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle) {
-	         request("account/getList", {
+	         request("<%=basePath%>account/getList", {
 	             handleAs: "json"
 	         }).then(function (response) {
 	             var store = new Memory({ data: response });
@@ -52,7 +52,7 @@ function getGrid() {
 	                     label: "删除",
 	                     onClick: function () {
 	                    	 $.blockUI();
-	                         request("account/delete",{query:{id:this.rowId,pwd:""}}).then(function() {
+	                         request("<%=basePath%>account/delete",{query:{id:this.rowId,pwd:""}}).then(function() {
 	                        	 document.getElementById("list").innerHTML="";
 	               		    	 getGrid();
 	                			 $.unblockUI();
@@ -151,7 +151,7 @@ function getGrid() {
      function addinfo() {
     	 
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
-    		 request("account/add",{query:{name:dom.byId("name").value,balance:dom.byId("balance").value,
+    		 request("<%=basePath%>account/add",{query:{name:dom.byId("name").value,balance:dom.byId("balance").value,
     			 pwd:dom.byId("pwd").value,belong:dom.byId("belong").value,
     			 isReal:dom.byId("isReal").value}
     			 }).then(function() {
@@ -173,7 +173,7 @@ function getGrid() {
      }
      function updateInfo() {
        	 require(["dojo/request","dojo/dom",],function(request,dom) {
-       		 request("account/update",{query:{id:dom.byId("id").value,name:dom.byId("name").value,
+       		 request("<%=basePath%>account/update",{query:{id:dom.byId("id").value,name:dom.byId("name").value,
        			 pwd:dom.byId("pwd").value,belong:dom.byId("belong").value,
        			 isReal:dom.byId("isReal").value,balance:dom.byId("balance").value}
        			 }).then(function() {

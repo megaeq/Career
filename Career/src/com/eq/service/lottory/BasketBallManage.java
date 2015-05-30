@@ -14,7 +14,7 @@ import com.eq.dao.entity.lottory.BasketBallGame;
 import com.eq.dao.impl.lottory.BasketBallGameImpl;
 import com.eq.util.BaseAction;
 @Component
-@RequestMapping("page/lottory/basketball")
+@RequestMapping("basketball")
 public class BasketBallManage extends BaseAction {
 	@Autowired
 	private BasketBallGameImpl impl;

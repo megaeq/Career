@@ -20,7 +20,7 @@ import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
 
 @Controller
-@RequestMapping("page/myinfo/account")
+@RequestMapping("account")
 public class AccountManage extends BaseAction {
 	@Autowired
 	private AccountImpl	impl;

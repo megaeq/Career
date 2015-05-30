@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	         "dgrid/extensions/Pagination",
  	        "dijit/form/Button"
  	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button) {
- 	         request("game/getList", {
+ 	         request("<%=basePath%>game/getList", {
  	             handleAs: "json",query:{startDate:dom.byId("startDate").value,
  	            	 endDate:dom.byId("endDate").value}
  	         }).then(function (response) {
@@ -152,7 +152,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		chip+=array[i]+";";  
     	  }
     	  require(["dojo/request","dojo/dom"],function(request,dom) {
-    		  request("chip/chipin",{query:{money:dom.byId("money").value,
+    		  request("<%=basePath%>chip/chipin",{query:{money:dom.byId("money").value,
     			  chip:chip,accountId:$.getUrlParam('accountId'),
     			  accountId:$.getUrlParam('accountId')}}).then(function() {
     				  require(["dojo/request","dojo/dom"],function(request,dom) {
@@ -169,7 +169,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       }
       function updateInfo() {
         	 require(["dojo/request","dojo/dom",],function(request,dom) {
-        		 request("game/update",{query:{id:dom.byId("id").value,suggest:dom.byId("suggest").value,
+        		 request("<%=basePath%>game/update",{query:{id:dom.byId("id").value,suggest:dom.byId("suggest").value,
         			 }
         			 }).then(function() {
        				 document.getElementById("list").innerHTML="";

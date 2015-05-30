@@ -86,7 +86,7 @@ function getGrid() {
 	                     label: "删除",
 	                     onClick: function () {
 	                    	 $.blockUI();
-	                         request("delete",{query:{id:this.rowId}}).then(function() {
+	                         request("<%=basePath%>incomeAndCost/delete",{query:{id:this.rowId}}).then(function() {
 	                        	 document.getElementById("list").innerHTML="";
 	               		    	 getGrid();
 	                			 $.unblockUI();
@@ -99,7 +99,7 @@ function getGrid() {
 	                     label: "编辑",
 	                     onClick: function () {
 	                    	 $.blockUI();
-	                         request("delete",{query:{id:this.rowId}}).then(function() {
+	                         request("<%=basePath%>incomeAndCost/delete",{query:{id:this.rowId}}).then(function() {
 	                        	 document.getElementById("list").innerHTML="";
 	               		    	 getGrid();
 	                			 $.unblockUI();
@@ -114,7 +114,7 @@ function getGrid() {
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	            	 className: "dgrid-autoheight",
 	                 store: new JsonRest({
-	         	   	    target: "getList"
+	         	   	    target: "<%=basePath%>incomeAndCost/getList"
 	       	   	  }),
 	                 columns: {id:{label:"id"},income:{label:"收入"},cost:{label:"消费"},date1:{label:"日期"},
 	                	 usages:{label:"用途"},memo:{label:"备注"},
@@ -152,7 +152,7 @@ function getGrid() {
      }
      function addinfo() {
     	 require(["dojo/request","dojo/dom",],function(request,dom) {
-    		 request("add",{query:{income:dom.byId("income").value,
+    		 request("<%=basePath%>incomeAndCost/add",{query:{income:dom.byId("income").value,
     			 cost:dom.byId("cost").value,addDate:dom.byId("addDate").value,
     			 usages:dom.byId("usages").value,memo:dom.byId("memo").value}
     			 }).then(function() {

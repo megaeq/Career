@@ -17,7 +17,7 @@ import com.eq.dao.impl.lottory.BeitouTempImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
 @Component
-@RequestMapping("page/lottory/beitou")
+@RequestMapping("beitou")
 public class BeitouManage extends BaseAction{
 	@Autowired
 	private BeitouImpl beitouImpl;

@@ -29,7 +29,7 @@ import com.eq.util.ParserUtils;
 import com.eq.util.UrlUtil;
 
 @Component
-@RequestMapping("page/lottory")
+@RequestMapping("gameInfo")
 public class GameInfoManage extends BaseAction
 {
 	private final String CHARSET = "gb2312";
