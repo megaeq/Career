@@ -165,7 +165,7 @@ public class GameInfoManage extends BaseAction
 				game.setPd(game.getPw() * game.getWinRate() / game.getDrawRate());
 				game.setPl(game.getPw() * game.getWinRate() / game.getLoseRate());
 			}
-			if(game.getHomeScore() != null && game.getHomeScore() > 0 && game.getGuestScore() != null && game.getWinRate() != null && game.getDrawRate() != null && game.getLoseRate() != null)
+			if(game.getHomeScore() != null && game.getHomeScore() > -1 && game.getGuestScore() != null && game.getGuestScore()>-1&&game.getWinRate() != null && game.getDrawRate() != null && game.getLoseRate() != null)
 			{
 				game.setHasFinish("1");
 			}
