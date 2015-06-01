@@ -14,6 +14,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <style type="text/css"> 
  @import "<%=basePath%>js/dojojs/dojox/grid/resources/tundraGrid.css"; 
  @import "<%=basePath%>js/dojojs/dojo/resources/dojo.css"; 
+ .winstyle{
+ 	color:#f70d0d;
+ 	font-weight:900;
+ 	font-size:15px;
+ }
+ .drawstyle{
+ 	color:#f2c308;
+ 	font-weight:900;
+ 	font-size:15px;
+ }
+ .losestyle{
+ 	color:#457fd6;
+ 	font-weight:900;
+ 	font-size:15px;
+ }
  </style> 
  <script type="text/javascript" src="<%=basePath%>js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/jquery/jquery.blockUI.js"></script>
@@ -33,14 +48,14 @@ function getGrid() {
 	         'dojo/dom-style' 
 	     ], function (declare,request,dom, Memory, OnDemandGrid, Pagination,Button,domStyle) {
 	         request("<%=basePath%>game/getListByName", {
-	             handleAs: "json",query:{gameId:$.getUrlParam('gameId'),hg:"home"}
+	             handleAs: "json",query:{hg:"home",gameId:$.getUrlParam('gameId')}
 	         }).then(function (response) {
 	             var store = new Memory({ data: response });
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
 	                 store: store,
 	                 className: "dgrid-autoheight",
-	                 columns: {id:{label:"id"},code:{label:"代号"},time2:{label:"时间"},
-	                	 gameType:{label:"比赛类型"},
+	                 columns: {gameType:{label:"比赛类型"},time2:{label:"时间"},
+	                	 
 	                	 teamInfo:{label:"主队-客队",renderCell:function(object,data,cell){
 	                		 var div = document.createElement("div");
 	                		 div.innerHTML=object.homeTeam+" VS "+object.guestTeam;
@@ -51,26 +66,20 @@ function getGrid() {
 	                		 div.innerHTML=object.homeScore+" - "+object.guestScore;
 	                		 return div;
 	                	 }},
-	                	 score:{label:"半场比分",renderCell:function(object,data,cell){
-	                		 var div = document.createElement("div");
-	                		 div.innerHTML=object.homeHalfScore+" - "+object.guestHalfScore;
-	                		 return div;
-	                	 }
-	                	 },winrate:{label:"主",renderCell:function(object,data,cell){
+	                	 winrate:{label:"主",renderCell:function(object,data,cell){
 	                		 var div = document.createElement("div");
 	                		 div.innerHTML=object.winRate;
 	                		 div.style="width:20px;";
 	                		 if(object.homeScore>object.guestScore) {
-	                			 div.style="color:#f70d0d;width:20px;";
+	                			 div.setAttribute("class","winstyle");
 	                		 }
 	                		 return div;
 	                		 }},
-	                		
 	                	 drawrate:{label:"平",renderCell:function(object,data,cell){
 	                		 var div = document.createElement("div");
 	                		 div.innerHTML=""+object.drawRate;
 	                		 if(object.homeScore==object.guestScore) {
-	                			 div.style="color:#f2c308;width:20px;";
+	                			 div.setAttribute("class","drawstyle");
 	                		 }
 	                		 return div;
 	                		 }},
@@ -78,7 +87,7 @@ function getGrid() {
 	                		 var div = document.createElement("div");
 	                		 div.innerHTML=object.drawRate;
 	                		 if(object.homeScore<object.guestScore) {
-	                			 div.style="color:#457fd6;width:20px;";
+	                			 div.setAttribute("class","losestyle");
 	                		 }
 	                		 return div;
 	                		 }}
@@ -88,6 +97,112 @@ function getGrid() {
 	                 pagingLinks:2
 	             	
 	             }, "homelist");
+	             grid.startup();
+	         });
+	         request("<%=basePath%>game/getListByName", {
+	             handleAs: "json",query:{hg:"guest",gameId:$.getUrlParam('gameId')}
+	         }).then(function (response) {
+	             var store = new Memory({ data: response });
+	             var grid = new (declare([OnDemandGrid, Pagination]))({
+	                 store: store,
+	                 className: "dgrid-autoheight",
+	                 columns: {gameType:{label:"比赛类型"},time2:{label:"时间"},
+	                	 
+	                	 teamInfo:{label:"主队-客队",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 div.innerHTML=object.homeTeam+" VS "+object.guestTeam;
+	                		 return div; 
+	                	 }},
+	                	 score:{label:"全场比分",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 div.innerHTML=object.homeScore+" - "+object.guestScore;
+	                		 return div;
+	                	 }},
+	                	 winrate:{label:"主",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 div.innerHTML=object.winRate;
+	                		 div.style="width:20px;";
+	                		 if(object.homeScore>object.guestScore) {
+	                			 div.setAttribute("class","winstyle");
+	                		 }
+	                		 return div;
+	                		 }},
+	                	 drawrate:{label:"平",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 div.innerHTML=""+object.drawRate;
+	                		 if(object.homeScore==object.guestScore) {
+	                			 div.setAttribute("class","drawstyle");
+	                		 }
+	                		 return div;
+	                		 }},
+	                	 loserate:{label:"负",width:"10px",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 console.log(div);
+	                		 div.innerHTML=object.drawRate;
+	                		 if(object.homeScore<object.guestScore) {
+	                			 div.setAttribute("class","losestyle");
+	                		 }
+	                		 return div;
+	                		 }}
+	                	 },
+	                 rowsPerPage:14,
+	                 pagingTextBox:true,
+	                 pagingLinks:2
+	             	
+	             }, "guestlist");
+	             grid.startup();
+	         });
+	         request("<%=basePath%>game/getABList", {
+	             handleAs: "json",query:{gameId:$.getUrlParam('gameId')}
+	         }).then(function (response) {
+	             var store = new Memory({ data: response });
+	             var grid = new (declare([OnDemandGrid, Pagination]))({
+	                 store: store,
+	                 className: "dgrid-autoheight",
+	                 columns: {gameType:{label:"比赛类型"},time2:{label:"时间"},
+	                	 
+	                	 teamInfo:{label:"主队-客队",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 div.innerHTML=object.homeTeam+" VS "+object.guestTeam;
+	                		 return div; 
+	                	 }},
+	                	 score:{label:"全场比分",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 div.innerHTML=object.homeScore+" - "+object.guestScore;
+	                		 return div;
+	                	 }},
+	                	 winrate:{label:"主",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 div.innerHTML=object.winRate;
+	                		 div.style="width:20px;";
+	                		 if(object.homeScore>object.guestScore) {
+	                			 div.setAttribute("class","winstyle");
+	                		 }
+	                		 return div;
+	                		 }},
+	                	 drawrate:{label:"平",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 div.innerHTML=""+object.drawRate;
+	                		 if(object.homeScore==object.guestScore) {
+	                			 div.setAttribute("class","drawstyle");
+	                		 }
+	                		 return div;
+	                		 }},
+	                	 loserate:{label:"负",width:"10px",renderCell:function(object,data,cell){
+	                		 var div = document.createElement("div");
+	                		 console.log(div);
+	                		 div.innerHTML=object.drawRate;
+	                		 if(object.homeScore<object.guestScore) {
+	                			 div.setAttribute("class","losestyle");
+	                		 }
+	                		 return div;
+	                		 }}
+	                	 },
+	                 rowsPerPage:14,
+	                 pagingTextBox:true,
+	                 pagingLinks:2
+	             	
+	             }, "ablist");
 	             grid.startup();
 	         });
 	     });

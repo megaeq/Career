@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import com.eq.util.DateUtil;
 @Controller
 @RequestMapping("game")
 public class GameManage extends BaseAction {
+	Logger logger = Logger.getLogger(GameManage.class);
 	@Autowired
 	private GameImpl	impl;
 
@@ -49,6 +51,11 @@ public class GameManage extends BaseAction {
 	public List<Game> getListByName(@RequestParam Map<String, Object> params) {
 		this.params = params;
 		Game game = impl.selectOne(getInt("gameId"));
+		logger.info("gameIdcr"+params.get("gameId"));
+		logger.info("hgcr"+params.get("hg"));
+		logger.info("gameId"+getInt("gameId"));
+		logger.info("hg"+getString("hg"));
+		
 		Map<String, Object> pps = new HashMap<String, Object>();
 		if ("home".equalsIgnoreCase(getString("hg"))) {
 			pps.put("teamname", game.getHomeTeam());
@@ -62,9 +69,10 @@ public class GameManage extends BaseAction {
 	@RequestMapping("getABList")
 	public List<Game> getABList(@RequestParam Map<String, Object> params) {
 		this.params = params;
+		Game game = impl.selectOne(getInt("gameId"));
 		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("aname", getString("aname"));
-		pps.put("bname", getString("bname"));
+		pps.put("aname", game.getHomeTeam());
+		pps.put("bname", game.getGuestTeam());
 		return impl.selectList(pps);
 	}
 

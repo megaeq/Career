@@ -26,8 +26,8 @@
 			(hometeam =#{teamname} OR guestteam =#{teamname}) AND
 			</if>
 			<if test="aname!=null and bname!=null">
-			((hometeam=#{aname} AND guestname=#{bname}) 
-			OR(hometeam=#{bname} AND guestname=#{aname})) AND
+			((hometeam=#{aname} AND guestteam=#{bname}) 
+			OR(hometeam=#{bname} AND guestteam=#{aname})) AND
 			</if>
 			<if test="guestteam!=null">
 			guestteam=#{guestteam} AND
