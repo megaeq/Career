@@ -28,6 +28,7 @@ public class GameManage extends BaseAction {
 	@ResponseBody
 	public List<Game> getList(@RequestParam Map<String, Object> params) {
 		this.params = params;
+		System.out.println(this.params.hashCode());
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("startDate", getDate("startDate"));
 		pps.put("endDate", getDate("endDate"));
@@ -50,16 +51,20 @@ public class GameManage extends BaseAction {
 	@RequestMapping("getListByName")
 	public List<Game> getListByName(@RequestParam Map<String, Object> params) {
 		this.params = params;
+		System.out.println("this:"+this.params.hashCode());
+		System.out.println("notthis:"+params.hashCode());
+		System.out.println("gameId:"+getInt("gameId"));
+		System.out.println("hg0:"+getString("hg"));
 		Game game = impl.selectOne(getInt("gameId"));
-		logger.info("gameIdcr"+params.get("gameId"));
-		logger.info("hgcr"+params.get("hg"));
-		logger.info("gameId"+getInt("gameId"));
-		logger.info("hg"+getString("hg"));
+		
 		
 		Map<String, Object> pps = new HashMap<String, Object>();
+		System.out.println("hg1:"+getString("hg"));
 		if ("home".equalsIgnoreCase(getString("hg"))) {
+			System.out.println("hg2:"+getString("hg"));
 			pps.put("teamname", game.getHomeTeam());
 		} else if ("guest".equalsIgnoreCase(getString("hg"))) {
+			System.out.println("hg2:"+getString("hg"));
 			pps.put("teamname", game.getGuestTeam());
 		}
 		return impl.selectList(pps);
@@ -69,7 +74,7 @@ public class GameManage extends BaseAction {
 	@RequestMapping("getABList")
 	public List<Game> getABList(@RequestParam Map<String, Object> params) {
 		this.params = params;
-		Game game = impl.selectOne(getInt("gameId"));
+		Game game = impl.selectOne(getInt("gameId2"));
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("aname", game.getHomeTeam());
 		pps.put("bname", game.getGuestTeam());

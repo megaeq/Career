@@ -153,7 +153,7 @@ function getGrid() {
 	             grid.startup();
 	         });
 	         request("<%=basePath%>game/getABList", {
-	             handleAs: "json",query:{gameId:$.getUrlParam('gameId')}
+	             handleAs: "json",query:{gameId2:$.getUrlParam('gameId')}
 	         }).then(function (response) {
 	             var store = new Memory({ data: response });
 	             var grid = new (declare([OnDemandGrid, Pagination]))({
