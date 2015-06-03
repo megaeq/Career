@@ -16,6 +16,7 @@ import com.eq.dao.entity.lottory.Game;
 import com.eq.dao.impl.lottory.GameImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.ParamUtils;
 
 @Controller
 @RequestMapping("game")
@@ -27,20 +28,19 @@ public class GameManage extends BaseAction {
 	@RequestMapping("getList")
 	@ResponseBody
 	public List<Game> getList(@RequestParam Map<String, Object> params) {
-		this.params = params;
-		System.out.println(this.params.hashCode());
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("startDate", getDate("startDate"));
-		pps.put("endDate", getDate("endDate"));
-		if("now".equals(getString("isNow"))) {
+		pps.put("startDate", PU.getDate("startDate"));
+		pps.put("endDate", PU.getDate("endDate"));
+		if("now".equals(PU.getString("isNow"))) {
 			pps.put("startDate", DateUtil.getNowTime());
 		}
-		pps.put("Rw", getFloat("Rw"));
-		pps.put("Rd", getFloat("Rd"));
-		pps.put("Rl", getFloat("Rl"));
-		pps.put("R1", getFloat("R1"));
-		pps.put("R2", getFloat("R2"));
-		pps.put("R3", getFloat("R3"));
+		pps.put("Rw", PU.getFloat("Rw"));
+		pps.put("Rd", PU.getFloat("Rd"));
+		pps.put("Rl", PU.getFloat("Rl"));
+		pps.put("R1", PU.getFloat("R1"));
+		pps.put("R2", PU.getFloat("R2"));
+		pps.put("R3", PU.getFloat("R3"));
 		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
 		response.setHeader("Content-Range", rangeStr+pps2.get("count"));
 		return (List<Game>)pps2.get("list");
@@ -50,21 +50,14 @@ public class GameManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("getListByName")
 	public List<Game> getListByName(@RequestParam Map<String, Object> params) {
-		this.params = params;
-		System.out.println("this:"+this.params.hashCode());
-		System.out.println("notthis:"+params.hashCode());
-		System.out.println("gameId:"+getInt("gameId"));
-		System.out.println("hg0:"+getString("hg"));
-		Game game = impl.selectOne(getInt("gameId"));
+		ParamUtils PU = new ParamUtils(params);
+		Game game = impl.selectOne(PU.getInt("gameId"));
 		
 		
 		Map<String, Object> pps = new HashMap<String, Object>();
-		System.out.println("hg1:"+getString("hg"));
-		if ("home".equalsIgnoreCase(getString("hg"))) {
-			System.out.println("hg2:"+getString("hg"));
+		if ("home".equalsIgnoreCase(PU.getString("hg"))) {
 			pps.put("teamname", game.getHomeTeam());
-		} else if ("guest".equalsIgnoreCase(getString("hg"))) {
-			System.out.println("hg2:"+getString("hg"));
+		} else if ("guest".equalsIgnoreCase(PU.getString("hg"))) {
 			pps.put("teamname", game.getGuestTeam());
 		}
 		return impl.selectList(pps);
@@ -73,8 +66,8 @@ public class GameManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("getABList")
 	public List<Game> getABList(@RequestParam Map<String, Object> params) {
-		this.params = params;
-		Game game = impl.selectOne(getInt("gameId2"));
+		ParamUtils PU = new ParamUtils(params);
+		Game game = impl.selectOne(PU.getInt("gameId2"));
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("aname", game.getHomeTeam());
 		pps.put("bname", game.getGuestTeam());
@@ -84,16 +77,16 @@ public class GameManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("update")
 	public void update(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Game game = new Game();
-		game.setId(getInt("id"));
-		game.setSuggest(getString("suggest"));
+		game.setId(PU.getInt("id"));
+		game.setSuggest(PU.getString("suggest"));
 		impl.update(game);
 	}
 	@ResponseBody
 	@RequestMapping("getGameInfo")
 	public Game getGameInfo(@RequestParam Map<String, Object> params) {
-		this.params = params;
-		return impl.selectOne(getInt("id"));
+		ParamUtils PU = new ParamUtils(params);
+		return impl.selectOne(PU.getInt("id"));
 	}
 }

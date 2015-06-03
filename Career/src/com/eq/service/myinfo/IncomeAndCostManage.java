@@ -24,6 +24,7 @@ import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.impl.myinfo.IncomeAndCostImpl;
 import com.eq.service.mybatis.PageParameter;
 import com.eq.util.BaseAction;
+import com.eq.util.ParamUtils;
 
 /**
  * @author mega
@@ -70,19 +71,19 @@ public class IncomeAndCostManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("delete")
 	public void delete(@RequestParam Map<String, Object> params) {
-		this.params=params;
-		impl.delete(getInt("id"));
+		ParamUtils PU = new ParamUtils(params);
+		impl.delete(PU.getInt("id"));
 	}
 	@ResponseBody
 	@RequestMapping("update")
 	public void update(@RequestParam Map<String, Object> params) {
-		this.params=params;
+		ParamUtils PU = new ParamUtils(params);
 		IncomeAndCost ic = new IncomeAndCost();
-		ic.setCost(getFloat("cost"));
-		ic.setIncome(getFloat("income"));
-		ic.setDate(getTimestamp("addDate"));
-		ic.setUsages(getString("usages"));
-		ic.setMemo(getString("memo"));
+		ic.setCost(PU.getFloat("cost"));
+		ic.setIncome(PU.getFloat("income"));
+		ic.setDate(PU.getTimestamp("addDate"));
+		ic.setUsages(PU.getString("usages"));
+		ic.setMemo(PU.getString("memo"));
 		impl.update(ic);
 	}
 }

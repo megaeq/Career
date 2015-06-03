@@ -16,6 +16,7 @@ import com.eq.dao.impl.myinfo.PlanHistoryImpl;
 import com.eq.dao.impl.myinfo.PlanImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.ParamUtils;
 
 @Controller
 @RequestMapping("plan")
@@ -28,7 +29,7 @@ public class PlanManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("getList")
 	public List<Plan> getList(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("userId",getUser().getId());
 		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
@@ -39,25 +40,25 @@ public class PlanManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("add")
 	public String add(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Plan plan = new Plan();
 		plan.setComplete(0);
-		if (getString("time") != null) {
-			plan.setCreateTime(DateUtil.getTimestamp(getString("time")));
+		if (PU.getString("time") != null) {
+			plan.setCreateTime(DateUtil.getTimestamp(PU.getString("time")));
 		} else {
 			plan.setCreateTime(DateUtil.getNowTime());
 		}
 		plan.setIsDel(0);
-		plan.setLevel(getInt("level"));
-		plan.setMemo(getString("memo"));
-		plan.setName(getString("name"));
-		plan.setType(getString("type"));
-		plan.setComplete(getInt("complete"));
+		plan.setLevel(PU.getInt("level"));
+		plan.setMemo(PU.getString("memo"));
+		plan.setName(PU.getString("name"));
+		plan.setType(PU.getString("type"));
+		plan.setComplete(PU.getInt("complete"));
 		plan.setUserId(getUser().getId());
 		if (1 == impl.add(plan)) {
 			PlanHistory planHistory = new PlanHistory();
 			planHistory.setCreateTime(DateUtil.getNowTime());
-			planHistory.setMemo(getString("memo"));
+			planHistory.setMemo(PU.getString("memo"));
 			planHistory.setPlanId(plan.getId());
 			planHistory.setType("新增");
 			if(historyImpl.add(planHistory)==1) {
@@ -74,8 +75,8 @@ public class PlanManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("delete")
 	public String delete(@RequestParam Map<String, Object> params) {
-		this.params = params;
-		Plan plan = impl.selectOne(getInt("id"));
+		ParamUtils PU = new ParamUtils(params);
+		Plan plan = impl.selectOne(PU.getInt("id"));
 		plan.setIsDel(1);
 		if (impl.update(plan) == 1) {
 			PlanHistory planHistory = new PlanHistory();
@@ -93,29 +94,29 @@ public class PlanManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("update")
 	public String update(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		
-		Plan plan = impl.selectOne(getInt("id"));
+		Plan plan = impl.selectOne(PU.getInt("id"));
 		int level = plan.getLevel();
-		plan.setComplete(getInt("complete"));
-		plan.setLevel(getInt("level"));
-		plan.setMemo(getString("memo"));
-		plan.setName(getString("name"));
-		plan.setType(getString("type"));
+		plan.setComplete(PU.getInt("complete"));
+		plan.setLevel(PU.getInt("level"));
+		plan.setMemo(PU.getString("memo"));
+		plan.setName(PU.getString("name"));
+		plan.setType(PU.getString("type"));
 		if (impl.update(plan) == 1) {
 			PlanHistory planHistory = new PlanHistory();
 			planHistory.setCreateTime(DateUtil.getNowTime());
 			planHistory.setPlanId(plan.getId());
 			String operation = "";
-			if(level>getInt("level")) {
+			if(level>PU.getInt("level")) {
 				operation = "升级";
-			} else if(level==getInt("level")){
+			} else if(level==PU.getInt("level")){
 				operation = "平级";
 			} else {
 				operation = "降级";
 			}
 			planHistory.setType(operation);
-			planHistory.setMemo("完成度"+getInt("complete")+"%");
+			planHistory.setMemo("完成度"+PU.getInt("complete")+"%");
 			if(historyImpl.add(planHistory)==1) {
 				return "success";
 			} else {

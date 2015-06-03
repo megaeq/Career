@@ -20,6 +20,7 @@ import com.eq.dao.impl.myinfo.AccountHistoryImpl;
 import com.eq.dao.impl.myinfo.AccountImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.ParamUtils;
 
 @Controller
 @RequestMapping("accountHistory")
@@ -33,81 +34,81 @@ public class AccountHistoryManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("add")
 	public void add(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		AccountHistory history = new AccountHistory();
-		history.setIncome(getFloat("income"));
-		history.setCost(getFloat("cost"));
-		if (getTimestamp("date") != null) {
-			history.setCreateTime(getTimestamp("date"));
+		history.setIncome(PU.getFloat("income"));
+		history.setCost(PU.getFloat("cost"));
+		if (PU.getTimestamp("date") != null) {
+			history.setCreateTime(PU.getTimestamp("date"));
 		} else {
 			history.setCreateTime(DateUtil.getNowTime());
 		}
 
-		history.setMemo(getString("memo"));
-		history.setUsages(getString("usages"));
-		history.setAccountId(getInt("accountId"));
+		history.setMemo(PU.getString("memo"));
+		history.setUsages(PU.getString("usages"));
+		history.setAccountId(PU.getInt("accountId"));
 		impl.add(history);
 		// 修改账户余额
-		Account account1 = accountImpl.selectOne(getInt("accountId"));
-		account1.setBalance(account1.getBalance() + getFloat("income")
-				- getFloat("cost"));
+		Account account1 = accountImpl.selectOne(PU.getInt("accountId"));
+		account1.setBalance(account1.getBalance() + PU.getFloat("income")
+				- PU.getFloat("cost"));
 		accountImpl.updateWithoutPwd(account1);
 		// 修改源账户记录
 		AccountHistory history2 = new AccountHistory();
 		history2.setAccountId(account1.getDestinationId());
-		history2.setCost(getFloat("income"));
-		history2.setIncome(getFloat("cost"));
-		if (getTimestamp("date") != null) {
-			history2.setCreateTime(getTimestamp("date"));
+		history2.setCost(PU.getFloat("income"));
+		history2.setIncome(PU.getFloat("cost"));
+		if (PU.getTimestamp("date") != null) {
+			history2.setCreateTime(PU.getTimestamp("date"));
 		} else {
 			history2.setCreateTime(DateUtil.getNowTime());
 		}
-		history2.setMemo(getString("memo"));
-		history2.setUsages(getString("usages"));
+		history2.setMemo(PU.getString("memo"));
+		history2.setUsages(PU.getString("usages"));
 		impl.add(history2);
 		// 修改源账户余额
 		Account account2 = accountImpl.selectOne(account1.getDestinationId());
-		account2.setBalance(account2.getBalance() - getFloat("income")
-				+ getFloat("cost"));
+		account2.setBalance(account2.getBalance() - PU.getFloat("income")
+				+ PU.getFloat("cost"));
 		accountImpl.updateWithoutPwd(account2);
 		//
-		if (StringUtils.isNotBlank(getString("destinationId"))) {
+		if (StringUtils.isNotBlank(PU.getString("destinationId"))) {
 			AccountHistory history3 = new AccountHistory();
-			history3.setIncome(getFloat("cost"));
-			history3.setCost(getFloat("income"));
-			if (getTimestamp("date") != null) {
-				history3.setCreateTime(getTimestamp("date"));
+			history3.setIncome(PU.getFloat("cost"));
+			history3.setCost(PU.getFloat("income"));
+			if (PU.getTimestamp("date") != null) {
+				history3.setCreateTime(PU.getTimestamp("date"));
 			} else {
 				history3.setCreateTime(DateUtil.getNowTime());
 			}
 
-			history3.setMemo(getString("memo"));
-			history3.setUsages(getString("usages"));
-			history3.setAccountId(getInt("destinationId"));
+			history3.setMemo(PU.getString("memo"));
+			history3.setUsages(PU.getString("usages"));
+			history3.setAccountId(PU.getInt("destinationId"));
 			impl.add(history3);
 			// 修改账户余额
-			Account account3 = accountImpl.selectOne(getInt("destinationId"));
-			account3.setBalance(account3.getBalance() + getFloat("cost")
-					- getFloat("income"));
+			Account account3 = accountImpl.selectOne(PU.getInt("destinationId"));
+			account3.setBalance(account3.getBalance() + PU.getFloat("cost")
+					- PU.getFloat("income"));
 			accountImpl.updateWithoutPwd(account3);
 			// 修改源账户记录
 			AccountHistory history4 = new AccountHistory();
 			history4.setAccountId(account3.getDestinationId());
-			history4.setCost(getFloat("cost"));
-			history4.setIncome(getFloat("income"));
-			if (getTimestamp("date") != null) {
-				history4.setCreateTime(getTimestamp("date"));
+			history4.setCost(PU.getFloat("cost"));
+			history4.setIncome(PU.getFloat("income"));
+			if (PU.getTimestamp("date") != null) {
+				history4.setCreateTime(PU.getTimestamp("date"));
 			} else {
 				history4.setCreateTime(DateUtil.getNowTime());
 			}
-			history4.setMemo(getString("memo"));
-			history4.setUsages(getString("usages"));
+			history4.setMemo(PU.getString("memo"));
+			history4.setUsages(PU.getString("usages"));
 			impl.add(history4);
 			// 修改源账户余额
 			Account account4 = accountImpl.selectOne(account3
 					.getDestinationId());
-			account4.setBalance(account4.getBalance() + getFloat("income")
-					- getFloat("cost"));
+			account4.setBalance(account4.getBalance() + PU.getFloat("income")
+					- PU.getFloat("cost"));
 			accountImpl.updateWithoutPwd(account4);
 		}
 
@@ -116,9 +117,9 @@ public class AccountHistoryManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("getList")
 	public List<AccountHistory> getList(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("accountId", getInt("accountId"));
+		pps.put("accountId", PU.getInt("accountId"));
 		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
 		response.setHeader("Content-Range", rangeStr+pps2.get("count"));
 		return (List<AccountHistory>)pps.get("list");
@@ -161,15 +162,15 @@ public class AccountHistoryManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("update")
 	public void update(@RequestParam Map<String, Object> params) {
-		this.params = params;
-		AccountHistory history = impl.selectOne(getInt("id"));
-		float change = (history.getCost() - getFloat("cost"))
-				- (history.getIncome() - getFloat("income"));
+		ParamUtils PU = new ParamUtils(params);
+		AccountHistory history = impl.selectOne(PU.getInt("id"));
+		float change = (history.getCost() - PU.getFloat("cost"))
+				- (history.getIncome() - PU.getFloat("income"));
 		// history.setCost(getFloat("cost"));
 		// history.setIncome(getFloat("income"));
-		history.setMemo(getString("memo"));
-		history.setUsages(getString("usages"));
-		history.setCreateTime(getTimestamp("date"));
+		history.setMemo(PU.getString("memo"));
+		history.setUsages(PU.getString("usages"));
+		history.setCreateTime(PU.getTimestamp("date"));
 		impl.update(history);
 		// 修改账户余额
 		/*

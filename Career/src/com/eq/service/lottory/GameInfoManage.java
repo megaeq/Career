@@ -25,6 +25,7 @@ import com.eq.dao.entity.lottory.Game;
 import com.eq.dao.impl.lottory.GameImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.ParamUtils;
 import com.eq.util.ParserUtils;
 import com.eq.util.UrlUtil;
 
@@ -39,9 +40,9 @@ public class GameInfoManage extends BaseAction
 	@RequestMapping("getFootBallGameInfo")
 	public String getGameInfo(@RequestParam Map<String, Object> params)
 	{
-		this.params = params;
-		Date startDate = getDate("startDate");
-		Date endDate = getDate("endDate");
+		ParamUtils PU = new ParamUtils(params);
+		Date startDate = PU.getDate("startDate");
+		Date endDate = PU.getDate("endDate");
 		Long starts = startDate.getTime();
 		Long ends = endDate.getTime();
 		try

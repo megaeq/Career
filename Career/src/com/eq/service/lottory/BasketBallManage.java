@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eq.dao.entity.lottory.BasketBallGame;
 import com.eq.dao.impl.lottory.BasketBallGameImpl;
 import com.eq.util.BaseAction;
+import com.eq.util.ParamUtils;
 @Component
 @RequestMapping("basketball")
 public class BasketBallManage extends BaseAction {
@@ -21,10 +22,10 @@ public class BasketBallManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("getList")
 	public List<BasketBallGame> getList(@RequestParam Map<String, Object> params) {
-		this.params  = params;
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("startDate", getDate("startDate"));
-		pps.put("endDate", getDate("endDate"));
+		pps.put("startDate", PU.getDate("startDate"));
+		pps.put("endDate", PU.getDate("endDate"));
 		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
 		response.setHeader("Content-Range", rangeStr+pps2.get("count"));
 		return (List<BasketBallGame>)pps2.get("list");

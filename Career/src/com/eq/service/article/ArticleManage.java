@@ -19,6 +19,7 @@ import com.eq.dao.impl.article.ArticleTagImpl;
 import com.eq.dao.impl.system.UserImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.ParamUtils;
 
 @Controller
 @RequestMapping("page/article")
@@ -34,9 +35,9 @@ public class ArticleManage extends BaseAction {
 	@RequestMapping("getList")
 	public List<Map<String, Object>> getlist(
 			@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("userId", getInt("userId"));
+		pps.put("userId", PU.getInt("userId"));
 		List<Article> articleList = (List<Article>)articleImpl.selectPageList(pps,0,12).get("list");
 		List<Map<String, Object>> response = new ArrayList<Map<String, Object>>();
 		for (Article art : articleList) {
@@ -64,14 +65,14 @@ public class ArticleManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("add")
 	public String add(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Article article = new Article();
 		article.setCreateTime(DateUtil.getNowTime());
-		article.setIntro(getString("intro"));
+		article.setIntro(PU.getString("intro"));
 		article.setIsDel(0);
-		article.setTitle(getString("title"));
-		article.setType(getString("type"));
-		article.setUserId(getInt("usserId"));
+		article.setTitle(PU.getString("title"));
+		article.setType(PU.getString("type"));
+		article.setUserId(PU.getInt("usserId"));
 		if (1 == articleImpl.add(article)) {
 			return "success";
 		} else {
@@ -82,11 +83,11 @@ public class ArticleManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("update")
 	public String update(@RequestParam Map<String, Object> params) {
-		this.params = params;
-		Article article = articleImpl.selectOne(getInt("id"));
-		article.setIntro(getString("intro"));
-		article.setTitle(getString("title"));
-		article.setType(getString("type"));
+		ParamUtils PU = new ParamUtils(params);
+		Article article = articleImpl.selectOne(PU.getInt("id"));
+		article.setIntro(PU.getString("intro"));
+		article.setTitle(PU.getString("title"));
+		article.setType(PU.getString("type"));
 		if (1 == articleImpl.update(article)) {
 			return "success";
 		} else {
@@ -97,8 +98,8 @@ public class ArticleManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("delete")
 	public String delete(@RequestParam Map<String, Object> params) {
-		this.params = params;
-		if (1 == articleImpl.delete(getInt("id"))) {
+		ParamUtils PU = new ParamUtils(params);
+		if (1 == articleImpl.delete(PU.getInt("id"))) {
 			return "success";
 		} else {
 			return "failure";

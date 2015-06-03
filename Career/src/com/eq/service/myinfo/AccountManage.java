@@ -18,6 +18,7 @@ import com.eq.dao.entity.system.User;
 import com.eq.dao.impl.myinfo.AccountImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.ParamUtils;
 
 @Controller
 @RequestMapping("account")
@@ -28,7 +29,7 @@ public class AccountManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("getList")
 	public List<Account> getList(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		getUser();
 		Map<String, Object> pps = new HashMap<String, Object>();
 		if(getUser()!=null) {
@@ -42,14 +43,14 @@ public class AccountManage extends BaseAction {
 	@RequestMapping("add")
 	@ResponseBody
 	public void add(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Account account = new Account();
-		account.setBalance(getFloat("balance"));
-		account.setBelong(getString("belong"));
+		account.setBalance(PU.getFloat("balance"));
+		account.setBelong(PU.getString("belong"));
 		account.setCreateTime(DateUtil.getNowTime());
-		account.setIsReal(getInt("isReal"));
-		account.setName(getString("name"));
-		account.setPwd(getString("pwd"));
+		account.setIsReal(PU.getInt("isReal"));
+		account.setName(PU.getString("name"));
+		account.setPwd(PU.getString("pwd"));
 		account.setUserId(getUser().getId());
 		impl.add(account);
 	}
@@ -57,25 +58,25 @@ public class AccountManage extends BaseAction {
 	@RequestMapping("delete")
 	@ResponseBody
 	public void delete(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> params2 = new HashMap<String, Object>();
-		params2.put("id", getInt("id"));
-		params2.put("pwd", getString("pwd"));
+		params2.put("id", PU.getInt("id"));
+		params2.put("pwd", PU.getString("pwd"));
 		impl.delete(params2);
 	}
 
 	@ResponseBody
 	@RequestMapping("update")
 	public void update(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Account account = new Account();
-		account.setBalance(getFloat("balance"));
-		account.setBelong(getString("belong"));
+		account.setBalance(PU.getFloat("balance"));
+		account.setBelong(PU.getString("belong"));
 		account.setCreateTime(DateUtil.getNowTime());
-		account.setId(getInt("id"));
-		account.setIsReal(getInt("isReal"));
-		account.setName(getString("name"));
-		account.setPwd(getString("pwd"));
+		account.setId(PU.getInt("id"));
+		account.setIsReal(PU.getInt("isReal"));
+		account.setName(PU.getString("name"));
+		account.setPwd(PU.getString("pwd"));
 		impl.update(account);
 	}
 }

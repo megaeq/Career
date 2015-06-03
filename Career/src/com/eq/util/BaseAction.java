@@ -112,47 +112,7 @@ public class BaseAction implements ApplicationContextAware {
 		return jsonObj;
 	}
 
-	public Integer getInt(String param) {
-		if (params.get(param) == null||StringUtils.isBlank(params.get(param).toString() )) {
-			return null;
-		} else {
-			return Integer.parseInt(params.get(param).toString());
-		}
-
-	}
-
-	public Float getFloat(String param) {
-		if (params.get(param) == null||StringUtils.isBlank(params.get(param).toString() )) {
-			return null;
-		} else {
-			return Float.parseFloat(params.get(param).toString());
-		}
-	}
-
-	public Date getDate(String param) {
-		if (params.get(param) == null) {
-			return null;
-		} else {
-			String date = params.get(param).toString();
-			return DateUtil.getDate(date);
-		}
-	}
-
-	public String getString(String param) {
-		if (params.get(param) == null) {
-			return null;
-		} else {
-			return params.get(param).toString();
-		}
-	}
-
-	public Timestamp getTimestamp(String param) {
-		if (params.get(param) == null) {
-			return null;
-		} else {
-			return DateUtil.getTimestamp(params.get(param).toString());
-		}
-	}
+	
 	public User getUser() {
 		HttpSession session = request.getSession();
 		Boolean AUTHENTICATED = (Boolean)session.getAttribute(AUTHENTICATED_SESSION_KEY);

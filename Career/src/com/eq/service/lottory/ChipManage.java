@@ -24,6 +24,7 @@ import com.eq.dao.impl.myinfo.AccountHistoryImpl;
 import com.eq.dao.impl.myinfo.AccountImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.ParamUtils;
 
 @Controller
 @RequestMapping("chip")
@@ -42,9 +43,9 @@ public class ChipManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("chipin")
 	public void chipin(@RequestParam Map<String, Object> params) {
-		this.params = params;
-		System.out.println(getInt("money") + " " + getString("chip"));
-		String[] chips = getString("chip").split(";");
+		ParamUtils PU = new ParamUtils(params);
+		System.out.println(PU.getInt("money") + " " + PU.getString("chip"));
+		String[] chips = PU.getString("chip").split(";");
 		List<GameAndBill> gbList = new ArrayList<GameAndBill>();
 		float m = 1f;
 		for (String gs : chips) {
@@ -63,11 +64,11 @@ public class ChipManage extends BaseAction {
 			gbList.add(gb);
 		}
 		Bill bill = new Bill();
-		bill.setBetAmount(getInt("money"));
+		bill.setBetAmount(PU.getInt("money"));
 		bill.setCluster(chips.length);
 		bill.setSp(m);
 		bill.setTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-		Account account = accountImpl.selectOne(getInt("accountId"));
+		Account account = accountImpl.selectOne(PU.getInt("accountId"));
 		if (account.getIsReal() == 2) {
 			bill.setType("virtual");
 		} else {
@@ -75,7 +76,7 @@ public class ChipManage extends BaseAction {
 		}
 		bill.setFlag(0);
 		bill.setIsDel(0);
-		bill.setAccountId(getInt("accountId"));
+		bill.setAccountId(PU.getInt("accountId"));
 		billImpl.add(bill);
 		for (GameAndBill gb : gbList) {
 			gb.setBillId(bill.getId());
@@ -86,42 +87,42 @@ public class ChipManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("addincome")
 	public void add(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		AccountHistory history = new AccountHistory();
-		history.setIncome(getFloat("income"));
-		history.setCost(getFloat("cost"));
-		if (getTimestamp("date") != null) {
-			history.setCreateTime(getTimestamp("date"));
+		history.setIncome(PU.getFloat("income"));
+		history.setCost(PU.getFloat("cost"));
+		if (PU.getTimestamp("date") != null) {
+			history.setCreateTime(PU.getTimestamp("date"));
 		} else {
 			history.setCreateTime(DateUtil.getNowTime());
 		}
 
-		history.setMemo(getString("memo"));
+		history.setMemo(PU.getString("memo"));
 		history.setUsages("彩票投注");
-		history.setAccountId(getInt("accountId"));
+		history.setAccountId(PU.getInt("accountId"));
 		historyImpl.add(history);
 		// 修改账户余额
-		Account account1 = accountImpl.selectOne(getInt("accountId"));
-		account1.setBalance(account1.getBalance() + getFloat("income")
-				- getFloat("cost"));
+		Account account1 = accountImpl.selectOne(PU.getInt("accountId"));
+		account1.setBalance(account1.getBalance() + PU.getFloat("income")
+				- PU.getFloat("cost"));
 		accountImpl.updateWithoutPwd(account1);
 		// 修改源账户记录
 		AccountHistory history2 = new AccountHistory();
 		history2.setAccountId(account1.getDestinationId());
-		history2.setCost(getFloat("income"));
-		history2.setIncome(getFloat("cost"));
-		if (getTimestamp("date") != null) {
-			history2.setCreateTime(getTimestamp("date"));
+		history2.setCost(PU.getFloat("income"));
+		history2.setIncome(PU.getFloat("cost"));
+		if (PU.getTimestamp("date") != null) {
+			history2.setCreateTime(PU.getTimestamp("date"));
 		} else {
 			history2.setCreateTime(DateUtil.getNowTime());
 		}
-		history2.setMemo(getString("memo"));
+		history2.setMemo(PU.getString("memo"));
 		history2.setUsages("彩票投注");
 		historyImpl.add(history2);
 		// 修改源账户余额
 		Account account2 = accountImpl.selectOne(account1.getDestinationId());
-		account2.setBalance(account2.getBalance() - getFloat("income")
-				+ getFloat("cost"));
+		account2.setBalance(account2.getBalance() - PU.getFloat("income")
+				+ PU.getFloat("cost"));
 		accountImpl.updateWithoutPwd(account2);
 	}
 

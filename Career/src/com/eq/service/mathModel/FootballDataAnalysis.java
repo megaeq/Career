@@ -28,6 +28,7 @@ import com.eq.dao.impl.lottory.GameImpl;
 import com.eq.dao.impl.mathModel.MathModelImpl;
 import com.eq.dao.impl.mathModel.MathModelRefImpl;
 import com.eq.util.BaseAction;
+import com.eq.util.ParamUtils;
 import com.eq.util.mathModel.FootballModel;
 
 /**
@@ -51,10 +52,10 @@ public class FootballDataAnalysis extends BaseAction
 	@ResponseBody
 	@RequestMapping("getResultList")
 	public List<MathModel> getResultList(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
 		List<MathModel> modelList = mathModelImpl.selectList(pps);
-		Game game = gameImpl.selectOne(getInt("id"));
+		Game game = gameImpl.selectOne(PU.getInt("id"));
 		for(MathModel model:modelList) {
 			Float result = footballModel.getResult(game, model.getId());
 			//间距

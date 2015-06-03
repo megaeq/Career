@@ -16,6 +16,7 @@ import com.eq.dao.impl.lottory.BeitouImpl;
 import com.eq.dao.impl.lottory.BeitouTempImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.ParamUtils;
 @Component
 @RequestMapping("beitou")
 public class BeitouManage extends BaseAction{
@@ -28,7 +29,7 @@ public class BeitouManage extends BaseAction{
 	@ResponseBody
 	@RequestMapping("add")
 	public void add(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		BeitouTemp temp = tempImpl.selectOne(1);
 		Integer beitouId = 0;
 		Beitou beitou = null;
@@ -88,19 +89,19 @@ public class BeitouManage extends BaseAction{
 			}
 		}
 		BeiTouGame game = new BeiTouGame();
-		game.setAmount(getInt("amount"));
+		game.setAmount(PU.getInt("amount"));
 		game.setBeitouId(beitou.getId());
-		game.setBelong(getString("belong"));
-		game.setBet(getInt("bet"));
+		game.setBelong(PU.getString("belong"));
+		game.setBet(PU.getInt("bet"));
 		game.setBottom(beitou.getBottom());
 		game.setCreateTime(DateUtil.getNowTime());
-		game.setDraw(getFloat("draw"));
-		game.setGuestTeam(getString("guestTeam"));
-		game.setHomeTeam(getString("homeTeam"));
+		game.setDraw(PU.getFloat("draw"));
+		game.setGuestTeam(PU.getString("guestTeam"));
+		game.setHomeTeam(PU.getString("homeTeam"));
 		game.setLevel(1);
-		game.setLose(getFloat("lose"));
-		game.setType(getString("type"));
-		game.setWin(getFloat("win"));
+		game.setLose(PU.getFloat("lose"));
+		game.setType(PU.getString("type"));
+		game.setWin(PU.getFloat("win"));
 		gameImpl.add(game);
 	} 
 }

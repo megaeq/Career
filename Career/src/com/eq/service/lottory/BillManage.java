@@ -23,6 +23,7 @@ import com.eq.dao.impl.myinfo.AccountHistoryImpl;
 import com.eq.dao.impl.myinfo.AccountImpl;
 import com.eq.util.BaseAction;
 import com.eq.util.DateUtil;
+import com.eq.util.ParamUtils;
 
 @Controller
 @RequestMapping("bill")
@@ -41,9 +42,9 @@ public class BillManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("getList")
 	public List<Bill> getList(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("accountId", getInt("accountId"));
+		pps.put("accountId", PU.getInt("accountId"));
 		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
 		response.setHeader("Content-Range", rangeStr+pps2.get("count"));
 		return (List<Bill>)pps2.get("list");
@@ -53,9 +54,9 @@ public class BillManage extends BaseAction {
 	@ResponseBody
 	@RequestMapping("clearing")
 	public String clearing(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
-		pps.put("billId", getInt("billId"));
+		pps.put("billId", PU.getInt("billId"));
 		List<GameAndBill> gbList = gbImpl.selectList(pps);
 		boolean success = true;
 		boolean complete = true;
@@ -85,7 +86,7 @@ public class BillManage extends BaseAction {
 		}
 		// 结算与否
 		if (complete && success) {
-			Bill bill = impl.selectOne(getInt("billId"));
+			Bill bill = impl.selectOne(PU.getInt("billId"));
 			Account account = accountImpl.selectOne(bill.getAccountId());
 			Account account2 = accountImpl
 					.selectOne(account.getDestinationId());
@@ -105,7 +106,7 @@ public class BillManage extends BaseAction {
 			accountHistoryImpl.add(history);
 			return "success";
 		} else if (complete && !success) {
-			Bill bill = impl.selectOne(getInt("billId"));
+			Bill bill = impl.selectOne(PU.getInt("billId"));
 			bill.setFlag(1);
 			bill.setIncome(0);
 			impl.update(bill);
