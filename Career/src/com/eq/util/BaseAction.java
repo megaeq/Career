@@ -46,7 +46,6 @@ public class BaseAction implements ApplicationContextAware {
 	@Autowired
 	public PropertyImpl propertyImpl;
 	private ApplicationContext	context;
-	public Map<String, Object>	params=null;
 	public int pageSize = 0;
 	public int currentPage = 0;
 	public String rangeStr = "";
