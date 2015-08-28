@@ -147,7 +147,8 @@
 	<bean id="chainDefinitionSectionMetaSource" class="com.eq.service.shiro.ChainDefinitionSectionMetaSource">  
 	    <property name="filterChainDefinitions">  
 	        <value> 
-	            /index.jsp = anon  
+	            /index.jsp = anon
+	            /career.jsp = anon  
 	            /user/add = anon
 	            /loginManage/** = anon
 	            /unauthorized.jsp = anon  
