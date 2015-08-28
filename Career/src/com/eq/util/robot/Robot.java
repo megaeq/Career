@@ -21,11 +21,12 @@ import com.eq.util.DateUtil;
  * @author Mega.Yan
  * @date 2015-6-15 下午4:49:29
  */
-public abstract class Robot
+public class Robot extends Thread
 {
-	private List<Switch> switchList = new ArrayList<Switch>();
 	private Long sleepTime =1000l;
-	private Boolean on = false;
+	private List<Task> taskList1;//待执行任务列表
+	private List<Task> taskList2;//正在执行任务列表
+	private Boolean on = true;
 	public Robot() {
 		
 	}
@@ -33,43 +34,38 @@ public abstract class Robot
 	public Robot(Long sleepTime) {
 		this.sleepTime = sleepTime;
 	}
-	public Robot(List<Switch> switchList) {
-		this.switchList = switchList;
-	}
-	public Robot(List<Switch> switchList,Long sleepTime) {
-		this.switchList = switchList;
-		this.sleepTime = sleepTime;
-	}
-	public abstract void run(); 
-	/**
-	 * 
-	 * @title start
-	 * @description TODO
-	 * @return 启动调用 
-	 * @throws
-	 */
-	public void start() {
-		for(;;) {
-			for(Switch sch:switchList) {
-				if(sch.on()) {
-					on = true;
-					break;
-				}
-			}
-			if(on) {
-				run();
-				on = false;
+	public void run() {
+		while(!on) {
+			for(int i=taskList1.size()-1;i>-1;i--) {
+				taskList1.get(i).start();
+				taskList2.add(taskList1.get(i));
+				taskList1.remove(i);
 			}
 			try
 			{
-				Thread.currentThread().sleep(sleepTime);
+				sleep(sleepTime);
 			}
 			catch (InterruptedException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+	} 
+	
+	public void addTask(Task task) {
+		taskList1.add(task);
+	}
+	public void removeTask(Task task) {
+		for(Task t:taskList2) {
+			if(t.getCode()==task.getCode()) {
+				t.destroy();
+				taskList2.remove(t);
+				break;
+			}
+		}
+	}
+	
+	public void destroy() {
+		on = false;
 	}
 }
