@@ -28,6 +28,7 @@ import com.eq.dao.impl.mathModel.MathModelImpl;
 import com.eq.dao.impl.mathModel.MathModelRefImpl;
 import com.eq.service.lottory.GameManage;
 import com.eq.util.BaseAction;
+import com.eq.util.ParamUtils;
 import com.eq.util.mathModel.FootballModel;
 
 /**
@@ -52,7 +53,7 @@ public class MathModelManage extends BaseAction
 	@ResponseBody
 	@RequestMapping("footballModelDataProcesser")
 	public String FootballModelDataProcesser(@RequestParam Map<String, Object> params) {
-		this.params = params;
+		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
 		pps.put("type", "1");
 		List<MathModel> modelList = mathModelImpl.selectList(pps);
