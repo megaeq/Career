@@ -24,7 +24,7 @@ import com.eq.util.sizeOf.SizeOfObject;
 public class Robot1 extends Robot
 {
 	public Robot1(List<Switch> s) {
-		super(s);
+		//super(s);
 	}
 	public void run () {
 		System.out.println(DateUtil.getNowTime());
