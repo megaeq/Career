@@ -42,6 +42,8 @@
 		<typeAlias alias="mathModel" type="com.eq.dao.entity.mathModel.MathModel" />
 		<typeAlias alias="mathDataRef" type="com.eq.dao.entity.mathModel.MathDataRef" />
 		<typeAlias alias="mathModelRef" type="com.eq.dao.entity.mathModel.MathModelRef" />
+		
+		<typeAlias alias="function" type="com.eq.dao.entity.function.Function" />
 	</typeAliases>
 
 	<plugins>

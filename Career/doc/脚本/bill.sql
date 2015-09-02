@@ -318,3 +318,17 @@ CREATE TABLE `math_model_ref` (
   `result` float(12,5) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--201509011509 
+CREATE TABLE `function` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) DEFAULT NULL,
+  `description` text,
+  `command` varchar(150) DEFAULT NULL,
+  `url` varchar(256) DEFAULT NULL,
+  `type` int(6) DEFAULT NULL,
+  `createTime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updateTime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `times` bigint(13) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

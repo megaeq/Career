@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="function">
+	<select id="selectPageList" parameterType="hashmap" resultType="function" >
+		SELECT * FROM function
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="type!=null">type=#{type} AND</if>
+			<if test="command!=null">command LIKE "%"#{command}"%" AND</if>
+			<if test="name!=null">name LIKE "%"#{name}"%" AND</if>
+		</trim>
+		ORDER BY times DESC
+	</select>
+	<select id="selectone" parameterType="int" resultType="function">
+		SELECT * FROM function WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="function" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO function(
+			<trim suffixOverrides=",">
+				<if test="name!=null">name,</if>
+				<if test="description!=null">description,</if>
+				<if test="command!=null">command,</if>
+				<if test="url!=null">url,</if>
+				<if test="type!=null">type,</if>
+				<if test="times!=null">times,</if>
+				<if test="createTime!=null">createTime,</if>
+				<if test="updateTime!=null">updateTime,</if>
+			</trim>
+		) VALUES (
+			<trim suffixOverrides=",">
+				<if test="name!=null">#{name},</if>
+				<if test="description!=null">#{description},</if>
+				<if test="command!=null">#{command},</if>
+				<if test="url!=null">#{url},</if>
+				<if test="type!=null">#{type},</if>
+				<if test="times!=null">#{times},</if>
+				<if test="createTime!=null">#{createTime},</if>
+				<if test="updateTime!=null">#{updateTime},</if>
+			</trim>
+		)
+	</insert>
+	<update id="update" parameterType="function">
+		UPDATE funtion SET
+		<trim suffixOverrides=",">
+			<if test="name!=null">name=#{name},</if>
+			<if test="description!=null">description=#{description},</if>
+			<if test="command!=null">command=#{command},</if>
+			<if test="url!=null">url=#{url},</if>
+			<if test="type!=null">type=#{type},</if>
+			<if test="times!=null">times=#{times},</if>
+			<if test="createTime!=null">createTime=#{createTime},</if>
+			<if test="updateTime!=null">updateTime=#{updateTime},</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM function WHERE id=#{id}
+	</delete>
+</mapper>
