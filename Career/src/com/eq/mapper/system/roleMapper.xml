@@ -2,15 +2,28 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="role">
 	<select id="selectPageList" parameterType="hashmap" resultType="role" >
-		SELECT * FROM role WHERE username=#{username}
+		SELECT * FROM role 
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="ids!=null">
+				id IN
+				<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+				 #{item}  
+				</foreach> 
+				 AND
+			 </if>
+			 <if test="available!=null">available=#{available} AND </if>
+		</trim>
 	</select>
 	<select id="selectone" parameterType="int" resultType="role">
+		SELECT * FROM role WHERE id=#{id}
 	</select>
 	<insert id="add" parameterType="role" useGeneratedKeys="true" keyProperty="id">
-	INSERT INTO role (role,username) VALUES (#{role},#{username})
+	INSERT INTO role (role,available) VALUES (#{role},#{available})
 	</insert>
 	<update id="update" parameterType="role">
-		UPDATE role SET role=#{role} WHERE id=#{id}
+		UPDATE role SET role=#{role}
+		<if test="available!=null">,available=#{available} </if>
+		 WHERE id=#{id}
 	</update>
 	<delete id="delete" parameterType="int">
 		DELETE FROM role WHERE id=#{id}

@@ -11,7 +11,8 @@ public class Role extends BaseEntity
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String role;
-	private String username;
+	//private String username;
+	private int available;//是否激活
 	public int getId()
 	{
 		return id;
@@ -28,13 +29,13 @@ public class Role extends BaseEntity
 	{
 		this.role = role;
 	}
-	public String getUsername()
+	public int getAvailable()
 	{
-		return username;
+		return available;
 	}
-	public void setUsername(String username)
+	public void setAvailable(int available)
 	{
-		this.username = username;
+		this.available = available;
 	}
 
 }

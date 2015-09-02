@@ -2,16 +2,28 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="permission">
 	<select id="selectPageList" parameterType="hashmap" resultType="permission" >
-		SELECT * FROM permission WHERE username=#{username}
+		SELECT * FROM permission  
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="ids!=null">
+				id IN
+				<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+				 #{item}  
+				</foreach> 
+				 AND
+			 </if>
+			 <if test="available!=null">available=#{available} AND </if>
+		</trim>
 	</select>
 	<select id="selectone" parameterType="int" resultType="permission">
-		
+		SELECT * FROM permission WHERE id=#{id}
 	</select>
 	<insert id="add" parameterType="permission" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO permission(username,permission) VALUES(#{username},#{permission})
+		INSERT INTO permission(permission,available) VALUES(#{permission},#{available})
 	</insert>
 	<update id="update" parameterType="permission">
-		UPDATE permission SET permission=#{permission} WHERE id=#{id}
+		UPDATE permission SET permission=#{permission}
+		<if test="available!=null"> ,available=#{available}</if>
+		 WHERE id=#{id}
 	</update>
 	<delete id="delete" parameterType="int">
 		DELETE FROM permission WHERE id=#{id}

@@ -10,8 +10,9 @@ public class Permission extends BaseEntity
 	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private String username;
+	//private String username;
 	private String permission;
+	private int available;//是否激活
 	public int getId()
 	{
 		return id;
@@ -20,14 +21,6 @@ public class Permission extends BaseEntity
 	{
 		this.id = id;
 	}
-	public String getUsername()
-	{
-		return username;
-	}
-	public void setUsername(String username)
-	{
-		this.username = username;
-	}
 	public String getPermission()
 	{
 		return permission;
@@ -35,6 +28,14 @@ public class Permission extends BaseEntity
 	public void setPermission(String permission)
 	{
 		this.permission = permission;
+	}
+	public int getAvailable()
+	{
+		return available;
+	}
+	public void setAvailable(int available)
+	{
+		this.available = available;
 	}
 
 }

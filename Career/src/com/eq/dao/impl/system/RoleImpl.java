@@ -36,7 +36,7 @@ public class RoleImpl extends BaseDao implements AbstractDao<Role, Integer>
 	@Override
 	public Role selectOne(Integer id)
 	{
-		return null;
+		return getSqlSessionTemplate().selectOne("role.selectone", id);
 	}
 
 	@Override

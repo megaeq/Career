@@ -53,7 +53,7 @@ public class MyRealm extends AuthorizingRealm
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		authorizationInfo.setRoles(roleSet);
         authorizationInfo.setStringPermissions(permissionSet);
-		return null;
+		return authorizationInfo;
 	}
 
 	@Override

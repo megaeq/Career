@@ -36,7 +36,7 @@ public class PermissionImpl extends BaseDao implements AbstractDao<Permission, I
 	@Override
 	public Permission selectOne(Integer id)
 	{
-		return null;
+		return getSqlSessionTemplate().selectOne("permission.selectone", id);
 	}
 
 	@Override
