@@ -38,18 +38,27 @@ public class MyRealm extends AuthorizingRealm
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)
 	{
 		String username = (String)principals.getPrimaryPrincipal();
+		User user = userImpl.selectOne(username);
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("username", username);
+		params.put("userId", user.getId());
+		params.put("available", 1);
 		List<Role> roleList = roleImpl.selectList(params);
-		List<Permission> permissionList = permissionImpl.selectList(params);
+		
+		
 		Set<String> roleSet = new HashSet<String>();
 		Set<String> permissionSet = new HashSet<String>();
 		for(int i=0;i<roleList.size();i++) {
 			roleSet.add(roleList.get(i).getRole());
+			params.clear();
+			params.put("roleId", roleList.get(i).getId());
+			params.put("available", 1);
+			List<Permission> permissionList = permissionImpl.selectList(params);
+			for(int j=0;j<permissionList.size();j++) {
+				permissionSet.add(permissionList.get(j).getPermission());
+			}
 		}
-		for(int i=0;i<permissionList.size();i++) {
-			permissionSet.add(permissionList.get(i).getPermission());
-		}
+		
+		
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		authorizationInfo.setRoles(roleSet);
         authorizationInfo.setStringPermissions(permissionSet);

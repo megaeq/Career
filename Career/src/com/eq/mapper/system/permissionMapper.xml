@@ -11,6 +11,9 @@
 				</foreach> 
 				 AND
 			 </if>
+			 <if test="roleId!=null">
+			 	id IN (SELECT permissionid FROM role_permission_rel WHERE roleid=#{roleId}) AND
+			 </if>
 			 <if test="available!=null">available=#{available} AND </if>
 		</trim>
 	</select>
