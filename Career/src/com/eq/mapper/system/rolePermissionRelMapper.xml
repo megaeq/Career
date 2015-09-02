@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="rolePermissionRel">
+	<select id="selectPageList" parameterType="hashmap" resultType="rolePermissionRel" >
+		SELECT * FROM role_permission_rel 
+		<trim prefix="WHERE" suffixOverrides="AND">
+			 <if test="permissionId!=null">permissionId=#{permissionId} AND </if>
+			 <if test="roleId!=null">roleId=#{roleId} AND </if>
+		</trim>
+	</select>
+	<select id="selectone" parameterType="int" resultType="rolePermissionRel">
+		SELECT * FROM role_permission_rel WHERE id=#{id}
+	</select>
+	<insert id="add" parameterType="rolePermissionRel" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO role_permission_rel(
+			<trim suffixOverrides=",">
+				 <if test="roleId!=null">roleId,</if>
+				  <if test="permissionId!=null">permissionId,</if>
+			</trim>
+		)VALUES (
+			<trim suffixOverrides=",">
+				 <if test="roleId!=null">#{roleId},</if>
+				  <if test="permissionId!=null">#{permissionId},</if>
+			</trim>
+		)
+	</insert>
+	<update id="update" parameterType="rolePermissionRel">
+		UPDATE role_permission_rel SET
+		<trim suffixOverrides=",">
+			 <if test="roleId!=null">roleId=#{roleId},</if>
+			  <if test="permissionId!=null">permissionId=#{permissionId},</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM role_permission_rel WHERE id=#{id}
+	</delete>
+</mapper>

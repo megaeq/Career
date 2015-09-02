@@ -332,3 +332,18 @@ CREATE TABLE `function` (
   `times` bigint(13) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--201509021543
+CREATE TABLE `role_permission_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `roleid` int(11) DEFAULT NULL,
+  `permissionid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `user_role_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) DEFAULT NULL,
+  `roleid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
