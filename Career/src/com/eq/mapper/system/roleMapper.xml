@@ -15,17 +15,34 @@
 			 	id IN(SELECT roleid FROM user_role_rel WHERE userid=#{userId}) AND
 			 </if>
 			 <if test="available!=null">available=#{available} AND </if>
+			 <if test="role!=null">role=#{role} AND </if>
+			 <if test="name!=null">name=#{name} AND </if>
 		</trim>
 	</select>
 	<select id="selectone" parameterType="int" resultType="role">
 		SELECT * FROM role WHERE id=#{id}
 	</select>
 	<insert id="add" parameterType="role" useGeneratedKeys="true" keyProperty="id">
-	INSERT INTO role (role,available) VALUES (#{role},#{available})
+	INSERT INTO role (
+	<trim suffixOverrides=",">
+		<if test="role!=null">role,</if>
+		<if test="available!=null"> available,</if>
+		<if test="name!=null"> name,</if>
+	</trim>) VALUES (
+	<trim suffixOverrides=",">
+		<if test="role!=null">#{role},</if>
+		<if test="available!=null"> #{available},</if>
+		<if test="name!=null"> #{name},</if>
+	</trim>
+	)
 	</insert>
 	<update id="update" parameterType="role">
-		UPDATE role SET role=#{role}
-		<if test="available!=null">,available=#{available} </if>
+		UPDATE role SET 
+		<trim suffixOverrides=",">
+			<if test="role!=null">role=#{role},</if>
+			<if test="available!=null"> available=#{available},</if>
+			<if test="name!=null"> name=#{name},</if>
+		</trim>
 		 WHERE id=#{id}
 	</update>
 	<delete id="delete" parameterType="int">

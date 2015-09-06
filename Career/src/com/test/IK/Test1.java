@@ -14,27 +14,44 @@ public class Test1
 	{
 		String [] cols = {"C02","A01","D02","A02"};
 		String [] params = {"A01","A02","A03","C01","C02","C03"};
-		String expression = "(A01||A02||A03)&&(C01||C02||C03)";
-		System.out.println(contains(cols, params,3, expression));
+		String expression = "(A01||A02||A03)&&(C01||C02||C03)*(D01||D02||D03)";
+		String minSizes = "3*1";
 		List<String> list = split(expression);
-		for(int i=0;i<list.size();i++) {
-			System.out.println(i+":"+list.get(i));
+		System.out.println(containsMulti(cols, expression, minSizes));
+		
+	}
+	public static Boolean containsMulti(String[] cols,String expressions,String minSizes) {
+		String[] expressionss = replaces(expressions).split("\\*");
+		String[] minSizess = minSizes.split("\\*");
+		String newExpression = "true";
+		for(int i=0;i<expressionss.length;i++) {
+			List<String> params = split(expressionss[i]);
+			newExpression+="&&"+containsone(cols,params,Integer.parseInt(minSizess[i]),expressionss[i]);
 		}
+		Object result = ExpressionEvaluator.evaluate(newExpression);
+		return Boolean.parseBoolean(result.toString());
 	}
 	
-	public static Boolean contains(String[] cols,String [] params,Integer minSize,String expression) {
+	public static String replaces(String expression) {
+		expression = expression.replace("（", "(");
+		expression = expression.replace("）", ")");
+		return expression;
+	}
+	
+	
+	public static Boolean containsone(String[] cols,List<String> params,Integer minSize,String expression) {
 		Collection<Variable> col = new ArrayList<Variable>();
 		Integer size = 0;
-		for(int i=0;i<params.length;i++) {
+		for(int i=0;i<params.size();i++) {
 			boolean contains = false;
 			for(int j=0;j<cols.length;j++) {
-				if(cols[j].equals(params[i])) {
+				if(cols[j].equals(params.get(i))) {
 					contains = true;
 					size++;
 					break;
 				}
 			}
-			col.add(Variable.createVariable(params[i], contains));
+			col.add(Variable.createVariable(params.get(i), contains));
 		}
 		if(size>=minSize) {
 			Object result = ExpressionEvaluator.evaluate(expression,col);

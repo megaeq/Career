@@ -21,11 +21,25 @@
 		SELECT * FROM permission WHERE id=#{id}
 	</select>
 	<insert id="add" parameterType="permission" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO permission(permission,available) VALUES(#{permission},#{available})
+		INSERT INTO permission(
+		<trim suffixOverrides=",">
+			<if test="permission!=null">permission,</if>
+			<if test="available!=null"> available,</if>
+			<if test="name!=null"> name=,</if>
+		</trim>) VALUES(
+		<trim suffixOverrides=",">
+			<if test="permission!=null">#{permission},</if>
+			<if test="available!=null"> #{available},</if>
+			<if test="name!=null"> #{name},</if>
+		</trim>)
 	</insert>
 	<update id="update" parameterType="permission">
-		UPDATE permission SET permission=#{permission}
-		<if test="available!=null"> ,available=#{available}</if>
+		UPDATE permission SET 
+		<trim suffixOverrides=",">
+			<if test="permission!=null">permission=#{permission},</if>
+			<if test="available!=null"> available=#{available},</if>
+			<if test="name!=null"> name=#{name},</if>
+		</trim>
 		 WHERE id=#{id}
 	</update>
 	<delete id="delete" parameterType="int">
