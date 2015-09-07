@@ -39,6 +39,19 @@ public class PermissionManage extends BaseAction
 	private PermissionImpl impl;
 	@RequestMapping("add")
 	@ResponseBody
+	private List<Permission> getList(@RequestParam Map<String, Object> params) {
+		ParamUtils PU = new ParamUtils(params);
+		Map<String, Object> pps = new HashMap<String, Object>();
+		pps.put("name", PU.getString("name"));
+		pps.put("available", PU.getString("available"));
+		pps.put("roleId", PU.getString("role"));
+		Map<String, Object> pps2 = impl.selectPageList(pps, currentPage, pageSize);
+		response.setHeader("Content-Range", rangeStr+pps2.get("count"));
+		return (List<Permission>)pps2.get("list");
+		
+	}
+	@RequestMapping("add")
+	@ResponseBody
 	public String add(@RequestParam Map<String, Object> params) {
 		ParamUtils PU = new ParamUtils(params);
 		Map<String, Object> pps = new HashMap<String, Object>();
@@ -68,10 +81,33 @@ public class PermissionManage extends BaseAction
 	@ResponseBody
 	public String update(@RequestParam Map<String, Object> params) {
 		ParamUtils PU = new ParamUtils(params);
-		Permission permission = impl.selectOne(PU.getInt("id"));
+		Map<String, Object> pps = new HashMap<String, Object>();
 		if(null!=PU.getString("name")) {
-			
+			pps.put("name", PU.getString("name"));
+			List<Permission> list = impl.selectList(pps);
+			if(!list.isEmpty()) {
+				return "权限名称已存在";
+			}
 		}
+		if(null!=PU.getString("permission")) {
+			pps.clear();
+			pps.put("permission", PU.getString("permission"));
+			List<Permission> list = impl.selectList(pps);
+			if(!list.isEmpty()) {
+				return "权限已存在";
+			}
+		}
+		Permission permission = impl.selectOne(PU.getInt("id"));
+		permission.setPermission(PU.getString("permission"));
+		permission.setName(PU.getString("name"));
+		permission.setAvailable(PU.getInt("available"));
 		return "添加成功";
+	}
+	@RequestMapping("delete")
+	@ResponseBody
+	public String delete(@RequestParam Map<String, Object> params) {
+		ParamUtils PU = new ParamUtils(params);
+		impl.delete(PU.getInt("id"));
+		return "删除成功";
 	}
 }

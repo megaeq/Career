@@ -15,6 +15,7 @@
 			 	id IN (SELECT permissionid FROM role_permission_rel WHERE roleid=#{roleId}) AND
 			 </if>
 			 <if test="available!=null">available=#{available} AND </if>
+			 <if test="name!=null">name=#{name} AND </if>
 		</trim>
 	</select>
 	<select id="selectone" parameterType="int" resultType="permission">
