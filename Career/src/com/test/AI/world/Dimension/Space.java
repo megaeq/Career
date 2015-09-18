@@ -18,7 +18,42 @@ import com.test.AI.world.Dimension.inter.Dimension;
  * @author Mega.Yan
  * @date 2015-9-17 上午11:24:28
  */
-public class Space implements Dimension<Point>
+public class Space implements Dimension
 {
-	
+	private Float x1;
+	private Float x2;
+	private Float x3;
+	private String unit="m";
+	public Float getX1()
+	{
+		return x1;
+	}
+	public void setX1(Float x1)
+	{
+		this.x1 = x1;
+	}
+	public Float getX2()
+	{
+		return x2;
+	}
+	public void setX2(Float x2)
+	{
+		this.x2 = x2;
+	}
+	public Float getX3()
+	{
+		return x3;
+	}
+	public void setX3(Float x3)
+	{
+		this.x3 = x3;
+	}
+	public String getUnit()
+	{
+		return unit;
+	}
+	public void setUnit(String unit)
+	{
+		this.unit = unit;
+	}
 }

@@ -16,6 +16,6 @@ package com.test.AI.world.Dimension.inter;
  * @author Mega.Yan
  * @date 2015-9-17 上午9:41:19
  */
-public interface Dimension<T>
+public interface Dimension
 {
 }
