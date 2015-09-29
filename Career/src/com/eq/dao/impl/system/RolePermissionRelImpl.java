@@ -13,6 +13,8 @@ package com.eq.dao.impl.system;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.entity.system.RolePermissionRel;
 import com.eq.dao.impl.BaseDao;
@@ -25,6 +27,7 @@ import com.eq.service.mybatis.PageParameter;
  * @author Mega.Yan
  * @date 2015-9-2 下午3:48:18
  */
+@Component
 public class RolePermissionRelImpl extends BaseDao implements AbstractDao<RolePermissionRel, Integer>
 {
 

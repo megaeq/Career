@@ -3,12 +3,14 @@ package com.eq.dao.impl.system;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.eq.dao.entity.myinfo.IncomeAndCost;
 import com.eq.dao.entity.system.SystemPermission;
 import com.eq.dao.impl.BaseDao;
 import com.eq.dao.inter.AbstractDao;
 import com.eq.service.mybatis.PageParameter;
-
+@Component
 public class SystemPermissionImpl extends BaseDao implements AbstractDao<SystemPermission, Integer>
 {
 

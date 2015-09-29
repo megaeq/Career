@@ -37,7 +37,7 @@ public class PermissionManage extends BaseAction
 {
 	@Autowired
 	private PermissionImpl impl;
-	@RequestMapping("add")
+	@RequestMapping("getList")
 	@ResponseBody
 	private List<Permission> getList(@RequestParam Map<String, Object> params) {
 		ParamUtils PU = new ParamUtils(params);
