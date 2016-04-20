@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.google.common.collect.Lists;
+
 public class NestedIterator implements Iterator<Integer>
 {
 	private List<Integer> list = new ArrayList<Integer>();
